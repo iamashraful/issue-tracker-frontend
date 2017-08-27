@@ -1,6 +1,7 @@
 import EventEmitter from "events";
 import dispatcher from "../dispatcher";
 import Home from "../components/Home";
+import Login from "../components/Login";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -11,7 +12,13 @@ class BasicStore extends EventEmitter {
                 text: 'Home',
                 url: '/home',
                 component: Home
-            }
+            },
+            {
+                id: 2,
+                text: 'Login',
+                url: '/login',
+                component: Login
+            },
         ]
     }
 
