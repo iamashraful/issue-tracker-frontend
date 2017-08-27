@@ -12,9 +12,10 @@ class Login extends Component {
     }
 
     handleSubmit(event) {
-        BasicStore.callApi('http://127.0.0.1:8000/api/v1/core/login/', 'POST', this.state).then((data) => {
-            console.log(data);
-        });
+        BasicStore.callApi('http://127.0.0.1:8000/api/v1/core/login/', 'POST', this.state);
+        BasicStore.setToken();
+        let token = BasicStore.getToken();
+        console.log(token);
         event.preventDefault();
     }
 

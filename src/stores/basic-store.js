@@ -27,11 +27,15 @@ class BasicStore extends EventEmitter {
         // Headers
         this.headers = {
             'Content-Type': 'application/json'
-        }
+        };
+        // Temporary Data
+        this.tempData = undefined;
     }
 
-    setToken(tok) {
-        this.token = tok;
+    setToken() {
+        if (this.tempData.token) {
+            this.token = this.tempData.token;
+        }
     }
 
     getToken() {
@@ -69,9 +73,11 @@ class BasicStore extends EventEmitter {
             /* Fetch will return promise here. */
             return response.json();
             /* From here it's returning the JSON of response data */
+        }).then((data) => {
+            this.tempData = data;
         }).catch((exp) => {
             /* If any errors occur. It will passed to action */
-            console.error(exp);
+            return exp;
         })
     }
 
