@@ -9,7 +9,7 @@ class BasicStore extends EventEmitter {
             {
                 id: 1,
                 text: 'Home',
-                url: '#home',
+                url: '/home',
                 component: Home
             }
         ]

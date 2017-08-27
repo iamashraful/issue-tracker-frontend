@@ -27,13 +27,9 @@ class NavBar extends Component {
                             </button>
                             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                                 <ul className="navbar-nav ml-auto mr-auto">
-                                    <li>AAAAA</li>
-                                    <li>AAAAA</li>
-                                    <li>AAAAA</li>
-                                    <li>AAAAA</li>
                                     {navItems.map(item =>
-                                        <li className="nav-item"
-                                            key={item.id}> {/* map require unique key. So, I just put. Nothing special */}
+                                        <li className="nav-item" key={item.id}>
+                                            {/* map require unique key. So, I just put. Nothing special */}
                                             <NavLink className="nav-link" activeClassName="active" to={item.url}>
                                                 {item.text}
                                             </NavLink>
