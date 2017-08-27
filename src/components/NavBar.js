@@ -19,14 +19,15 @@ class NavBar extends Component {
             <HashRouter>
                 <div>
                     <div className="nav-content">
-                        <nav className="navbar navbar-toggleable-md">
+                        <nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
                             <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                                     data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"/>
                             </button>
+                            <a className="navbar-brand" href="/">My Project</a>
                             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-                                <ul className="navbar-nav ml-auto mr-auto">
+                                <ul className="navbar-nav ml-auto">
                                     {navItems.map(item =>
                                         <li className="nav-item" key={item.id}>
                                             {/* map require unique key. So, I just put. Nothing special */}
