@@ -1,26 +1,62 @@
 import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
+import 'whatwg-fetch';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            data: {
+                non_fields_error: ''
+            }
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    makeUrl(path) {
+        return BasicStore.apiUrl + path;
+    }
+
     handleSubmit(event) {
-        BasicStore.callApi('http://127.0.0.1:8000/api/v1/core/login/', 'POST', this.state);
-        BasicStore.setToken();
-        let token = BasicStore.getToken();
-        console.log(token);
+        const url = this.makeUrl('api/v1/core/login/');
+        const payload = {
+            method: 'POST',
+            headers: BasicStore.headers,
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            })
+        };
+        fetch(url, payload).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (data.token) {
+                // Clear username & password from state
+                this.setState({
+                    username: '',
+                    password: '',
+                    data: {
+                        non_fields_error: ''
+                    }
+                });
+                BasicStore.setToken(data.token);
+            }
+            else {
+                this.setState({data: data});
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
         event.preventDefault();
     }
 
     render() {
         const cssClasses = "form-control";
+        const errCssClasses = 'alert alert-danger ';
+        const displayError = this.state.data.non_fields_error ? errCssClasses + 'd-block' : errCssClasses + 'd-none';
+
         return (
             <div className="container">
                 <div className="row">
@@ -31,14 +67,20 @@ class Login extends Component {
                                 <form onSubmit={this.handleSubmit}>
                                     <fieldset className="p-4">
                                         <div className="form-group">
-                                            <input className={cssClasses}  placeholder="Username" type="text" required
-                                                   onChange = {(event) => this.setState({username:event.target.value})}
+                                            <input className={cssClasses} placeholder="Username" type="text" required
+                                                   onChange={(event) => this.setState({username: event.target.value})}
+                                                   value={this.state.username}
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <input className={cssClasses}  placeholder="Password" type="password" required
-                                                   onChange = {(event) => this.setState({password:event.target.value})}
+                                            <input className={cssClasses} placeholder="Password" type="password"
+                                                   required
+                                                   onChange={(event) => this.setState({password: event.target.value})}
+                                                   value={this.state.password}
                                             />
+                                        </div>
+                                        <div className={displayError}>
+                                            <small>{this.state.data.non_fields_error}</small>
                                         </div>
                                         <button className="btn btn-md btn-block btn-success">Login</button>
                                     </fieldset>
