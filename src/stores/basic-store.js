@@ -1,7 +1,8 @@
 import EventEmitter from "events";
 import dispatcher from "../dispatcher";
-import Home from "../components/Home";
+import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
+import Home from "../components/Home";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -10,13 +11,19 @@ class BasicStore extends EventEmitter {
         this.apiUrl = 'https://tester-ash.herokuapp.com/';
         this.navItems = [
             {
-                id: 1,
+                id: 10,
                 text: 'Home',
-                url: '/home',
+                url: '/',
                 component: Home
             },
             {
-                id: 2,
+                id: 20,
+                text: 'Dashboard',
+                url: '/dashboard',
+                component: Dashboard
+            },
+            {
+                id: 30,
                 text: 'Login',
                 url: '/login',
                 component: Login
