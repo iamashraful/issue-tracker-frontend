@@ -33,6 +33,7 @@ class Login extends Component {
             return response.json();
         }).then((data) => {
             if (data.token) {
+                BasicStore.setToken(data.token);
                 // Clear username & password from state
                 this.setState({
                     username: '',
@@ -41,7 +42,6 @@ class Login extends Component {
                         non_fields_error: ''
                     }
                 });
-                BasicStore.setToken(data.token);
             }
             else {
                 this.setState({data: data});

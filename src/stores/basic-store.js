@@ -14,19 +14,22 @@ class BasicStore extends EventEmitter {
                 id: 10,
                 text: 'Home',
                 url: '/',
-                component: Home
+                component: Home,
+                auth: false
             },
             {
                 id: 20,
                 text: 'Dashboard',
                 url: '/dashboard',
-                component: Dashboard
+                component: Dashboard,
+                auth: true
             },
             {
                 id: 30,
                 text: 'Login',
                 url: '/login',
-                component: Login
+                component: Login,
+                auth: false
             },
         ];
         // Token
@@ -35,12 +38,18 @@ class BasicStore extends EventEmitter {
         this.headers = {
             'Content-Type': 'application/json'
         };
+        // Authentication data
+        this.isAuthentication = false;
         // Temporary Data
         this.tempData = undefined;
     }
 
     setToken(token) {
         this.token = token;
+        // Change the authentication value
+        this.isAuthentication = true;
+        // Response to components for store change
+        this.emit("change");
     }
 
     getToken() {

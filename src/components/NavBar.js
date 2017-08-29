@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
-import {
-    HashRouter,
-    Route,
-    NavLink,
-    Switch
-} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
+import NavLinkCustom from "./NavLinkCustom";
 
 class NavBar extends Component {
     constructor(props) {
@@ -15,6 +11,7 @@ class NavBar extends Component {
 
     render() {
         const navItems = BasicStore.navItems;
+
         return (
             <HashRouter>
                 <div>
@@ -31,9 +28,13 @@ class NavBar extends Component {
                                     {navItems.map(item =>
                                         <li className="nav-item" key={item.id}>
                                             {/* map require unique key. So, I just put. Nothing special */}
-                                            <NavLink className="nav-link" activeClassName="active" to={item.url}>
-                                                {item.text}
-                                            </NavLink>
+                                            <NavLinkCustom
+                                                cssClass="nav-link"
+                                                activeClass="active"
+                                                auth={item.auth}
+                                                text={item.text}
+                                                url={item.url}
+                                            />
                                         </li>
                                     )}
                                 </ul>
