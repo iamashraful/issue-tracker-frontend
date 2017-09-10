@@ -42,6 +42,8 @@ class Login extends Component {
                         non_fields_error: ''
                     }
                 });
+                // TODO: This is very badly hard coded. I have plan to change it with another state.
+                window.location = '/#/dashboard';
             }
             else {
                 this.setState({data: data});
@@ -67,16 +69,15 @@ class Login extends Component {
                                 <form onSubmit={this.handleSubmit}>
                                     <fieldset className="p-4">
                                         <div className="form-group">
-                                            <input className={cssClasses} placeholder="Username" type="text" required
+                                            <input className={cssClasses} placeholder="Username" type="text"
                                                    onChange={(event) => this.setState({username: event.target.value})}
-                                                   value={this.state.username}
+                                                   value={this.state.username} required
                                             />
                                         </div>
                                         <div className="form-group">
                                             <input className={cssClasses} placeholder="Password" type="password"
-                                                   required
                                                    onChange={(event) => this.setState({password: event.target.value})}
-                                                   value={this.state.password}
+                                                   value={this.state.password} required
                                             />
                                         </div>
                                         <div className={displayError}>
