@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import NavLinkCustom from "./NavLinkCustom";
+import NotFound from "./NotFound";
 
 class NavBar extends Component {
     constructor(props) {
@@ -49,6 +50,8 @@ class NavBar extends Component {
                                 <Route exact path={item.url} component={item.component} key={item.id}/>
                             )
                         }
+                        {/* Defining 404 url */}
+                        <Route component={NotFound}/>
                     </Switch>
                 </div>
             </HashRouter>
