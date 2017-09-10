@@ -2,6 +2,7 @@ import EventEmitter from "events";
 import dispatcher from "../dispatcher";
 import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
+import Logout from "../components/Logout";
 import Home from "../components/Home";
 
 class BasicStore extends EventEmitter {
@@ -29,6 +30,13 @@ class BasicStore extends EventEmitter {
                 text: 'Login',
                 url: '/login',
                 component: Login,
+                auth: false
+            },
+            {
+                id: 31,
+                text: 'Logout',
+                url: '/logout',
+                component: Logout,
                 auth: false
             },
         ];

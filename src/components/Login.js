@@ -10,7 +10,9 @@ class Login extends Component {
             password: '',
             data: {
                 non_fields_error: ''
-            }
+            },
+            loading: false,
+            loadingText: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,6 +22,8 @@ class Login extends Component {
     }
 
     handleSubmit(event) {
+        // Set loading true
+        this.setState({loading: true, loadingText: 'Please Wait...'});
         const url = this.makeUrl('api/v1/core/login/');
         const payload = {
             method: 'POST',
@@ -32,6 +36,7 @@ class Login extends Component {
         fetch(url, payload).then((response) => {
             return response.json();
         }).then((data) => {
+            this.setState({loading: true, loadingText: 'Redirecting...'});
             if (data.token) {
                 BasicStore.setToken(data.token);
                 // Clear username & password from state
@@ -46,6 +51,7 @@ class Login extends Component {
                 window.location = '/#/dashboard';
             }
             else {
+                this.setState({loading: false, loadingText: ''});
                 this.setState({data: data});
             }
         }).catch((err) => {
@@ -58,6 +64,8 @@ class Login extends Component {
         const cssClasses = "form-control";
         const errCssClasses = 'alert alert-danger ';
         const displayError = this.state.data.non_fields_error ? errCssClasses + 'd-block' : errCssClasses + 'd-none';
+        const loggingButtonViewClass = this.state.loading ? 'd-block' : 'd-none';
+        const loginButtonViewClass = this.state.loading ? 'd-none' : 'd-block';
 
         return (
             <div className="container">
@@ -83,7 +91,12 @@ class Login extends Component {
                                         <div className={displayError}>
                                             <small>{this.state.data.non_fields_error}</small>
                                         </div>
-                                        <button className="btn btn-md btn-block btn-success">Login</button>
+                                        <button className="btn btn-md btn-block btn-success">
+                                            <span className={loginButtonViewClass}>Login</span>
+                                            <span className={loggingButtonViewClass}>
+                                                Please Wait... <i className="fa fa-spinner fa-spin"/>
+                                            </span>
+                                        </button>
                                     </fieldset>
                                 </form>
                             </div>
