@@ -56,8 +56,16 @@ class BasicStore extends EventEmitter {
         this.token = token;
         // Change the authentication value
         this.isAuthentication = true;
+        if (this.token !== '') {
+            this.headers.Authorization = 'Token ' + this.token;
+        }
         // Response to components for store change
         this.emit("change");
+    }
+
+    destroyToken() {
+        this.token = '';
+        this.isAuthentication = false;
     }
 
     getToken() {

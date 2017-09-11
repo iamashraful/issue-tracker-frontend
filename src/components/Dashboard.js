@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import BasicStore from "../stores/basic-store";
 import NoAccess from "./NoAccess";
 
 class Dashboard extends Component {
