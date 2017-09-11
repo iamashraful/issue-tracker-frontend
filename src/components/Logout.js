@@ -7,7 +7,7 @@ class Logout extends Component {
         super(props);
         this.state = {
             status: 400,
-            message: 'Communicating with server...',
+            message: 'Please wait...',
             isAuth: BasicStore.isAuthentication
         };
         this.logoutStatusCode = 204;
@@ -16,13 +16,6 @@ class Logout extends Component {
     makeUrl(path) {
         return BasicStore.apiUrl + path;
     }
-
-    // componentWillUpdate() {
-    //     // Catch `change` event from Store
-    //     BasicStore.on("change", () => {
-    //         this.setState({isAuth: BasicStore.isAuthentication});
-    //     });
-    // }
 
     componentWillMount() {
         // Catch `change` event from Store

@@ -48,8 +48,6 @@ class BasicStore extends EventEmitter {
         };
         // Authentication data
         this.isAuthentication = false;
-        // Temporary Data
-        this.tempData = undefined;
     }
 
     setToken(token) {
@@ -66,6 +64,9 @@ class BasicStore extends EventEmitter {
     destroyToken() {
         this.token = '';
         this.isAuthentication = false;
+        // Trick to delete Authorization when no need
+        delete this.headers.Authorization;
+        this.emit("change");
     }
 
     getToken() {
