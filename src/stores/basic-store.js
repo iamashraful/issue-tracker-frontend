@@ -37,7 +37,7 @@ class BasicStore extends EventEmitter {
                 text: 'Logout',
                 url: '/logout',
                 component: Logout,
-                auth: false
+                auth: true
             },
         ];
         // Token

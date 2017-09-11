@@ -18,6 +18,9 @@ class NavLinkCustom extends Component {
 
     render() {
         let hideContentClassNames = 'nav-link ';
+        if(this.props.text === 'Login' && this.props.url === '/login' && this.state.isAuth){
+            hideContentClassNames += 'd-none';
+        }
         if(!this.state.isAuth) {
             hideContentClassNames += this.props.auth ? 'd-none' : 'd-block';
         }

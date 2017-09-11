@@ -1,31 +1,27 @@
 import React, {Component} from 'react';
 import BasicStore from "../stores/basic-store";
+import NoAccess from "./NoAccess";
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuth: BasicStore.isAuthentication
+            displayClass: 'd-block'
         };
+        this.contentVisibility.bind(this);
     }
 
-    componentWillMount() {
-        BasicStore.on("change", () => {
-            this.setState({isAuth: BasicStore.isAuthentication})
-        })
+    contentVisibility(val) {
+        this.setState({displayClass: val})
     }
 
     render() {
-        let permissionErrorClass = this.state.isAuth ? 'd-none':'alert alert-danger text-center d-block';
-        let mainContentClass = this.state.isAuth ? 'd-block' : 'd-none';
+        let mainContentClass = '';
+        mainContentClass += this.state.displayClass;
 
         return (
             <div>
-                <div className="container">
-                    <div className={permissionErrorClass}>
-                        You don't have permission to view this content.
-                    </div>
-                </div>
+                <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
                 <div className={mainContentClass}>
                     <h1 className="text-center">Welcome Dashboard</h1>
                 </div>

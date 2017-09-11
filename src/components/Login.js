@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
 import 'whatwg-fetch';
 
+import {Redirect} from 'react-router-dom';
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -66,7 +68,10 @@ class Login extends Component {
         const displayError = this.state.data.non_fields_error ? errCssClasses + 'd-block' : errCssClasses + 'd-none';
         const loggingButtonViewClass = this.state.loading ? 'd-block' : 'd-none';
         const loginButtonViewClass = this.state.loading ? 'd-none' : 'd-block';
-
+        const isAuth = BasicStore.isAuthentication;
+        if (isAuth) {
+            return <Redirect to="/"/>
+        }
         return (
             <div className="container">
                 <div className="row">
