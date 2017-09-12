@@ -22,23 +22,24 @@ class Logout extends Component {
         BasicStore.on("change", () => {
             this.setState({isAuth: BasicStore.isAuthentication});
         });
-        // Call the logout API
-        const url = this.makeUrl('api/v1/core/logout/');
-        const payload = {
-            method: 'POST',
-            headers: BasicStore.headers
-        };
-        fetch(url, payload).then((response) => {
-            return response.json();
-        }).then((data) => {
-            if(data.status === this.logoutStatusCode) {
-                this.setState({status: data.status, message: data.message});
-                // Empty token from store
-                BasicStore.destroyToken();
-            }
-        }).catch((err) => {
-            console.log(err);
-        });
+        // // Call the logout API
+        // const url = this.makeUrl('api/v1/core/logout/');
+        // const payload = {
+        //     method: 'POST',
+        //     headers: BasicStore.headers
+        // };
+        // fetch(url, payload).then((response) => {
+        //     return response.json();
+        // }).then((data) => {
+        //     if(data.status === this.logoutStatusCode) {
+        //         this.setState({status: data.status, message: data.message});
+        //         // Empty token from store
+        //         BasicStore.destroyToken();
+        //     }
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
+        BasicStore.destroyToken();
     }
 
     render() {
