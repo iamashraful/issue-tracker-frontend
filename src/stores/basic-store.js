@@ -40,18 +40,24 @@ class BasicStore extends EventEmitter {
                 auth: true
             },
         ];
-        // Token
-        this.token = '';
+        // Token -- Accessing from local storage
+        this.token = localStorage.getItem('token') || "";
+
         // Headers
         this.headers = {
             'Content-Type': 'application/json'
         };
+        if(this.token !== "") {
+            this.headers.Authorization = "Token " + this.token;
+        }
         // Authentication data
-        this.isAuthentication = false;
+        this.isAuthentication = this.token !== "";
     }
 
     setToken(token) {
         this.token = token;
+        // Set token to local storage
+        localStorage.setItem('token', String(token));
         // Change the authentication value
         this.isAuthentication = true;
         if (this.token !== '') {
@@ -63,6 +69,8 @@ class BasicStore extends EventEmitter {
 
     destroyToken() {
         this.token = '';
+        // Set local storage token empty
+        localStorage.setItem('token', '');
         this.isAuthentication = false;
         // Trick to delete Authorization when no need
         delete this.headers.Authorization;
