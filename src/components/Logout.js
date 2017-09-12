@@ -28,7 +28,6 @@ class Logout extends Component {
             method: 'POST',
             headers: BasicStore.headers
         };
-        console.log(payload);
         fetch(url, payload).then((response) => {
             return response.json();
         }).then((data) => {
