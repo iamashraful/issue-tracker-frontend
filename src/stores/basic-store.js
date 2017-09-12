@@ -4,6 +4,7 @@ import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
 import Logout from "../components/Logout";
 import Home from "../components/Home";
+import UserRegistration from "../components/UserRegistration";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -24,6 +25,13 @@ class BasicStore extends EventEmitter {
                 url: '/dashboard',
                 component: Dashboard,
                 auth: true
+            },
+            {
+                id: 29,
+                text: 'Register',
+                url: '/register',
+                component: UserRegistration,
+                auth: false
             },
             {
                 id: 30,
