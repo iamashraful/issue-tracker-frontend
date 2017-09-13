@@ -9,15 +9,34 @@ class UserRegistration extends Component {
             password: '',
             confirm_password: '',
             email: '',
-            role: '',
             gender: '',
-            roles: undefined
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
         console.log(this.state);
+        // POST user for registration
+        const url = this.makeUrl('api/v1/core/registration/');
+        const postBody = JSON.stringify({
+            username: this.state.username,
+            password: this.state.password,
+            confirm_password: this.state.confirm_password,
+            email: this.state.email,
+            gender: this.state.gender
+        });
+        const payload = {
+            method: 'POST',
+            headers: BasicStore.headers,
+            body: postBody
+        };
+        fetch(url, payload).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        });
         event.preventDefault();
     }
 
@@ -26,19 +45,19 @@ class UserRegistration extends Component {
     }
 
     componentWillMount() {
-        // Get all the roles
-        const url = this.makeUrl('api/v1/role-manager/roles/');
-        const payload = {
-            method: 'GET',
-            headers: BasicStore.headers
-        };
-        fetch(url, payload).then((response) => {
-            return response.json();
-        }).then((data) => {
-            this.setState({roles: data});
-        }).catch((err) => {
-            console.log(err);
-        });
+        // // Get all the roles
+        // const url = this.makeUrl('api/v1/role-manager/roles/');
+        // const payload = {
+        //     method: 'GET',
+        //     headers: BasicStore.headers
+        // };
+        // fetch(url, payload).then((response) => {
+        //     return response.json();
+        // }).then((data) => {
+        //     this.setState({roles: data});
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
     }
 
     render() {
