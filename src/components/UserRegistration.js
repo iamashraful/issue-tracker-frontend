@@ -44,22 +44,6 @@ class UserRegistration extends Component {
         return BasicStore.apiUrl + path;
     }
 
-    componentWillMount() {
-        // // Get all the roles
-        // const url = this.makeUrl('api/v1/role-manager/roles/');
-        // const payload = {
-        //     method: 'GET',
-        //     headers: BasicStore.headers
-        // };
-        // fetch(url, payload).then((response) => {
-        //     return response.json();
-        // }).then((data) => {
-        //     this.setState({roles: data});
-        // }).catch((err) => {
-        //     console.log(err);
-        // });
-    }
-
     render() {
         const cssClasses = "form-control";
         return (
