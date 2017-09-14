@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
+import {Redirect} from 'react-router-dom';
 
 class UserRegistration extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class UserRegistration extends Component {
             confirm_password: '',
             email: '',
             gender: '',
+            isAuth: BasicStore.isAuthentication
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -44,8 +46,17 @@ class UserRegistration extends Component {
         return BasicStore.apiUrl + path;
     }
 
+    componentWillMount() {
+        BasicStore.on("change", () => {
+            this.setState({isAuth: BasicStore.isAuthentication});
+        });
+    }
+
     render() {
         const cssClasses = "form-control";
+        if(this.state.isAuth) {
+            return <Redirect to="/"/>
+        }
         return (
             <div>
                 <div className="container">
