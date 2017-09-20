@@ -11,13 +11,18 @@ class UserRegistration extends Component {
             confirm_password: '',
             email: '',
             gender: '',
-            isAuth: BasicStore.isAuthentication
+            isAuth: BasicStore.isAuthentication,
+            loading: false,
+            loadingText: '',
+            _hasError: false,
+            apiResponseData: {}
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
-        console.log(this.state);
+        // Set loading true
+        this.setState({loading: true, loadingText: 'Please Wait...'});
         // POST user for registration
         const url = this.makeUrl('api/v1/core/registration/');
         const postBody = JSON.stringify({
@@ -33,8 +38,13 @@ class UserRegistration extends Component {
             body: postBody
         };
         fetch(url, payload).then((response) => {
+            if (response.status === 400) {
+                this.setState({_hasError: true})
+            }
             return response.json();
         }).then((data) => {
+            // Set loading false and text empty
+            this.setState({loading: false, loadingText: '', apiResponseData: data});
             console.log(data);
         }).catch((err) => {
             console.log(err);
@@ -53,7 +63,11 @@ class UserRegistration extends Component {
     }
 
     render() {
-        const cssClasses = "form-control";
+        let cssClasses = "form-control ";
+        const registeringButtonViewClass = this.state.loading ? 'd-block' : 'd-none';
+        const registerButtonViewClass = this.state.loading ? 'd-none' : 'd-block';
+        cssClasses += this.state._hasError ? 'b-red' : '';
+
         if(this.state.isAuth) {
             return <Redirect to="/"/>
         }
@@ -72,6 +86,7 @@ class UserRegistration extends Component {
                                                        onChange={(event) => this.setState({username: event.target.value})}
                                                        value={this.state.username} required
                                                 />
+                                                <p className="alert-danger">{this.state.apiResponseData.username}</p>
                                             </div>
                                             <div className="form-group">
                                                 <input className={cssClasses} placeholder="Password" type="password"
@@ -98,7 +113,10 @@ class UserRegistration extends Component {
                                                 />
                                             </div>
                                             <button className="btn btn-md btn-block btn-success">
-                                                Register
+                                                <span className={registerButtonViewClass}>Register</span>
+                                                <span className={registeringButtonViewClass}>
+                                                Please Wait... <i className="fa fa-spinner fa-spin"/>
+                                            </span>
                                             </button>
                                         </fieldset>
                                     </form>
