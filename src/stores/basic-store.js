@@ -5,6 +5,7 @@ import Login from "../components/Login";
 import Logout from "../components/Logout";
 import Home from "../components/Home";
 import UserRegistration from "../components/UserRegistration";
+import Settings from "../components/Settings";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -24,6 +25,13 @@ class BasicStore extends EventEmitter {
                 text: 'Dashboard',
                 url: '/dashboard',
                 component: Dashboard,
+                auth: true
+            },
+            {
+                id: 25,
+                text: 'Settings',
+                url: '/settings',
+                component: Settings,
                 auth: true
             },
             {
@@ -49,7 +57,8 @@ class BasicStore extends EventEmitter {
             },
         ];
         // Token -- Accessing from local storage
-        this.token = localStorage.getItem('token') || "";
+        this.token = localStorage.getItem('token') || '';
+        this.userRole = localStorage.getItem('role') || '';
 
         // Headers
         this.headers = {
@@ -62,10 +71,13 @@ class BasicStore extends EventEmitter {
         this.isAuthentication = this.token !== "";
     }
 
-    setToken(token) {
+    setToken(token, role) {
         this.token = token;
+        this.userRole = role;
         // Set token to local storage
         localStorage.setItem('token', String(token));
+        // Set role to local storage
+        localStorage.setItem('role', String(role));
         // Change the authentication value
         this.isAuthentication = true;
         if (this.token !== '') {
@@ -77,8 +89,11 @@ class BasicStore extends EventEmitter {
 
     destroyToken() {
         this.token = '';
+        this.userRole = '';
         // Set local storage token empty
         localStorage.setItem('token', '');
+        // Set local storage role empty
+        localStorage.setItem('role', '');
         this.isAuthentication = false;
         // Trick to delete Authorization when no need
         delete this.headers.Authorization;
