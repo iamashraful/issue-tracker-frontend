@@ -6,6 +6,9 @@
 .b-red {
     border-color: red;
 }
+.b-red:focus {
+    border-color: red;
+}
 .b-success {
 
 }

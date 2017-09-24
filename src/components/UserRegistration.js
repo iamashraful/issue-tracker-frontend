@@ -15,9 +15,17 @@ class UserRegistration extends Component {
             loading: false,
             loadingText: '',
             _hasError: false,
-            apiResponseData: {}
+            apiResponseData: {},
+            errorData: {}
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    errorMapping(errorResponse) {
+        errorResponse.then((data) => {
+            this.setState({errorData: data});
+            console.log(this.state.errorData);
+        })
     }
 
     handleSubmit(event) {
@@ -39,9 +47,9 @@ class UserRegistration extends Component {
         };
         fetch(url, payload).then((response) => {
             if (response.status === 400) {
-                this.setState({_hasError: true})
+                this.setState({_hasError: true});
+                this.errorMapping(response.json())
             }
-            return response.json();
         }).then((data) => {
             // Set loading false and text empty
             this.setState({loading: false, loadingText: '', apiResponseData: data});
@@ -66,9 +74,8 @@ class UserRegistration extends Component {
         let cssClasses = "form-control ";
         const registeringButtonViewClass = this.state.loading ? 'd-block' : 'd-none';
         const registerButtonViewClass = this.state.loading ? 'd-none' : 'd-block';
-        cssClasses += this.state._hasError ? 'b-red' : '';
 
-        if(this.state.isAuth) {
+        if (this.state.isAuth) {
             return <Redirect to="/"/>
         }
         return (
@@ -81,36 +88,50 @@ class UserRegistration extends Component {
                                 <div className="card-body">
                                     <form onSubmit={this.handleSubmit}>
                                         <fieldset className="p-4">
+                                            <p
+                                                className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>
+                                                {this.state.errorData.non_fields_errors}
+                                            </p>
                                             <div className="form-group">
+                                                <label>Username</label>
                                                 <input className={cssClasses} placeholder="Username" type="text"
                                                        onChange={(event) => this.setState({username: event.target.value})}
                                                        value={this.state.username} required
                                                 />
-                                                <p className="alert-danger">{this.state.apiResponseData.username}</p>
+                                                <p className="alert-danger">{this.state.errorData.username}</p>
                                             </div>
                                             <div className="form-group">
+                                                <label>Password</label>
                                                 <input className={cssClasses} placeholder="Password" type="password"
                                                        onChange={(event) => this.setState({password: event.target.value})}
                                                        value={this.state.password} required
                                                 />
+                                                <p className="alert-danger">{this.state.errorData.password}</p>
                                             </div>
                                             <div className="form-group">
-                                                <input className={cssClasses} placeholder="Confirm Password" type="password"
+                                                <label>Confirm Password</label>
+                                                <input className={cssClasses} placeholder="Confirm Password"
+                                                       type="password"
                                                        onChange={(event) => this.setState({confirm_password: event.target.value})}
                                                        value={this.state.confirm_password} required
                                                 />
+                                                <p className="alert-danger">{this.state.errorData.confirm_password}</p>
                                             </div>
                                             <div className="form-group">
+                                                <label>Email</label>
                                                 <input className={cssClasses} placeholder="Email" type="email"
                                                        onChange={(event) => this.setState({email: event.target.value})}
                                                        value={this.state.email} required
                                                 />
+                                                <p className="alert-danger">{this.state.errorData.email}</p>
                                             </div>
                                             <div className="form-group">
+                                                <label>Gender</label>
                                                 <input className={cssClasses} placeholder="Gender" type="text"
                                                        onChange={(event) => this.setState({gender: event.target.value})}
                                                        value={this.state.gender} required
                                                 />
+                                                <p className="alert-danger">{this.state.errorData.gender}</p>
                                             </div>
                                             <button className="btn btn-md btn-block btn-success">
                                                 <span className={registerButtonViewClass}>Register</span>
