@@ -19,14 +19,10 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    makeUrl(path) {
-        return BasicStore.apiUrl + path;
-    }
-
     handleSubmit(event) {
         // Set loading true
         this.setState({loading: true, loadingText: 'Please Wait...'});
-        const url = this.makeUrl('api/v1/core/login/');
+        const url = BasicStore.makeUrl('api/v1/core/login/');
         const payload = {
             method: 'POST',
             headers: BasicStore.headers,

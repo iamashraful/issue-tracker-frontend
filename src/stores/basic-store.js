@@ -60,6 +60,9 @@ class BasicStore extends EventEmitter {
         this.token = localStorage.getItem('token') || '';
         this.userRole = localStorage.getItem('role') || '';
 
+        // Declaring all urls
+        this.allUrls = [];
+
         // Headers
         this.headers = {
             'Content-Type': 'application/json'
@@ -69,6 +72,10 @@ class BasicStore extends EventEmitter {
         }
         // Authentication data
         this.isAuthentication = this.token !== "";
+    }
+
+    makeUrl(path) {
+        return this.apiUrl + path;
     }
 
     setToken(token, role) {

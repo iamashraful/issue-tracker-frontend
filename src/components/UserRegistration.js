@@ -24,7 +24,7 @@ class UserRegistration extends Component {
         // Set loading true
         this.setState({loading: true, loadingText: 'Please Wait...'});
         // POST user for registration
-        const url = this.makeUrl('api/v1/core/registration/');
+        const url = BasicStore.makeUrl('api/v1/core/registration/');
         const postBody = JSON.stringify({
             username: this.state.username,
             password: this.state.password,
