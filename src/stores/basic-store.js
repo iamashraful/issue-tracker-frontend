@@ -11,7 +11,7 @@ class BasicStore extends EventEmitter {
     constructor() {
         super();
 
-        this.apiUrl = 'https://tester-ash.herokuapp.com/';
+        this.apiUrl = 'http://localhost:8000/';
         this.navItems = [
             {
                 id: 10,
