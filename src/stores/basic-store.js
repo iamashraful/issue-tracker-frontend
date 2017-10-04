@@ -13,53 +13,63 @@ class BasicStore extends EventEmitter {
         super();
 
         this.apiUrl = 'http://localhost:8000/';
+        this.urlPaths = {
+            home: '/',
+            dashboard: '/dashboard',
+            projects: '/projects',
+            settings: '/settings',
+            register: '/register',
+            login: '/login',
+            logout: '/logout'
+        };
+
         this.navItems = [
             {
                 id: 10,
                 text: 'Home',
-                url: '/',
+                url: this.urlPaths.home,
                 component: Home,
                 auth: false
             },
             {
                 id: 15,
                 text: 'Projects',
-                url: '/projects',
+                url: this.urlPaths.projects,
                 component: ProjectsList,
                 auth: true
             },
             {
                 id: 20,
                 text: 'Dashboard',
-                url: '/dashboard',
+                url: this.urlPaths.dashboard,
                 component: Dashboard,
                 auth: true
             },
             {
                 id: 25,
                 text: 'Settings',
-                url: '/settings',
+                url: this.urlPaths.settings,
                 component: Settings,
                 auth: true
             },
             {
                 id: 29,
                 text: 'Register',
-                url: '/register',
+                url: this.urlPaths.register,
                 component: UserRegistration,
                 auth: false
             },
             {
                 id: 30,
                 text: 'Login',
-                url: '/login',
+                url: this.urlPaths.login,
                 component: Login,
                 auth: false
             },
             {
                 id: 31,
                 text: 'Logout',
-                url: '/logout',
+                url: this.urlPaths.logout,
                 component: Logout,
                 auth: true
             },

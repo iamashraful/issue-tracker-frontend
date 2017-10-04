@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import NoAccess from "./NoAccess";
+import {Link} from "react-router-dom";
 
 import BasicStore from '../stores/basic-store';
 
@@ -61,7 +62,10 @@ class ProjectsList extends Component {
                                     <div className="card-block">
                                         <h4 className="card-title">{project.website}</h4>
                                         <p className="card-text">{project.description}</p>
-                                        <a href={project.slug} className="btn btn-primary btn-block">Details</a>
+                                        <Link
+                                            to={BasicStore.urlPaths.projects + '/' + project.slug}
+                                            className="btn btn-primary btn-block">Details
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
