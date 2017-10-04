@@ -4,6 +4,10 @@ body {
     font-family: sans-serif;
 }
 
+nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
+    height: 7% !important;
+}
+
 .nav-content {
     margin-top: 5%;
 }
@@ -20,4 +24,9 @@ body {
 
 .error-actions .btn {
     margin-right: 10px;
+}
+
+.p-t-b-1rem {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }

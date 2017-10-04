@@ -6,6 +6,7 @@ import Logout from "../components/Logout";
 import Home from "../components/Home";
 import UserRegistration from "../components/UserRegistration";
 import Settings from "../components/Settings";
+import ProjectsList from "../components/ProjectsList";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -19,6 +20,13 @@ class BasicStore extends EventEmitter {
                 url: '/',
                 component: Home,
                 auth: false
+            },
+            {
+                id: 15,
+                text: 'Projects',
+                url: '/projects',
+                component: ProjectsList,
+                auth: true
             },
             {
                 id: 20,
