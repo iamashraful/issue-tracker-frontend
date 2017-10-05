@@ -3,19 +3,55 @@
 .b-danger {
 
 }
+
 .b-red {
     border-color: red;
 }
+
 .b-red:focus {
     border-color: red;
 }
+
 .b-success {
 
 }
+
 .b-info {
 
 }
 
 .container-loading {
     font-size: 5rem;
+}
+
+.project-title {
+    font-family: "Ubuntu Mono";
+    font-weight: 700;
+    background-color: #2aabd2;
+    color: white;
+    padding: 0 0 0 2.55%;
+}
+
+.project-title span {
+    font-size: 1.5rem;
+}
+
+.project-title a {
+    color: white !important;
+}
+
+.sub-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.sub-nav li {
+    float: left;
+}
+
+.project-details .jumbotron {
+    padding: 1rem 2rem;
 }

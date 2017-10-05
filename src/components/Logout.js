@@ -26,7 +26,7 @@ class Logout extends Component {
 
     render() {
         if(!this.state.isAuth) {
-            return <Redirect to="/"/>
+            return <Redirect to={BasicStore.urlPaths.home}/>
         }
         return (
             <div className="container">

@@ -20,7 +20,8 @@ class BasicStore extends EventEmitter {
             settings: '/settings',
             register: '/register',
             login: '/login',
-            logout: '/logout'
+            logout: '/logout',
+            notFound: '/404',
         };
 
         this.navItems = [
