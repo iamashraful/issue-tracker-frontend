@@ -5,7 +5,7 @@ body {
 }
 
 nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
-    height: 7% !important;
+    height: 30px !important;
 }
 
 .nav-content {
