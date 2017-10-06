@@ -30,11 +30,11 @@ class BasicStore extends EventEmitter {
 
         // Enum like object (Similar to backend Enum)
         this.issueStatusEnum = {
-            newIssue: "0",
-            inProgress: "1",
-            onHold: "2",
-            awaitingQA: "3",
-            qaVerified: "4",
+            newIssue: 0,
+            inProgress: 1,
+            onHold: 2,
+            awaitingQA: 3,
+            qaVerified: 4,
             // Reverse way access
             0: "New",
             1: "In Progress",
@@ -44,9 +44,9 @@ class BasicStore extends EventEmitter {
         };
 
         this.issueTrackerEnum = {
-            bug: "0",
-            feature: "1",
-            support: "2",
+            bug: 0,
+            feature: 1,
+            support: 2,
             // Reverse way access
             0: "Bug",
             1: "Feature",
@@ -54,10 +54,10 @@ class BasicStore extends EventEmitter {
         };
 
         this.issuePriorityEnum = {
-            low: "0",
-            normal: "1",
-            high: "2",
-            urgent: "3",
+            low: 0,
+            normal: 1,
+            high: 2,
+            urgent: 3,
             // Reverse way access
             0: "Low",
             1: "Normal",

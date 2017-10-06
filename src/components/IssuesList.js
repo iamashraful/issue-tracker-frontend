@@ -45,7 +45,7 @@ class IssuesList extends Component {
         return (
             <div className={mainContentClass}>
                 <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
-                <h1>Issue List</h1>
+                <h1>List of all issues</h1>
                 <div>
                     {/* Here will be some filters */}
                 </div>

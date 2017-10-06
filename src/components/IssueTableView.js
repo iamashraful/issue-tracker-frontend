@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
 import BasicStore from "../stores/basic-store";
 
 
@@ -11,6 +12,50 @@ class IssueTableView extends Component {
     }
 
     render() {
+        if (this.props.issues.length === 0) {
+            return (
+                <div className="container-loading text-center align-middle">
+                    <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
+
+        const tableRowView = this.props.issues.map(function (issue) {
+            let tableRowClass = '';
+            if (issue.tracker === BasicStore.issueTrackerEnum.bug) {
+                tableRowClass = 'table-danger';
+            }
+            if (issue.tracker === BasicStore.issueTrackerEnum.support) {
+                tableRowClass = 'table-info';
+            }
+
+            return(
+                <tr className={tableRowClass} key={issue.id}>
+                    <th scope="row">{issue.id}</th>
+                    <td className="text-truncate force-text-ellipsis" title={issue.title}>
+                        <Link to={BasicStore.urlPaths.issues + "/" + issue.id}>
+                            {issue.title}
+                        </Link>
+                    </td>
+                    <td className="text-truncate" title={issue.project.name}>
+                        <Link to={BasicStore.urlPaths.projects + "/" + issue.project.slug}>
+                            {issue.project.name}
+                        </Link>
+                    </td>
+                    <td>{issue.author}</td>
+                    <td>{BasicStore.issueTrackerEnum[issue.tracker]}</td>
+                    <td>{issue.created_at}</td>
+                    <td>{issue.due_date}</td>
+                    <td>{issue.assigned_to.user.username}</td>
+                    <td>{BasicStore.issuePriorityEnum[issue.priority]}</td>
+                    <td>{BasicStore.issueStatusEnum[issue.status]}</td>
+                    <td>{issue.progress}%</td>
+                    <td>{issue.updated_at}</td>
+                </tr>
+            )
+        });
+
+
         return (
             <div>
                 <table className="table table-hover">
@@ -31,23 +76,7 @@ class IssueTableView extends Component {
                     </tr>
                     </thead>
                     <tbody>
-
-                    {this.props.issues.map(issue =>
-                        <tr className="table-danger" key={issue.id}>
-                            <th scope="row">{issue.id}</th>
-                            <td>{issue.title}</td>
-                            <td>{issue.project.name}</td>  {/* TODO: Here will bw a Link */}
-                            <td>Mr Robin</td>
-                            <td>{BasicStore.issueTrackerEnum[issue.tracker]}</td>
-                            <td>08/10/2017</td>
-                            <td>12/10/2017</td>
-                            <td>Ashraful Islam</td>
-                            <td>{BasicStore.issuePriorityEnum[issue.priority]}</td>
-                            <td>{BasicStore.issueStatusEnum[issue.status]}</td>
-                            <td>{issue.progress}%</td>
-                            <td>10/10/2017</td>
-                        </tr>
-                    )}
+                        {tableRowView}
                     </tbody>
                 </table>
             </div>
