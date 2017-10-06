@@ -20,6 +20,10 @@
 
 }
 
+.w-10 {
+    width: 10% !important;
+}
+
 .container-loading {
     font-size: 5rem;
 }

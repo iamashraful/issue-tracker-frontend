@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
 import NoAccess from "./NoAccess";
+import IssueTableView from "./IssueTableView";
 
 
 class IssuesList extends Component {
@@ -28,14 +29,13 @@ class IssuesList extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, issues: data});
-            console.log(this.state.issues);
         }).catch((err) => {
             console.log(err);
         });
     }
 
     componentWillMount() {
-        // this.getIssues();
+        this.getIssues();
     }
 
     render() {
@@ -46,6 +46,13 @@ class IssuesList extends Component {
             <div className={mainContentClass}>
                 <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
                 <h1>Issue List</h1>
+                <div>
+                    {/* Here will be some filters */}
+                </div>
+                <div>
+                    {/* Here will be table view for issues List*/}
+                    <IssueTableView issues={this.state.issues}/>
+                </div>
             </div>
         )
     }

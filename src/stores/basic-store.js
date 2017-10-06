@@ -13,7 +13,9 @@ class BasicStore extends EventEmitter {
     constructor() {
         super();
 
+        // Change the url when API server is changed.
         this.apiUrl = 'http://localhost:8000/';
+        // All the urls paths
         this.urlPaths = {
             home: '/',
             dashboard: '/dashboard',
@@ -24,6 +26,43 @@ class BasicStore extends EventEmitter {
             logout: '/logout',
             notFound: '/404',
             issues: '/issues',
+        };
+
+        // Enum like object (Similar to backend Enum)
+        this.issueStatusEnum = {
+            newIssue: "0",
+            inProgress: "1",
+            onHold: "2",
+            awaitingQA: "3",
+            qaVerified: "4",
+            // Reverse way access
+            0: "New",
+            1: "In Progress",
+            2: "On Hold",
+            3: "Awaiting WA",
+            4: "QA Verified"
+        };
+
+        this.issueTrackerEnum = {
+            bug: "0",
+            feature: "1",
+            support: "2",
+            // Reverse way access
+            0: "Bug",
+            1: "Feature",
+            2: "Support"
+        };
+
+        this.issuePriorityEnum = {
+            low: "0",
+            normal: "1",
+            high: "2",
+            urgent: "3",
+            // Reverse way access
+            0: "Low",
+            1: "Normal",
+            2: "High",
+            3: "Urgent"
         };
 
         this.navItems = [
@@ -95,7 +134,7 @@ class BasicStore extends EventEmitter {
         this.headers = {
             'Content-Type': 'application/json'
         };
-        if(this.token !== "") {
+        if (this.token !== "") {
             this.headers.Authorization = "Token " + this.token;
         }
         // Authentication data
