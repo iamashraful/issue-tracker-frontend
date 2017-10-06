@@ -9,9 +9,11 @@ class ProjectDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             projectSlug: this.props.match.params.slug,
             project: "",
-            notFound: false
+            notFound: false,
+            unAuth: false
         };
     }
 
@@ -25,6 +27,9 @@ class ProjectDetails extends Component {
             if (response.status === 404) {
                 this.setState({notFound: true});
             }
+            if (response.status === 401) {
+                this.setState({unAuth: true});
+            }
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature
@@ -37,14 +42,21 @@ class ProjectDetails extends Component {
     componentWillMount() {
         // Set projectSlug to state
         this.setState({projectSlug: this.props.match.params.slug});
-        console.log(this.state.projectSlug);
         this.getDetails();
     }
 
     render() {
-        // if (this.state.notFound) {
-        //     return <Redirect to={BasicStore.urlPaths.notFound}/>
-        // }
+        if (this.state.notFound || this.state.unAuth) {
+            return <Redirect to={BasicStore.urlPaths.notFound}/>
+        }
+
+        if (this.state.loading) {
+            return (
+                <div className="container-loading text-center align-middle">
+                    <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
 
         return (
             <div className="project-details container-fluid">

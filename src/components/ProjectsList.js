@@ -15,6 +15,7 @@ class ProjectsList extends Component {
 
             // Business Logic related states
             projects: [],
+            statusCode: 0,
         };
         this.contentVisibility.bind(this);
     }
@@ -30,6 +31,9 @@ class ProjectsList extends Component {
             headers: BasicStore.headers
         };
         fetch(url, payload).then((response) => {
+            if (response.status === 401) {
+                this.setState({statusCode: response.status, loading: false});
+            }
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature
@@ -42,11 +46,31 @@ class ProjectsList extends Component {
     componentWillMount() {
         // This method will run when a component has mount
         this.getProjectList();
+        // Set loading false when not necessary
+        if(this.state.statusCode === 401) {
+            this.setState({loading: false});
+        }
     }
 
     render() {
-        let mainContentClass = 'container ';
+        let mainContentClass = 'container-fluid ';
         mainContentClass += this.state.displayClass;
+
+        if (this.state.loading) {
+            return (
+                <div className="container-loading text-center align-middle">
+                    <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
+
+        if (this.state.projects.length === 0) {
+            return(
+                <div className={mainContentClass}>
+                    <h1 className="text-center text-danger p-5">No projects found.</h1>
+                </div>
+            )
+        }
 
         return (
             <div>

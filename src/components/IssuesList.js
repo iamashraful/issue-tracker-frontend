@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
+import NoAccess from "./NoAccess";
 
 
 class IssuesList extends Component {
@@ -9,6 +10,11 @@ class IssuesList extends Component {
             loading: false,
             issues: []
         };
+        this.contentVisibility.bind(this);
+    }
+
+    contentVisibility(val) {
+        this.setState({displayClass: val});
     }
 
     getIssues() {
@@ -33,8 +39,12 @@ class IssuesList extends Component {
     }
 
     render() {
-        return(
-            <div>
+        let mainContentClass = 'container-fluid ';
+        mainContentClass += this.state.displayClass;
+
+        return (
+            <div className={mainContentClass}>
+                <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
                 <h1>Issue List</h1>
             </div>
         )

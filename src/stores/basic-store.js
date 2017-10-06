@@ -7,6 +7,7 @@ import Home from "../components/Home";
 import UserRegistration from "../components/UserRegistration";
 import Settings from "../components/Settings";
 import ProjectsList from "../components/ProjectsList";
+import IssuesList from "../components/IssuesList";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -22,6 +23,7 @@ class BasicStore extends EventEmitter {
             login: '/login',
             logout: '/logout',
             notFound: '/404',
+            issues: '/issues',
         };
 
         this.navItems = [
@@ -37,6 +39,13 @@ class BasicStore extends EventEmitter {
                 text: 'Projects',
                 url: this.urlPaths.projects,
                 component: ProjectsList,
+                auth: true
+            },
+            {
+                id: 17,
+                text: 'Issues',
+                url: this.urlPaths.issues,
+                component: IssuesList,
                 auth: true
             },
             {
