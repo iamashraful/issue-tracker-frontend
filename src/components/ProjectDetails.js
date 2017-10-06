@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import {Redirect, Link} from 'react-router-dom';
+import {Redirect, Link, Switch, Route} from 'react-router-dom';
 
 import BasicStore from '../stores/basic-store';
+import IssuesList from "./IssuesList";
 
 
 class ProjectDetails extends Component {
@@ -36,13 +37,14 @@ class ProjectDetails extends Component {
     componentWillMount() {
         // Set projectSlug to state
         this.setState({projectSlug: this.props.match.params.slug});
+        console.log(this.state.projectSlug);
         this.getDetails();
     }
 
     render() {
-        if(this.state.notFound) {
-            return <Redirect to={BasicStore.urlPaths.notFound}/>
-        }
+        // if (this.state.notFound) {
+        //     return <Redirect to={BasicStore.urlPaths.notFound}/>
+        // }
 
         return (
             <div className="project-details container-fluid">
@@ -69,10 +71,15 @@ class ProjectDetails extends Component {
                     <p>{this.state.project.description}</p>
                     <hr/>
                     {/* TODO: Here will add tab view */}
+                    {/* Defining Route */}
+                    <Switch>
+                        {/* Defining urls */}
+                        <Route exact path={"/projects/" + this.state.projectSlug + "/issues"} component={IssuesList}/>
+                    </Switch>
                 </div>
             </div>
         )
     }
 }
 
-export default ProjectDetails
+export default ProjectDetails;
