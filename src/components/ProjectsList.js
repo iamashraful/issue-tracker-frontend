@@ -42,7 +42,6 @@ class ProjectsList extends Component {
     componentWillMount() {
         // This method will run when a component has mount
         this.getProjectList();
-        console.log(this.state.projects)
     }
 
     render() {
