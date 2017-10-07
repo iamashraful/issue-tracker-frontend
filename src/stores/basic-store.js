@@ -196,5 +196,6 @@ class BasicStore extends EventEmitter {
 }
 
 const basicStore = new BasicStore();
+basicStore.setMaxListeners(100);
 dispatcher.register(basicStore.handleActions.bind(basicStore));
 export default basicStore;

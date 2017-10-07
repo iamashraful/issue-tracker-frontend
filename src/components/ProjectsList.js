@@ -13,15 +13,27 @@ class ProjectsList extends Component {
             displayClass: 'd-block',
             loading: true,
 
+            // Project states
+            name: "",
+            description: "",
+            website: "",
+            documents: "",
+
             // Business Logic related states
             projects: [],
             statusCode: 0,
         };
         this.contentVisibility.bind(this);
+        this.handleSaveProject.bind(this);
     }
 
     contentVisibility(val) {
         this.setState({displayClass: val});
+    }
+
+    handleSaveProject(event) {
+        // Here will be save API call
+        event.preventDefault();
     }
 
     getProjectList() {
@@ -55,6 +67,7 @@ class ProjectsList extends Component {
     render() {
         let mainContentClass = 'container-fluid ';
         mainContentClass += this.state.displayClass;
+        let cssClasses = "form-control ";
 
         if (this.state.loading) {
             return (
@@ -85,8 +98,8 @@ class ProjectsList extends Component {
                         </button>
                     </div>
 
-                    <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                         aria-hidden="true">
+                    <div className="modal fade" id="myModal" tabIndex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">
@@ -98,13 +111,47 @@ class ProjectsList extends Component {
 
                                 </div>
                                 <div className="modal-body">
-                                    Here will be a create form
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-default" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                    <button type="button" className="btn btn-primary">Save</button>
+                                    <form onSubmit={this.handleSaveProject.bind(this)}>
+                                        <fieldset className="p-4">
+                                            {/*<p*/}
+                                            {/*className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>*/}
+                                            {/*{this.state.errorData.non_fields_errors}*/}
+                                            {/*</p>*/}
+                                            <div className="form-group">
+                                                <label>Name</label>
+                                                <input className={cssClasses} placeholder="Name of Project" type="text"
+                                                       onChange={(event) => this.setState({name: event.target.value})}
+                                                       value={this.state.name} required
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Website</label>
+                                                <input className={cssClasses} placeholder="Website of Project"
+                                                       type="text"
+                                                       onChange={(event) => this.setState({website: event.target.value})}
+                                                       value={this.state.website}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Description</label>
+                                                <textarea className={cssClasses} placeholder="Description of Project"
+                                                          type="text" value={this.state.description} required rows="5"
+                                                          onChange={(event) => this.setState({description: event.target.value})}
+
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Documents</label>
+                                                <input className={cssClasses} placeholder="Documents of Project"
+                                                       type="file"
+                                                       onChange={(event) => this.setState({documents: event.target.value})}
+                                                       value={this.state.documents}
+                                                />
+                                            </div>
+                                            <button className="btn btn-primary">Save</button>
+                                        </fieldset>
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
