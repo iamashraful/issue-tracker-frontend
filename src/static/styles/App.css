@@ -24,6 +24,10 @@
     width: 10% !important;
 }
 
+.p-l-r-1 {
+    padding: 0 1rem 0 1rem;
+}
+
 .container-loading {
     font-size: 5rem;
 }
@@ -64,4 +68,10 @@
     display: inline-block;
     text-overflow: ellipsis;
     width: 230px;
+}
+
+.action-view {
+    background-color: #c4e2ec;
+    padding: 5px;
+    height: 35px;
 }

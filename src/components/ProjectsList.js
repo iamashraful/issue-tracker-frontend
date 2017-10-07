@@ -47,7 +47,7 @@ class ProjectsList extends Component {
         // This method will run when a component has mount
         this.getProjectList();
         // Set loading false when not necessary
-        if(this.state.statusCode === 401) {
+        if (this.state.statusCode === 401) {
             this.setState({loading: false});
         }
     }
@@ -65,7 +65,7 @@ class ProjectsList extends Component {
         }
 
         if (this.state.projects.length === 0) {
-            return(
+            return (
                 <div className={mainContentClass}>
                     <h1 className="text-center text-danger p-5">No projects found.</h1>
                 </div>
@@ -76,8 +76,42 @@ class ProjectsList extends Component {
             <div>
                 <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
                 <div className={mainContentClass}>
-                    {/* First Row */}
-                    <div className="row">
+                    <div className="action-view">
+                        {/* Action buttons view */}
+                        <button
+                            className="btn btn-primary p-l-r-1 pull-right"
+                            data-toggle="modal" data-target="#myModal">
+                            New
+                        </button>
+                    </div>
+
+                    <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h4 className="modal-title" id="myModalLabel">Create new project</h4>
+                                    <button type="button" className="close" data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span className="sr-only">Close</span>
+                                    </button>
+
+                                </div>
+                                <div className="modal-body">
+                                    Here will be a create form
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="button" className="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* All the projects card view */}
+                    <div className="row p-t-b-1rem">
                         {this.state.projects.map(project =>
                             <div className="col-md-4 col-sm-6" key={project.id}>
                                 <div className="card card-outline-primary">
