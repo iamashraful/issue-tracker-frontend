@@ -51,7 +51,7 @@ class IssuesList extends Component {
                 </div>
                 <div>
                     {/* Here will be table view for issues List*/}
-                    <IssueTableView issues={this.state.issues}/>
+                    <IssueTableView issues={this.state.issues} loading={this.state.loading}/>
                 </div>
             </div>
         )

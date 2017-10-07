@@ -12,10 +12,18 @@ class IssueTableView extends Component {
     }
 
     render() {
-        if (this.props.issues.length === 0) {
+        if (this.props.loading) {
             return (
                 <div className="container-loading text-center align-middle">
                     <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
+
+        if (this.props.issues.length === 0) {
+            return (
+                <div className="text-center">
+                    <p>No data found.</p>
                 </div>
             )
         }
