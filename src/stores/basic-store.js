@@ -26,6 +26,8 @@ class BasicStore extends EventEmitter {
             logout: '/logout',
             notFound: '/404',
             issues: '/issues',
+            create: '/create',
+            edit: '/edit',
         };
 
         // Enum like object (Similar to backend Enum)

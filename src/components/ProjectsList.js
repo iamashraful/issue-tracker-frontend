@@ -13,27 +13,15 @@ class ProjectsList extends Component {
             displayClass: 'd-block',
             loading: true,
 
-            // Project states
-            name: "",
-            description: "",
-            website: "",
-            documents: "",
-
             // Business Logic related states
             projects: [],
             statusCode: 0,
         };
         this.contentVisibility.bind(this);
-        this.handleSaveProject.bind(this);
     }
 
     contentVisibility(val) {
         this.setState({displayClass: val});
-    }
-
-    handleSaveProject(event) {
-        // Here will be save API call
-        event.preventDefault();
     }
 
     getProjectList() {
@@ -67,7 +55,6 @@ class ProjectsList extends Component {
     render() {
         let mainContentClass = 'container-fluid ';
         mainContentClass += this.state.displayClass;
-        let cssClasses = "form-control ";
 
         if (this.state.loading) {
             return (
@@ -91,72 +78,13 @@ class ProjectsList extends Component {
                 <div className={mainContentClass}>
                     <div className="action-view">
                         {/* Action buttons view */}
-                        <button
-                            className="btn btn-primary p-l-r-1 pull-right"
-                            data-toggle="modal" data-target="#myModal">
-                            New
-                        </button>
-                    </div>
-
-                    <div className="modal fade" id="myModal" tabIndex="-1" role="dialog"
-                         aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h4 className="modal-title" id="myModalLabel">Create new project</h4>
-                                    <button type="button" className="close" data-dismiss="modal">
-                                        <span aria-hidden="true">&times;</span>
-                                        <span className="sr-only">Close</span>
-                                    </button>
-
-                                </div>
-                                <div className="modal-body">
-                                    <form onSubmit={this.handleSaveProject.bind(this)}>
-                                        <fieldset className="p-4">
-                                            {/*<p*/}
-                                            {/*className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>*/}
-                                            {/*{this.state.errorData.non_fields_errors}*/}
-                                            {/*</p>*/}
-                                            <div className="form-group">
-                                                <label>Name</label>
-                                                <input className={cssClasses} placeholder="Name of Project" type="text"
-                                                       onChange={(event) => this.setState({name: event.target.value})}
-                                                       value={this.state.name} required
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Website</label>
-                                                <input className={cssClasses} placeholder="Website of Project"
-                                                       type="text"
-                                                       onChange={(event) => this.setState({website: event.target.value})}
-                                                       value={this.state.website}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Description</label>
-                                                <textarea className={cssClasses} placeholder="Description of Project"
-                                                          type="text" value={this.state.description} required rows="5"
-                                                          onChange={(event) => this.setState({description: event.target.value})}
-
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Documents</label>
-                                                <input className={cssClasses} placeholder="Documents of Project"
-                                                       type="file"
-                                                       onChange={(event) => this.setState({documents: event.target.value})}
-                                                       value={this.state.documents}
-                                                />
-                                            </div>
-                                            <button className="btn btn-primary">Save</button>
-                                        </fieldset>
-
-                                    </form>
-                                </div>
-                            </div>
+                        <div>
+                            <Link
+                                className="btn btn-primary link-button pull-right"
+                                to={BasicStore.urlPaths.projects + BasicStore.urlPaths.create}> Create
+                            </Link>
                         </div>
                     </div>
-
                     {/* All the projects card view */}
                     <div className="row p-t-b-1rem">
                         {this.state.projects.map(project =>
