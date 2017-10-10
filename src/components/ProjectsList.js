@@ -37,7 +37,7 @@ class ProjectsList extends Component {
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature
-            this.setState({loading: false, projects: data});
+            this.setState({loading: false, projects: data.results});
         }).catch((err) => {
             console.log(err);
         });
