@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import BasicStore from "../stores/basic-store";
-import {Link, Redirect} from "react-router-dom";
 
 class CreateEditProject extends Component {
     constructor(props) {
@@ -67,10 +66,11 @@ class CreateEditProject extends Component {
         const savingButton = this.state.loading ? 'd-block' : 'd-none';
         const saveButton = this.state.loading ? 'd-none' : 'd-block';
         successMgs += this.state.success ? "d-block" : "d-none";
-        if (this.state.success) {
-            setTimeout(() => {
-                return <Link to={BasicStore.urlPaths.projects}/>
-            }, 10000);
+
+        if(this.state.success) {
+            setTimeout(function() {
+                window.location.assign("/#" + BasicStore.urlPaths.projects);
+            }.bind(this), 3000);
         }
 
         return (
