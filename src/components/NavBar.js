@@ -26,7 +26,7 @@ class NavBar extends Component {
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"/>
                             </button>
-                            <a className="navbar-brand" href="/">Project Management System</a>
+                            <a className="navbar-brand" href="/">Project's Issue Tracking System</a>
                             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                                 <ul className="navbar-nav ml-auto">
                                     {navItems.map(item =>
