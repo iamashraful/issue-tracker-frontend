@@ -30,3 +30,8 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
+
+/* Overrides */
+.select2-container {
+    width: 100% !important;
+}

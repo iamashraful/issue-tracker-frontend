@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import BasicStore from "../stores/basic-store";
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 class CreateEditIssue extends Component {
     constructor(props) {
@@ -7,8 +9,14 @@ class CreateEditIssue extends Component {
         this.state = {
             //UI related state
             loading: false,
+            projectSelectData: [
+                {text: "Google", id: 1},
+                {text: "Facebook", id: 2},
+                {text: "MicroSoft", id: 3},
+            ],
             // Issue states
             title: "",
+            project: "",
             description: "",
             documents: "",
             // API Response state
@@ -19,6 +27,33 @@ class CreateEditIssue extends Component {
             errorData: [],
         };
         this.handleSaveIssue.bind(this);
+        this.onProjectSelect = this.onProjectSelect.bind(this);
+        this.onOpenProjectSelect = this.onOpenProjectSelect.bind(this);
+    }
+
+    componentWillMount() {
+        // If projects are empty at the store then it will call the API again
+        if(BasicStore.projects.length === 0) {
+            BasicStore.fetchProjects();
+        }
+    }
+
+    onOpenProjectSelect(e) {
+        const projects = BasicStore.projects;
+        let data = [];
+        projects.map(pr => {
+            data.push({label: pr.name, value: pr.id});
+        });
+        this.setState({projectSelectData: data});
+        // e.preventDefault();
+    }
+
+    onProjectSelect(val) {
+        if(val !== null) {
+            this.setState({project: val.value});
+        } else{
+            this.setState({project: ""});
+        }
     }
 
     handleSaveIssue(event) {
@@ -61,7 +96,6 @@ class CreateEditIssue extends Component {
     }
 
     render() {
-        console.log(BasicStore.projects);
         let cssClasses = "form-control ";
         let successMgs = "text-center alert alert-success ";
         const savingButton = this.state.loading ? 'd-block' : 'd-none';
@@ -101,6 +135,16 @@ class CreateEditIssue extends Component {
                                       type="text" value={this.state.description} rows="5"
                                       onChange={(event) => this.setState({description: event.target.value})}
 
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Project</label> <br/>
+                            <Select
+                                name="form-field-name"
+                                value={this.state.project}
+                                options={this.state.projectSelectData}
+                                onChange={this.onProjectSelect}
+                                onOpen={this.onOpenProjectSelect}
                             />
                         </div>
                         <button className="btn btn-primary pull-right custom-btn-padding">

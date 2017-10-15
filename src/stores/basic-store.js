@@ -149,6 +149,21 @@ class BasicStore extends EventEmitter {
         this.projects = projectList;
     }
 
+    fetchProjects() {
+        const url = this.makeUrl('api/v1/pms/projects/');
+        const payload = {
+            method: 'GET',
+            headers: this.headers
+        };
+        fetch(url, payload).then((response) => {
+            return response.json();
+        }).then((data) => {
+            this.projects = data.results;
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     makeUrl(path) {
         return this.apiUrl + path;
     }
