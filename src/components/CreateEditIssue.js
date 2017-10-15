@@ -9,14 +9,12 @@ class CreateEditIssue extends Component {
         this.state = {
             //UI related state
             loading: false,
-            projectSelectData: [
-                {text: "Google", id: 1},
-                {text: "Facebook", id: 2},
-                {text: "MicroSoft", id: 3},
-            ],
+            projectSelectData: [],
+            profileSelectData: [],
             // Issue states
             title: "",
             project: "",
+            assigned_to: "",
             description: "",
             documents: "",
             // API Response state
@@ -29,12 +27,18 @@ class CreateEditIssue extends Component {
         this.handleSaveIssue.bind(this);
         this.onProjectSelect = this.onProjectSelect.bind(this);
         this.onOpenProjectSelect = this.onOpenProjectSelect.bind(this);
+        this.onProfileSelect = this.onProfileSelect.bind(this);
+        this.onOpenProfileSelect = this.onOpenProfileSelect.bind(this);
     }
 
     componentWillMount() {
         // If projects are empty at the store then it will call the API again
         if(BasicStore.projects.length === 0) {
             BasicStore.fetchProjects();
+        }
+        // If profiles are empty at the store then it will call the API again
+        if(BasicStore.profiles.length === 0) {
+            BasicStore.fetchProfiles();
         }
     }
 
@@ -53,6 +57,24 @@ class CreateEditIssue extends Component {
             this.setState({project: val.value});
         } else{
             this.setState({project: ""});
+        }
+    }
+
+    onOpenProfileSelect(e) {
+        const profiles = BasicStore.profiles;
+        let data = [];
+        profiles.map(pr => {
+            data.push({label: pr.user.username, value: pr.id});
+        });
+        this.setState({profileSelectData: data});
+        // e.preventDefault();
+    }
+
+    onProfileSelect(val) {
+        if(val !== null) {
+            this.setState({assigned_to: val.value});
+        } else{
+            this.setState({assigned_to: ""});
         }
     }
 
@@ -145,6 +167,16 @@ class CreateEditIssue extends Component {
                                 options={this.state.projectSelectData}
                                 onChange={this.onProjectSelect}
                                 onOpen={this.onOpenProjectSelect}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Assigned To</label> <br/>
+                            <Select
+                                name="form-field-name"
+                                value={this.state.assigned_to}
+                                options={this.state.profileSelectData}
+                                onChange={this.onProfileSelect}
+                                onOpen={this.onOpenProfileSelect}
                             />
                         </div>
                         <button className="btn btn-primary pull-right custom-btn-padding">

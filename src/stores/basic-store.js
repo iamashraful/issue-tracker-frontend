@@ -30,7 +30,9 @@ class BasicStore extends EventEmitter {
             edit: '/edit',
         };
 
+        // API Response data
         this.projects = [];
+        this.profiles = [];
 
         // Enum like object (Similar to backend Enum)
         this.issueStatusEnum = {
@@ -159,6 +161,21 @@ class BasicStore extends EventEmitter {
             return response.json();
         }).then((data) => {
             this.projects = data.results;
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    fetchProfiles() {
+        const url = this.makeUrl('api/v1/core/profiles/');
+        const payload = {
+            method: 'GET',
+            headers: this.headers
+        };
+        fetch(url, payload).then((response) => {
+            return response.json();
+        }).then((data) => {
+            this.profiles = data.results;
         }).catch((err) => {
             console.log(err);
         });
