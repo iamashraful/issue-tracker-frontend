@@ -30,6 +30,8 @@ class BasicStore extends EventEmitter {
             edit: '/edit',
         };
 
+        this.projects = [];
+
         // Enum like object (Similar to backend Enum)
         this.issueStatusEnum = {
             newIssue: 0,
@@ -141,6 +143,10 @@ class BasicStore extends EventEmitter {
         }
         // Authentication data
         this.isAuthentication = this.token !== "";
+    }
+
+    setProjects(projectList) {
+        this.projects = projectList;
     }
 
     makeUrl(path) {

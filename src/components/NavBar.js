@@ -6,6 +6,7 @@ import NotFound from "./NotFound";
 import ProjectDetails from "./ProjectDetails";
 import IssueDetails from "./IssueDetails";
 import CreateEditProject from "./CreateEditProject";
+import CreateEditIssue from "./CreateEditIssue";
 
 class NavBar extends Component {
     constructor(props) {
@@ -56,6 +57,7 @@ class NavBar extends Component {
                         {/* Defining details page urls */}
                         <Route exact path="/projects/create" component={CreateEditProject}/>
                         <Route exact path="/projects/:slug" component={ProjectDetails}/>
+                        <Route exact path="/issues/create" component={CreateEditIssue}/>
                         <Route exact path="/issues/:id" component={IssueDetails}/>
                         {/* Defining 404 url */}
                         <Route component={NotFound}/>

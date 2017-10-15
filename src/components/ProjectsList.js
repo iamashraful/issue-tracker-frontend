@@ -38,6 +38,8 @@ class ProjectsList extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, projects: data.results});
+            // save list to store for future use
+            BasicStore.setProjects(data.results);
         }).catch((err) => {
             console.log(err);
         });
@@ -67,6 +69,15 @@ class ProjectsList extends Component {
         if (this.state.projects.length === 0) {
             return (
                 <div className={mainContentClass}>
+                    <div className="action-view">
+                        {/* Action buttons view */}
+                        <div>
+                            <Link
+                                className="btn btn-primary link-button pull-right"
+                                to={BasicStore.urlPaths.projects + BasicStore.urlPaths.create}> Create
+                            </Link>
+                        </div>
+                    </div>
                     <h1 className="text-center text-danger p-5">No projects found.</h1>
                 </div>
             )

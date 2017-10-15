@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
 import NoAccess from "./NoAccess";
 import IssueTableView from "./IssueTableView";
+import {Link} from "react-router-dom";
 
 
 class IssuesList extends Component {
@@ -45,11 +46,19 @@ class IssuesList extends Component {
         return (
             <div className={mainContentClass}>
                 <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
-                <h1>List of all issues</h1>
                 <div>
                     {/* Here will be some filters */}
                 </div>
                 <div>
+                    <div className="action-view">
+                        {/* Action buttons view */}
+                        <div>
+                            <Link
+                                className="btn btn-primary link-button pull-right"
+                                to={BasicStore.urlPaths.issues + BasicStore.urlPaths.create}> Create
+                            </Link>
+                        </div>
+                    </div>
                     {/* Here will be table view for issues List*/}
                     <IssueTableView issues={this.state.issues} loading={this.state.loading}/>
                 </div>
