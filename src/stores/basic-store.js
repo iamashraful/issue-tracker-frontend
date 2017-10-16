@@ -41,13 +41,21 @@ class BasicStore extends EventEmitter {
             onHold: 2,
             awaitingQA: 3,
             qaVerified: 4,
+            closeIssue: 5,
+            archive: 6,
             // Reverse way access
             0: "New",
             1: "In Progress",
             2: "On Hold",
-            3: "Awaiting WA",
-            4: "QA Verified"
+            3: "Awaiting QA",
+            4: "QA Verified",
+            5: "Close",
+            6: "Archive"
         };
+        this.issueStatusEnumSelectData = [];
+        for (let i=0; i<6; i++) {
+            this.issueStatusEnumSelectData.push({label: this.issueStatusEnum[i], value: i});
+        }
 
         this.issueTrackerEnum = {
             bug: 0,
@@ -58,6 +66,10 @@ class BasicStore extends EventEmitter {
             1: "Feature",
             2: "Support"
         };
+        this.issueTrackerEnumSelectData = [];
+        for (let i=0; i<2; i++) {
+            this.issueTrackerEnumSelectData.push({label: this.issueTrackerEnum[i], value: i});
+        }
 
         this.issuePriorityEnum = {
             low: 0,
@@ -70,6 +82,10 @@ class BasicStore extends EventEmitter {
             2: "High",
             3: "Urgent"
         };
+        this.issuePriorityEnumSelectData = [];
+        for (let i=0; i<3; i++) {
+            this.issuePriorityEnumSelectData.push({label: this.issuePriorityEnum[i], value: i});
+        }
 
         this.navItems = [
             {

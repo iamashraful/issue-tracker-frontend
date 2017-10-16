@@ -31,6 +31,26 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
     padding-bottom: 1rem;
 }
 
+.w-25ps {
+    width: 25%;
+}
+
+.w-33ps {
+    width: 33.33%;
+}
+
+.w-50ps {
+    width: 50%;
+}
+
+.p-l-r-15px {
+    padding: 0 15px 0 15px;
+}
+
+.p-b-15px {
+    padding-bottom: 15px;
+}
+
 /* Overrides */
 .select2-container {
     width: 100% !important;

@@ -15,8 +15,13 @@ class CreateEditIssue extends Component {
             title: "",
             project: "",
             assigned_to: "",
+            watchers: [],
             description: "",
             documents: "",
+            status: "",
+            priority: "",
+            tracker: "",
+            due_date: "",
             // API Response state
             issuePostResponse: "",
             statusCode: 400,
@@ -29,6 +34,7 @@ class CreateEditIssue extends Component {
         this.onOpenProjectSelect = this.onOpenProjectSelect.bind(this);
         this.onProfileSelect = this.onProfileSelect.bind(this);
         this.onOpenProfileSelect = this.onOpenProfileSelect.bind(this);
+        this.onWatchersSelect = this.onWatchersSelect.bind(this);
     }
 
     componentWillMount() {
@@ -78,12 +84,31 @@ class CreateEditIssue extends Component {
         }
     }
 
+    onWatchersSelect(val) {
+        if(val !== null) {
+            let d = [];
+            val.map(item => {
+                d.push(item.value)
+            });
+            this.setState({watchers: d});
+        }
+        else{
+            this.setState({watchers: []});
+        }
+    }
+
     handleSaveIssue(event) {
         this.setState({loading: true});
         const postBody = JSON.stringify({
             title: this.state.title,
             description: this.state.description,
-            website: this.state.website,
+            project: this.state.project,
+            assigned_to: this.state.assigned_to,
+            watchers: this.state.watchers,
+            status: this.state.status,
+            tracker: this.state.tracker,
+            priority: this.state.priority,
+            due_date: this.state.due_date
         });
 
         // Here will be save API call
@@ -150,8 +175,7 @@ class CreateEditIssue extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Description</label>
-                            <br/>
+                            <label>Description</label> <br/>
                             <span className="text-danger">{this.state.errorData.description}</span>
                             <textarea className={cssClasses} placeholder="Description of Project"
                                       type="text" value={this.state.description} rows="5"
@@ -159,26 +183,89 @@ class CreateEditIssue extends Component {
 
                             />
                         </div>
-                        <div className="form-group">
-                            <label>Project</label> <br/>
-                            <Select
-                                name="form-field-name"
-                                value={this.state.project}
-                                options={this.state.projectSelectData}
-                                onChange={this.onProjectSelect}
-                                onOpen={this.onOpenProjectSelect}
-                            />
+
+                        <div className="row p-b-15px">
+                            <div className="w-50ps p-l-r-15px">
+                                <label>Project</label> <br/>
+                                <span className="text-danger">{this.state.errorData.project}</span>
+                                <Select
+                                    required
+                                    name="form-field-name"
+                                    value={this.state.project}
+                                    options={this.state.projectSelectData}
+                                    onChange={this.onProjectSelect}
+                                    onOpen={this.onOpenProjectSelect}
+                                />
+                            </div>
+
+                            <div className="w-50ps p-l-r-15px">
+                                <label>Assigned To</label> <br/>
+                                <span className="text-danger">{this.state.errorData.assigned_to}</span>
+                                <Select
+                                    required
+                                    name="form-field-name"
+                                    value={this.state.assigned_to}
+                                    options={this.state.profileSelectData}
+                                    onChange={this.onProfileSelect}
+                                    onOpen={this.onOpenProfileSelect}
+                                />
+                            </div>
                         </div>
-                        <div className="form-group">
-                            <label>Assigned To</label> <br/>
-                            <Select
-                                name="form-field-name"
-                                value={this.state.assigned_to}
-                                options={this.state.profileSelectData}
-                                onChange={this.onProfileSelect}
-                                onOpen={this.onOpenProfileSelect}
-                            />
+
+                        <div className="row p-b-15px">
+                            <div className="w-50ps p-l-r-15px">
+                                <label>Watchers</label> <br/>
+                                <Select
+                                    multi
+                                    name="form-field-name"
+                                    value={this.state.watchers}
+                                    options={this.state.profileSelectData}
+                                    onChange={this.onWatchersSelect}
+                                    onOpen={this.onOpenProfileSelect}
+                                />
+                            </div>
+
+                            <div className="w-50ps p-l-r-15px">
+                                <label>Due Date</label>
+                                <input
+                                    className="form-control p-1" type="date"
+                                    onChange={(e) => this.setState({due_date: e.target.value})}
+                                />
+                            </div>
                         </div>
+
+                        <div className="row p-b-15px">
+                            <div className="w-33ps p-l-r-15px">
+                                <label>Status</label> <br/>
+                                <Select
+                                    name="form-field-name"
+                                    value={this.state.status}
+                                    options={BasicStore.issueStatusEnumSelectData}
+                                    onChange={(val) => this.setState({status: val ? val.value:""})}
+                                />
+                            </div>
+
+                            <div className="w-33ps p-l-r-15px">
+                                <label>Tracker</label> <br/>
+                                <Select
+                                    name="form-field-name"
+                                    value={this.state.tracker}
+                                    options={BasicStore.issueTrackerEnumSelectData}
+                                    onChange={(val) => this.setState({tracker: val ? val.value:""})}
+                                />
+                            </div>
+
+                            <div className="w-33ps p-l-r-15px">
+                                <label>Priority</label> <br/>
+                                <Select
+                                    name="form-field-name"
+                                    value={this.state.priority}
+                                    options={BasicStore.issuePriorityEnumSelectData}
+                                    onChange={(val) => this.setState({priority: val ? val.value:""})}
+                                />
+                            </div>
+                        </div>
+
                         <button className="btn btn-primary pull-right custom-btn-padding">
                             <span className={saveButton}>Save</span>
                             <span className={savingButton}>Please Wait...
