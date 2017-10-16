@@ -53,7 +53,7 @@ class BasicStore extends EventEmitter {
             6: "Archive"
         };
         this.issueStatusEnumSelectData = [];
-        for (let i=0; i<6; i++) {
+        for (let i=0; i<=6; i++) {
             this.issueStatusEnumSelectData.push({label: this.issueStatusEnum[i], value: i});
         }
 
@@ -67,7 +67,7 @@ class BasicStore extends EventEmitter {
             2: "Support"
         };
         this.issueTrackerEnumSelectData = [];
-        for (let i=0; i<2; i++) {
+        for (let i=0; i<=2; i++) {
             this.issueTrackerEnumSelectData.push({label: this.issueTrackerEnum[i], value: i});
         }
 
@@ -83,7 +83,7 @@ class BasicStore extends EventEmitter {
             3: "Urgent"
         };
         this.issuePriorityEnumSelectData = [];
-        for (let i=0; i<3; i++) {
+        for (let i=0; i<=3; i++) {
             this.issuePriorityEnumSelectData.push({label: this.issuePriorityEnum[i], value: i});
         }
 

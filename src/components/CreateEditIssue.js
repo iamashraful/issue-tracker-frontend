@@ -18,9 +18,10 @@ class CreateEditIssue extends Component {
             watchers: [],
             description: "",
             documents: "",
-            status: "",
-            priority: "",
-            tracker: "",
+            status: BasicStore.issueStatusEnum.newIssue,
+            priority: BasicStore.issuePriorityEnum.low,
+            tracker: BasicStore.issueTrackerEnum.bug,
+            progress: 0,
             due_date: "",
             // API Response state
             issuePostResponse: "",
@@ -108,7 +109,8 @@ class CreateEditIssue extends Component {
             status: this.state.status,
             tracker: this.state.tracker,
             priority: this.state.priority,
-            due_date: this.state.due_date
+            due_date: this.state.due_date,
+            progress: this.state.progress
         });
 
         // Here will be save API call
@@ -262,6 +264,17 @@ class CreateEditIssue extends Component {
                                     value={this.state.priority}
                                     options={BasicStore.issuePriorityEnumSelectData}
                                     onChange={(val) => this.setState({priority: val ? val.value:""})}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="row p-b-15px">
+                            <div className="w-33ps p-l-r-15px">
+                                <label>Progress</label> <br/>
+                                <input
+                                    placeholder="Enter value in (%)" type="number" className="form-control"
+                                    onChange={(e) => this.setState({progress: e.target.value})}
+                                    value={this.state.progress}
                                 />
                             </div>
                         </div>
