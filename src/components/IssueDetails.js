@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import BasicStore from "../stores/basic-store";
 import {Link} from "react-router-dom";
+import Safe from "react-safe";
 
 class IssueDetails extends Component {
     constructor(props) {
@@ -135,7 +136,7 @@ class IssueDetails extends Component {
                     {/* Issue Description */}
                     <div className="row p-3">
                         <h5 className="w-100">Description</h5>
-                        <p className="issue-desc">{this.state.issue.description}</p>
+                        <Safe.p className="issue-desc">{this.state.issue.description}</Safe.p>
                     </div>
                     <div className="b-t"/>
                     {/* History Section */}
