@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import BasicStore from "../stores/basic-store";
 import Select from 'react-select';
+import RichTextEditor from 'react-rte';
 import 'react-select/dist/react-select.css';
 
 class CreateEditIssue extends Component {
@@ -16,7 +17,7 @@ class CreateEditIssue extends Component {
             project: "",
             assigned_to: "",
             watchers: [],
-            description: "",
+            description: RichTextEditor.createEmptyValue(),
             documents: "",
             status: BasicStore.issueStatusEnum.newIssue,
             priority: BasicStore.issuePriorityEnum.low,
@@ -102,7 +103,7 @@ class CreateEditIssue extends Component {
         this.setState({loading: true});
         const postBody = JSON.stringify({
             title: this.state.title,
-            description: this.state.description,
+            description: this.state.description.toString('html'),
             project: this.state.project,
             assigned_to: this.state.assigned_to,
             watchers: this.state.watchers,
@@ -179,10 +180,10 @@ class CreateEditIssue extends Component {
                         <div className="form-group">
                             <label>Description</label> <br/>
                             <span className="text-danger">{this.state.errorData.description}</span>
-                            <textarea className={cssClasses} placeholder="Description of Project"
-                                      type="text" value={this.state.description} rows="5"
-                                      onChange={(event) => this.setState({description: event.target.value})}
-
+                            <RichTextEditor
+                                className="h-250px"
+                                value={this.state.description}
+                                onChange={(val) => this.setState({description: val})}
                             />
                         </div>
 

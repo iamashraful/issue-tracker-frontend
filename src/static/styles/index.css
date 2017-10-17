@@ -81,6 +81,9 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
 .b-t {
     border-top: 1px solid;
 }
+.h-250px {
+    height: 250px;
+}
 
 /* Overrides */
 .select2-container {

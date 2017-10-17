@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import BasicStore from "../stores/basic-store";
+import RichTextEditor from 'react-rte';
 
 class CreateEditProject extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class CreateEditProject extends Component {
             loading: false,
             // Project states
             name: "",
+            description: RichTextEditor.createEmptyValue(),
             website: "",
             documents: "",
             // API Response state
@@ -25,9 +27,10 @@ class CreateEditProject extends Component {
         this.setState({loading: true});
         const postBody = JSON.stringify({
             name: this.state.name,
-            description: this.state.description,
+            description: this.state.description.toString('html'),
             website: this.state.website,
         });
+        console.log(postBody);
 
         // Here will be save API call
         const url = BasicStore.makeUrl('api/v1/pms/projects/');
@@ -105,10 +108,10 @@ class CreateEditProject extends Component {
                             <label>Description</label>
                             <br/>
                             <span className="text-danger">{this.state.errorData.description}</span>
-                            <textarea className={cssClasses} placeholder="Description of Project"
-                                      type="text" value={this.state.description} rows="5"
-                                      onChange={(event) => this.setState({description: event.target.value})}
-
+                            <RichTextEditor
+                                className="h-250px"
+                                value={this.state.description}
+                                onChange={(val) => this.setState({description: val})}
                             />
                         </div>
                         <button className="btn btn-primary pull-right custom-btn-padding">
