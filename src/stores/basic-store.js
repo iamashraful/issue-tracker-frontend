@@ -8,6 +8,7 @@ import UserRegistration from "../components/UserRegistration";
 import Settings from "../components/Settings";
 import ProjectsList from "../components/ProjectsList";
 import IssuesList from "../components/IssuesList";
+import ActivityLog from "../components/ActivityLog";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -98,7 +99,7 @@ class BasicStore extends EventEmitter {
                         id: 10,
                         text: 'Activity Log',
                         url: this.urlPaths.activityLog,
-                        component: Home,
+                        component: ActivityLog,
                         auth: true
                     },
                     {
