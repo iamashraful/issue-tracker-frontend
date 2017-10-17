@@ -32,7 +32,7 @@ class NavBar extends Component {
                             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                                 <ul className="navbar-nav ml-auto">
                                     {dropDownItems.map(item =>
-                                        <li className="nav-item dropdown">
+                                        <li className="nav-item dropdown" key={item.id}>
                                             <a
                                                 className="nav-link dropdown-toggle" href=""
                                                 id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -41,6 +41,7 @@ class NavBar extends Component {
                                             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                                 {item.menus.map(subMenu =>
                                                     <NavLinkCustom
+                                                        key={subMenu.id}
                                                         cssClass="dropdown-item"
                                                         activeClass=""
                                                         auth={subMenu.auth}

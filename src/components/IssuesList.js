@@ -52,7 +52,7 @@ class IssuesList extends Component {
                 <div>
                     <div className="action-view">
                         {/* Action buttons view */}
-                        <div>
+                        <div className="action-buttons">
                             <Link
                                 className="btn btn-primary link-button pull-right"
                                 to={BasicStore.urlPaths.issues + BasicStore.urlPaths.create}> Create
