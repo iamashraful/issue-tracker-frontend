@@ -28,6 +28,7 @@ class BasicStore extends EventEmitter {
             issues: '/issues',
             create: '/create',
             edit: '/edit',
+            activityLog: '/activity-logs',
         };
 
         // API Response data
@@ -86,6 +87,30 @@ class BasicStore extends EventEmitter {
         for (let i=0; i<=3; i++) {
             this.issuePriorityEnumSelectData.push({label: this.issuePriorityEnum[i], value: i});
         }
+
+        this.dropdownItems = [
+            {
+                id: 10,
+                text: "Reporting",
+                auth: true,
+                menus :[
+                    {
+                        id: 10,
+                        text: 'Activity Log',
+                        url: this.urlPaths.activityLog,
+                        component: Home,
+                        auth: true
+                    },
+                    {
+                        id: 20,
+                        text: 'Home Report',
+                        url: this.urlPaths.activityLog,
+                        component: Home,
+                        auth: true
+                    },
+                ]
+            },
+        ];
 
         this.navItems = [
             {

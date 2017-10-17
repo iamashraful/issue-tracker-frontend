@@ -16,6 +16,7 @@ class NavBar extends Component {
 
     render() {
         const navItems = BasicStore.navItems;
+        const dropDownItems = BasicStore.dropdownItems;
 
         return (
             <HashRouter>
@@ -30,6 +31,26 @@ class NavBar extends Component {
                             <a className="navbar-brand" href="/">Project's Issue Tracking System</a>
                             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                                 <ul className="navbar-nav ml-auto">
+                                    {dropDownItems.map(item =>
+                                        <li className="nav-item dropdown">
+                                            <a
+                                                className="nav-link dropdown-toggle" href=""
+                                                id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false"> {item.text}
+                                            </a>
+                                            <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                                {item.menus.map(subMenu =>
+                                                    <NavLinkCustom
+                                                        cssClass="dropdown-item"
+                                                        activeClass=""
+                                                        auth={subMenu.auth}
+                                                        text={subMenu.text}
+                                                        url={subMenu.url}
+                                                    />
+                                                )}
+                                            </div>
+                                        </li>
+                                    )}
                                     {navItems.map(item =>
                                         <li className="nav-item" key={item.id}>
                                             {/* map require unique key. So, I just put. Nothing special */}
@@ -49,11 +70,14 @@ class NavBar extends Component {
 
                     {/* Defining Route */}
                     <Switch>
-                        {
-                            navItems.map(item =>
-                                <Route exact path={item.url} component={item.component} key={item.id}/>
+                        {navItems.map(item =>
+                            <Route exact path={item.url} component={item.component} key={item.id}/>
+                        )}
+                        {dropDownItems.map(items =>
+                            items.menus.map(menu =>
+                                <Route exact path={menu.url} component={menu.component} key={menu.id}/>
                             )
-                        }
+                        )}
                         {/* Defining details page urls */}
                         <Route exact path="/projects/create" component={CreateEditProject}/>
                         <Route exact path="/projects/:slug" component={ProjectDetails}/>
