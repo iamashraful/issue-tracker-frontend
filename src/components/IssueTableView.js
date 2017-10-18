@@ -12,6 +12,7 @@ class IssueTableView extends Component {
     }
 
     render() {
+        // console.log(this)
         if (this.props.loading) {
             return (
                 <div className="container-loading text-center align-middle">

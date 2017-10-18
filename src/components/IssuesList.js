@@ -9,7 +9,7 @@ class IssuesList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
+            loading: true,
             issues: []
         };
         this.contentVisibility.bind(this);
