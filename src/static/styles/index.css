@@ -84,7 +84,27 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
 .h-250px {
     min-height: 250px;
 }
+.m-b-15 {
+    margin-bottom: 15px;
+}
+.project-desc p{
+    margin-bottom: 0;
+}
 
+.card-scroll {
+    height: 150px;
+    overflow-y: scroll;
+}
+.project-card-title {
+    font-size: 1.5rem;
+    color: #1d1e1f;
+    padding: 5px 20px 5px 20px;
+    text-decoration: none !important;
+}
+.project-card-title:hover {
+    background-color: #5cb3fd;
+    color: #ffffff;
+}
 /* Overrides */
 .select2-container {
     width: 100% !important;

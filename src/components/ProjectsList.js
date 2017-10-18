@@ -100,18 +100,19 @@ class ProjectsList extends Component {
                     {/* All the projects card view */}
                     <div className="row p-t-b-1rem">
                         {this.state.projects.map(project =>
-                            <div className="col-md-4 col-sm-6" key={project.id}>
+                            <div className="col-md-4 col-sm-6 m-b-15" key={project.id}>
                                 <div className="card card-outline-primary">
-                                    <h5 className="card-header text-truncate">{project.name}</h5>
-                                    <div className="card-block">
+                                    {/*<h5 className="card-header text-truncate">{project.name}</h5>*/}
+                                    <Link
+                                        to={BasicStore.urlPaths.projects + '/' + project.slug}
+                                        className="card-header text-truncate project-card-title"
+                                        >{project.name}
+                                        </Link>
+                                    <div className="card-block card-scroll">
                                         <h6 className="card-title">
                                             <a href={project.website} target="_blank">{project.website}</a>
                                         </h6>
-                                        <Safe.p className="card-text text-truncate">{project.description}</Safe.p>
-                                        <Link
-                                            to={BasicStore.urlPaths.projects + '/' + project.slug}
-                                            className="btn btn-primary btn-block">Details
-                                        </Link>
+                                        <Safe.p className="card-text text-truncate project-desc">{project.description}</Safe.p>
                                     </div>
                                 </div>
                             </div>
