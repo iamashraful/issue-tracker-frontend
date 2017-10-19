@@ -10,7 +10,7 @@ class IssueDetails extends Component {
             issue: "",
             notFound: false,
             unAuth: false,
-            loading: false,
+            loading: true,
         };
     }
 
@@ -41,8 +41,14 @@ class IssueDetails extends Component {
     }
 
     render() {
-        console.log(this.state.issue);
         const assigned_to = this.state.issue.assigned_to ? this.state.issue.assigned_to.user.username:"N/A";
+        if (this.state.loading) {
+            return (
+                <div className="container-loading text-center align-middle">
+                    <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
 
         return (
             <div className="container-fluid">
