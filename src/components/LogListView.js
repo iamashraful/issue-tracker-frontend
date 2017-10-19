@@ -35,6 +35,7 @@ class LogListView extends Component {
                     <td title={lg.operational_text}>
                         <Link to={lg.link}>{lg.operational_text}</Link>
                     </td>
+                    <td>{lg.action.toLowerCase()}</td>
                     <td>{lg.created_at}</td>
                 </tr>
             )
@@ -47,7 +48,8 @@ class LogListView extends Component {
                     <thead>
                     <tr>
                         <th>Action Done by</th>
-                        <th>Message</th>
+                        <th>Action Message</th>
+                        <th>Action Type</th>
                         <th>Action Time</th>
                     </tr>
                     </thead>
