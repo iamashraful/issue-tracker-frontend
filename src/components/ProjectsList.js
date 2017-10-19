@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import NoAccess from "./NoAccess";
 import {Link} from "react-router-dom";
-import Safe from "react-safe";
 
 import BasicStore from '../stores/basic-store';
 
@@ -112,7 +111,10 @@ class ProjectsList extends Component {
                                         <h6 className="card-title">
                                             <a href={project.website} target="_blank">{project.website}</a>
                                         </h6>
-                                        <Safe.p className="card-text text-truncate project-desc">{project.description}</Safe.p>
+                                        <p
+                                            className="card-text text-truncate project-desc"
+                                            dangerouslySetInnerHTML={{ __html: project.description }}
+                                        />
                                     </div>
                                 </div>
                             </div>

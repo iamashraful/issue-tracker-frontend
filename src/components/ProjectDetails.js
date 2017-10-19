@@ -3,7 +3,6 @@ import {Redirect, Link, Switch, Route} from 'react-router-dom';
 
 import BasicStore from '../stores/basic-store';
 import IssuesList from "./IssuesList";
-import Safe from "react-safe";
 
 
 class ProjectDetails extends Component {
@@ -81,7 +80,7 @@ class ProjectDetails extends Component {
                 </div>
                 <div className="jumbotron">
                     <h4>Description</h4>
-                    <Safe.p>{this.state.project.description}</Safe.p>
+                    <p dangerouslySetInnerHTML={{ __html: this.state.project.description }}/>
                     <hr/>
                     {/* TODO: Here will add tab view */}
                     {/* Defining Route */}
