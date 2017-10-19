@@ -36,7 +36,7 @@ class ActivityLog extends Component {
         return (
             <div className="container-fluid">
                 <h1>Activities...</h1>
-                <LogListView/>
+                <LogListView logs={this.state.logs} loading={this.state.loading}/>
             </div>
         )
     }
