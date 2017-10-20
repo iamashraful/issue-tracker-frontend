@@ -32,7 +32,8 @@ class ActivityLog extends Component {
 
     getActivityLog() {
         const parsed = qs.parse(this.props.location.search);
-        const url = BasicStore.makeUrl('api/v1/pms/activity-logs/?q=' + parsed.q);
+        let q = parsed.q !== undefined ? parsed.q:"";
+        const url = BasicStore.makeUrl('api/v1/pms/activity-logs/?q=' + q);
         const payload = {
             method: 'GET',
             headers: BasicStore.headers
@@ -56,7 +57,7 @@ class ActivityLog extends Component {
             <div className="container-fluid">
                 <h1>Activities...</h1>
                 <div>
-                    <input type="text" onChange={this.testInputChange}/>
+                    <input type="text" onChange={this.testInputChange} value={this.state.q}/>
                     <button className="m-1 btn btn-xs btn-outline-danger" onClick={this.testFilter}>Update</button>
                 </div>
                 <LogListView logs={this.state.logs} loading={this.state.loading}/>
