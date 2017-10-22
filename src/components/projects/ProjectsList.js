@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import NoAccess from "./NoAccess";
+import NoAccess from "../utility/NoAccess";
 import {Link} from "react-router-dom";
 
-import BasicStore from '../stores/basic-store';
+import BasicStore from '../../stores/basic-store';
 
 
 class ProjectsList extends Component {

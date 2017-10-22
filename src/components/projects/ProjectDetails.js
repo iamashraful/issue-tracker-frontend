@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Redirect, Link, Switch, Route} from 'react-router-dom';
 
-import BasicStore from '../stores/basic-store';
-import IssuesList from "./IssuesList";
+import BasicStore from '../../stores/basic-store';
+import IssuesList from "../issues/IssuesList";
 
 
 class ProjectDetails extends Component {

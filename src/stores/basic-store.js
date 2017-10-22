@@ -6,9 +6,9 @@ import Logout from "../components/Logout";
 import Home from "../components/Home";
 import UserRegistration from "../components/UserRegistration";
 import Settings from "../components/Settings";
-import ProjectsList from "../components/ProjectsList";
-import IssuesList from "../components/IssuesList";
-import ActivityLog from "../components/ActivityLog";
+import ProjectsList from "../components/projects/ProjectsList";
+import IssuesList from "../components/issues/IssuesList";
+import ActivityLog from "../components/reports/ActivityLog";
 
 class BasicStore extends EventEmitter {
     constructor() {

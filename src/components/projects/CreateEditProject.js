@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import BasicStore from "../stores/basic-store";
+import BasicStore from "../../stores/basic-store";
 import RichTextEditor from 'react-rte';
 
 class CreateEditProject extends Component {

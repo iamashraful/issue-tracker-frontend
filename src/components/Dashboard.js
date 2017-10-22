@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import NoAccess from "./NoAccess";
+import NoAccess from "./utility/NoAccess";
 
 class Dashboard extends Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BasicStore from '../stores/basic-store';
+import BasicStore from '../../stores/basic-store';
 
 class NoAccess extends Component {
     constructor(props) {

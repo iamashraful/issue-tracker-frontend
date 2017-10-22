@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import BasicStore from '../stores/basic-store';
-import NoAccess from "./NoAccess";
+import BasicStore from '../../stores/basic-store';
+import NoAccess from "../utility/NoAccess";
 import IssueTableView from "./IssueTableView";
 import {Link} from "react-router-dom";
 

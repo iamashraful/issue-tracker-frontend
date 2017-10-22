@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import BasicStore from '../stores/basic-store';
 import {HashRouter, Route, Switch} from 'react-router-dom';
-import NavLinkCustom from "./NavLinkCustom";
-import NotFound from "./NotFound";
-import ProjectDetails from "./ProjectDetails";
-import IssueDetails from "./IssueDetails";
-import CreateEditProject from "./CreateEditProject";
+import NavLinkCustom from "./utility/NavLinkCustom";
+import NotFound from "./utility/NotFound";
+import ProjectDetails from "./projects/ProjectDetails";
+import IssueDetails from "./issues/IssueDetails";
+import CreateEditProject from "./projects/CreateEditProject";
 import CreateEditIssue from "./CreateEditIssue";
 
 class NavBar extends Component {

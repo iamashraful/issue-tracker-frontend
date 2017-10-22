@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import BasicStore from "../stores/basic-store";
+import BasicStore from "../../stores/basic-store";
 
 
 class IssueTableView extends Component {

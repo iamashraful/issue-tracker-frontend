@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import BasicStore from "../stores/basic-store";
+import BasicStore from "../../stores/basic-store";
 import {Link} from "react-router-dom";
 
 class IssueDetails extends Component {
