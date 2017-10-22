@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import BasicStore from "../stores/basic-store";
+import BasicStore from "../../stores/basic-store";
 import Select from 'react-select';
 import RichTextEditor from 'react-rte';
 import 'react-select/dist/react-select.css';

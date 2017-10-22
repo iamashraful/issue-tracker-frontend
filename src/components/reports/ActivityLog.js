@@ -12,20 +12,16 @@ class ActivityLog extends Component {
             logs: [],
             q: "",
         };
-        this.testFilter = this.testFilter.bind(this);
-        this.testInputChange = this.testInputChange.bind(this);
+        this.searchLog = this.searchLog.bind(this);
     }
 
-    testInputChange(e) {
+    searchLog(e) {
+        // Set loading True
+        this.setState({loading: true});
         const val = e.target.value;
         this.setState({q: val});
         this.props.history.push("?q=" + val);
-        e.preventDefault();
-    }
-
-    testFilter(e) {
-        const parsed = qs.parse(this.props.location.search);
-        this.setState({q: parsed.q});
+        // Call API when change
         this.getActivityLog();
         e.preventDefault();
     }
@@ -55,10 +51,22 @@ class ActivityLog extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <h1>Activities...</h1>
-                <div>
-                    <input type="text" onChange={this.testInputChange} value={this.state.q}/>
-                    <button className="m-1 btn btn-xs btn-outline-danger" onClick={this.testFilter}>Update</button>
+
+                <div className="row">
+                    <div className="col-md-4 col-sm-12 col-xs-12">
+                        <h3>Activity Report</h3>
+                    </div>
+                    <div className="col-md-4 col-sm-6 col-xs-12">
+                        <div className="form-group">
+                            <input type="text" className="form-control"
+                                   onChange={this.searchLog} value={this.state.q}
+                                   placeholder="Search here..."
+                            />
+                        </div>
+                    </div>
+                    {/*<div className="col-md-4 col-sm-6 col-xs-12">*/}
+                        {/*<input type="date"  className="pull-right form-control" style={{padding: '5px'}}/>*/}
+                    {/*</div>*/}
                 </div>
                 <LogListView logs={this.state.logs} loading={this.state.loading}/>
             </div>

@@ -6,7 +6,7 @@ import NotFound from "./utility/NotFound";
 import ProjectDetails from "./projects/ProjectDetails";
 import IssueDetails from "./issues/IssueDetails";
 import CreateEditProject from "./projects/CreateEditProject";
-import CreateEditIssue from "./CreateEditIssue";
+import CreateEditIssue from "./issues/CreateEditIssue";
 
 class NavBar extends Component {
     constructor(props) {
