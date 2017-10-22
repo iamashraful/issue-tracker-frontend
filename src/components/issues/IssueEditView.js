@@ -4,10 +4,12 @@ import Select from 'react-select';
 import RichTextEditor from 'react-rte';
 import 'react-select/dist/react-select.css';
 
-class CreateEditIssue extends Component {
+
+class IssueEditView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            issueId: this.props.match.params.id,
             //UI related state
             loading: false,
             projectSelectData: [],
@@ -39,7 +41,38 @@ class CreateEditIssue extends Component {
         this.onWatchersSelect = this.onWatchersSelect.bind(this);
     }
 
+    getDetails() {
+        const url = BasicStore.makeUrl('api/v1/pms/issues/' + this.state.issueId + '/');
+        const payload = {
+            method: 'GET',
+            headers: BasicStore.headers
+        };
+        fetch(url, payload).then((response) => {
+            if (response.status === 404) {
+                this.setState({notFound: true});
+            }
+            if (response.status === 401) {
+                this.setState({unAuth: true});
+            }
+            return response.json();
+        }).then((data) => {
+            // set loading false for stop loading feature
+            this.setState({
+                loading: false, title: data.title, project: data.project.id, description: RichTextEditor.createEmptyValue(),
+                assigned_to: data.assigned_to, status: data.status, priority: data.priority,
+                progress: data.progress, tracker: data.tracker
+            });
+            data.watchers.map(w => {
+                this.state.watchers.push(w.id);
+            });
+            console.log(this.state.project);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     componentWillMount() {
+        this.getDetails();
         // If projects are empty at the store then it will call the API again
         if(BasicStore.projects.length === 0) {
             BasicStore.fetchProjects();
@@ -151,6 +184,7 @@ class CreateEditIssue extends Component {
         const savingButton = this.state.loading ? 'd-block' : 'd-none';
         const saveButton = this.state.loading ? 'd-none' : 'd-block';
         successMgs += this.state.success ? "d-block" : "d-none";
+        const pageTitle = this.props.title !== undefined ? this.props.title : "Create New Issue";
 
         if(this.state.success) {
             setTimeout(function() {
@@ -160,14 +194,14 @@ class CreateEditIssue extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center text-danger">Create new Issue</h2>
+                <h2 className="text-center text-danger">{pageTitle}</h2>
                 <hr/>
                 <h4 className={successMgs}>Issue created successfully.</h4>
                 <form onSubmit={this.handleSaveIssue.bind(this)}>
                     <fieldset className="p-l-r-20p">
                         <p
-                        className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>
-                        {this.state.errorData.non_fields_errors}
+                            className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>
+                            {this.state.errorData.non_fields_errors}
                         </p>
                         <div className="form-group">
                             <label>Title</label> <br/>
@@ -281,7 +315,7 @@ class CreateEditIssue extends Component {
                         </div>
 
                         <button className="btn btn-primary pull-right custom-btn-padding">
-                            <span className={saveButton}>Save</span>
+                            <span className={saveButton}>Update</span>
                             <span className={savingButton}>Please Wait...
                                 <i className="fa fa-spinner fa-spin"/>
                             </span>
@@ -294,4 +328,4 @@ class CreateEditIssue extends Component {
     }
 }
 
-export default CreateEditIssue;
+export default IssueEditView;
