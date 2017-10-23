@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import BasicStore from "../../stores/basic-store";
-import LogListView from "../LogListView";
+import LogListView from "./LogListView";
 import {withRouter} from "react-router-dom";
 import qs from "query-string";
 
