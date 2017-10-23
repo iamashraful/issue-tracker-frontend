@@ -4,7 +4,7 @@ import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
 import Logout from "../components/Logout";
 import Home from "../components/Home";
-import UserRegistration from "../components/UserRegistration";
+import UserRegistration from "../components/profiles/UserRegistration";
 import Settings from "../components/Settings";
 import ProjectsList from "../components/projects/ProjectsList";
 import IssuesList from "../components/issues/IssuesList";
@@ -30,6 +30,7 @@ class BasicStore extends EventEmitter {
             create: '/create',
             edit: '/edit',
             activityLog: '/activity-logs',
+            profiles: '/profiles',
         };
 
         // API Response data
