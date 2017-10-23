@@ -179,6 +179,13 @@ class BasicStore extends EventEmitter {
 
         // Declaring all urls
         this.allUrls = [];
+        // Declaring role
+        this.userRoleEnum = {
+            admin: "Admin",
+            manager: "Manager",
+            tester: "Tester",
+            developer: "Developer"
+        };
 
         // Headers
         this.headers = {

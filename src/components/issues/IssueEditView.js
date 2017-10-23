@@ -10,8 +10,8 @@ class IssueEditView extends Component {
         super(props);
         this.state = {
             issueId: this.props.match.params.id,
-            //UI related state
-            loading: false,
+            // UI related state
+            loading: true,
             projectSelectData: BasicStore.projectsSelectFormat,
             profileSelectData: BasicStore.profilesSelectFormat,
             // Issue states
@@ -157,15 +157,35 @@ class IssueEditView extends Component {
     }
 
     render() {
+        // User Role basis hide/show
+        const roleArray = [
+            BasicStore.userRoleEnum.admin, BasicStore.userRoleEnum.manager, BasicStore.userRoleEnum.tester
+        ];
+        let showForTopUser = roleArray.indexOf(BasicStore.userRole) !== -1 ? 'd-block' : 'd-none';
+        /*
+            TOP LEVEL USERS:
+            1. Admin
+            2. Manager
+            3. Tester
+         */
+
         let cssClasses = "form-control ";
         let successMgs = "text-center alert alert-success ";
         const savingButton = this.state.loading ? 'd-block' : 'd-none';
         const saveButton = this.state.loading ? 'd-none' : 'd-block';
         successMgs += this.state.success ? "d-block" : "d-none";
 
+        if (this.state.loading) {
+            return (
+                <div className="container-loading text-center align-middle">
+                    <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
+
         if (this.state.success) {
             setTimeout(function () {
-                window.location.assign("/#" + BasicStore.urlPaths.issues);
+                window.location.assign("/#" + BasicStore.urlPaths.issues + '/' + this.state.issueId);
             }.bind(this), 3000);
         }
 
@@ -180,7 +200,7 @@ class IssueEditView extends Component {
                             className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>
                             {this.state.errorData.non_fields_errors}
                         </p>
-                        <div className="form-group">
+                        <div className={showForTopUser + " form-group"}>
                             <label>Title</label> <br/>
                             <span className="text-danger">{this.state.errorData.title}</span>
                             <input className={cssClasses} placeholder="Name of Project" type="text"
@@ -188,7 +208,7 @@ class IssueEditView extends Component {
                                    value={this.state.title}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={showForTopUser + " form-group"}>
                             <label>Description</label> <br/>
                             <span className="text-danger">{this.state.errorData.description}</span>
                             <RichTextEditor
@@ -199,7 +219,7 @@ class IssueEditView extends Component {
                         </div>
 
                         <div className="row p-b-15px">
-                            <div className="w-50ps p-l-r-15px">
+                            <div className={showForTopUser + " w-50ps p-l-r-15px"}>
                                 <label>Project</label> <br/>
                                 <span className="text-danger">{this.state.errorData.project}</span>
                                 <Select
@@ -225,7 +245,7 @@ class IssueEditView extends Component {
                         </div>
 
                         <div className="row p-b-15px">
-                            <div className="w-50ps p-l-r-15px">
+                            <div className={showForTopUser + " w-50ps p-l-r-15px"}>
                                 <label>Watchers</label> <br/>
                                 <Select
                                     multi
