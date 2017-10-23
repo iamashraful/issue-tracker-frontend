@@ -12,8 +12,8 @@ class IssueEditView extends Component {
             issueId: this.props.match.params.id,
             //UI related state
             loading: false,
-            projectSelectData: [],
-            profileSelectData: [],
+            projectSelectData: BasicStore.projectsSelectFormat,
+            profileSelectData: BasicStore.profilesSelectFormat,
             // Issue states
             title: "",
             project: "",
@@ -33,11 +33,9 @@ class IssueEditView extends Component {
             success: false,
             errorData: [],
         };
-        this.handleSaveIssue.bind(this);
+        this.handleIssueUpdate.bind(this);
         this.onProjectSelect = this.onProjectSelect.bind(this);
-        this.onOpenProjectSelect = this.onOpenProjectSelect.bind(this);
         this.onProfileSelect = this.onProfileSelect.bind(this);
-        this.onOpenProfileSelect = this.onOpenProfileSelect.bind(this);
         this.onWatchersSelect = this.onWatchersSelect.bind(this);
     }
 
@@ -58,8 +56,9 @@ class IssueEditView extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({
-                loading: false, title: data.title, project: data.project.id, description: RichTextEditor.createEmptyValue(),
-                assigned_to: data.assigned_to, status: data.status, priority: data.priority,
+                loading: false, title: data.title, project: data.project.id,
+                description: RichTextEditor.createValueFromString(data.description, 'html'),
+                assigned_to: data.assigned_to.id, status: data.status, priority: data.priority,
                 progress: data.progress, tracker: data.tracker
             });
             data.watchers.map(w => {
@@ -74,65 +73,45 @@ class IssueEditView extends Component {
     componentWillMount() {
         this.getDetails();
         // If projects are empty at the store then it will call the API again
-        if(BasicStore.projects.length === 0) {
+        if (BasicStore.projects.length === 0) {
             BasicStore.fetchProjects();
         }
         // If profiles are empty at the store then it will call the API again
-        if(BasicStore.profiles.length === 0) {
+        if (BasicStore.profiles.length === 0) {
             BasicStore.fetchProfiles();
         }
     }
 
-    onOpenProjectSelect(e) {
-        const projects = BasicStore.projects;
-        let data = [];
-        projects.map(pr => {
-            data.push({label: pr.name, value: pr.id});
-        });
-        this.setState({projectSelectData: data});
-        // e.preventDefault();
-    }
-
     onProjectSelect(val) {
-        if(val !== null) {
+        if (val !== null) {
             this.setState({project: val.value});
-        } else{
+        } else {
             this.setState({project: ""});
         }
     }
 
-    onOpenProfileSelect(e) {
-        const profiles = BasicStore.profiles;
-        let data = [];
-        profiles.map(pr => {
-            data.push({label: pr.user.username, value: pr.id});
-        });
-        this.setState({profileSelectData: data});
-        // e.preventDefault();
-    }
-
     onProfileSelect(val) {
-        if(val !== null) {
+        if (val !== null) {
             this.setState({assigned_to: val.value});
-        } else{
+        } else {
             this.setState({assigned_to: ""});
         }
     }
 
     onWatchersSelect(val) {
-        if(val !== null) {
+        if (val !== null) {
             let d = [];
             val.map(item => {
                 d.push(item.value)
             });
             this.setState({watchers: d});
         }
-        else{
+        else {
             this.setState({watchers: []});
         }
     }
 
-    handleSaveIssue(event) {
+    handleIssueUpdate(event) {
         this.setState({loading: true});
         const postBody = JSON.stringify({
             title: this.state.title,
@@ -143,14 +122,13 @@ class IssueEditView extends Component {
             status: this.state.status,
             tracker: this.state.tracker,
             priority: this.state.priority,
-            due_date: this.state.due_date,
             progress: this.state.progress
         });
 
         // Here will be save API call
-        const url = BasicStore.makeUrl('api/v1/pms/issues/');
+        const url = BasicStore.makeUrl('api/v1/pms/issues/' + this.state.issueId + '/');
         const payload = {
-            method: 'POST',
+            method: 'PUT',
             headers: BasicStore.headers,
             body: postBody
         };
@@ -161,15 +139,15 @@ class IssueEditView extends Component {
             if (response.status === 401) {
                 this.setState({statusCode: response.status, loading: false});
             }
-            if (response.status === 201) {
+            if (response.status === 200) {
                 this.setState({statusCode: response.status, success: true, loading: false});
             }
             return response.json();
         }).then((data) => {
-            if(!this.state.success) {
+            if (!this.state.success) {
                 this.setState({errorData: data});
             }
-            if(this.state.success) {
+            if (this.state.success) {
                 this.setState({loading: false, issuePostResponse: data, errorData: []});
             }
         }).catch((err) => {
@@ -184,20 +162,19 @@ class IssueEditView extends Component {
         const savingButton = this.state.loading ? 'd-block' : 'd-none';
         const saveButton = this.state.loading ? 'd-none' : 'd-block';
         successMgs += this.state.success ? "d-block" : "d-none";
-        const pageTitle = this.props.title !== undefined ? this.props.title : "Create New Issue";
 
-        if(this.state.success) {
-            setTimeout(function() {
+        if (this.state.success) {
+            setTimeout(function () {
                 window.location.assign("/#" + BasicStore.urlPaths.issues);
             }.bind(this), 3000);
         }
 
         return (
             <div className="container">
-                <h2 className="text-center text-danger">{pageTitle}</h2>
+                <h2 className="text-center text-danger">Update the Issue</h2>
                 <hr/>
-                <h4 className={successMgs}>Issue created successfully.</h4>
-                <form onSubmit={this.handleSaveIssue.bind(this)}>
+                <h4 className={successMgs}>Issue updated successfully.</h4>
+                <form onSubmit={this.handleIssueUpdate.bind(this)}>
                     <fieldset className="p-l-r-20p">
                         <p
                             className={this.state.errorData.non_fields_errors !== undefined ? 'alert alert-danger' : ''}>
@@ -231,7 +208,6 @@ class IssueEditView extends Component {
                                     value={this.state.project}
                                     options={this.state.projectSelectData}
                                     onChange={this.onProjectSelect}
-                                    onOpen={this.onOpenProjectSelect}
                                 />
                             </div>
 
@@ -244,7 +220,6 @@ class IssueEditView extends Component {
                                     value={this.state.assigned_to}
                                     options={this.state.profileSelectData}
                                     onChange={this.onProfileSelect}
-                                    onOpen={this.onOpenProfileSelect}
                                 />
                             </div>
                         </div>
@@ -258,17 +233,17 @@ class IssueEditView extends Component {
                                     value={this.state.watchers}
                                     options={this.state.profileSelectData}
                                     onChange={this.onWatchersSelect}
-                                    onOpen={this.onOpenProfileSelect}
+                                />
+                            </div>
+                            <div className="w-50ps p-l-r-15px">
+                                <label>Progress</label> <br/>
+                                <input
+                                    placeholder="Enter value in (%)" type="number" className="form-control"
+                                    onChange={(e) => this.setState({progress: e.target.value})}
+                                    value={this.state.progress}
                                 />
                             </div>
 
-                            <div className="w-50ps p-l-r-15px">
-                                <label>Due Date</label>
-                                <input
-                                    className="form-control p-1" type="date"
-                                    onChange={(e) => this.setState({due_date: e.target.value})}
-                                />
-                            </div>
                         </div>
 
                         <div className="row p-b-15px">
@@ -278,7 +253,7 @@ class IssueEditView extends Component {
                                     name="form-field-name"
                                     value={this.state.status}
                                     options={BasicStore.issueStatusEnumSelectData}
-                                    onChange={(val) => this.setState({status: val ? val.value:""})}
+                                    onChange={(val) => this.setState({status: val ? val.value : ""})}
                                 />
                             </div>
 
@@ -288,7 +263,7 @@ class IssueEditView extends Component {
                                     name="form-field-name"
                                     value={this.state.tracker}
                                     options={BasicStore.issueTrackerEnumSelectData}
-                                    onChange={(val) => this.setState({tracker: val ? val.value:""})}
+                                    onChange={(val) => this.setState({tracker: val ? val.value : ""})}
                                 />
                             </div>
 
@@ -298,21 +273,11 @@ class IssueEditView extends Component {
                                     name="form-field-name"
                                     value={this.state.priority}
                                     options={BasicStore.issuePriorityEnumSelectData}
-                                    onChange={(val) => this.setState({priority: val ? val.value:""})}
+                                    onChange={(val) => this.setState({priority: val ? val.value : ""})}
                                 />
                             </div>
                         </div>
 
-                        <div className="row p-b-15px">
-                            <div className="w-33ps p-l-r-15px">
-                                <label>Progress</label> <br/>
-                                <input
-                                    placeholder="Enter value in (%)" type="number" className="form-control"
-                                    onChange={(e) => this.setState({progress: e.target.value})}
-                                    value={this.state.progress}
-                                />
-                            </div>
-                        </div>
 
                         <button className="btn btn-primary pull-right custom-btn-padding">
                             <span className={saveButton}>Update</span>

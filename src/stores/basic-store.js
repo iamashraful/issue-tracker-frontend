@@ -34,7 +34,9 @@ class BasicStore extends EventEmitter {
 
         // API Response data
         this.projects = [];
+        this.projectsSelectFormat = [];
         this.profiles = [];
+        this.profilesSelectFormat = [];
 
         // Enum like object (Similar to backend Enum)
         this.issueStatusEnum = {
@@ -203,6 +205,9 @@ class BasicStore extends EventEmitter {
             return response.json();
         }).then((data) => {
             this.projects = data.results;
+            data.results.map(pr => {
+                this.projectsSelectFormat.push({label: pr.name, value: pr.id});
+            });
         }).catch((err) => {
             console.log(err);
         });
@@ -218,6 +223,9 @@ class BasicStore extends EventEmitter {
             return response.json();
         }).then((data) => {
             this.profiles = data.results;
+            data.results.map(pr => {
+                this.profilesSelectFormat.push({label: pr.user.username, value: pr.id});
+            });
         }).catch((err) => {
             console.log(err);
         });
