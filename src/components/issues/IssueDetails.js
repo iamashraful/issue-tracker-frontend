@@ -140,13 +140,13 @@ class IssueDetails extends Component {
                     <div className="b-t"/>
                     {/* Issue Description */}
                     <div className="row p-3">
-                        <h5 className="w-100">Description</h5>
+                        <h5 className="w-100 f-700">Description</h5>
                         <p className="issue-desc" dangerouslySetInnerHTML={{ __html: this.state.issue.description }}/>
                     </div>
                     <div className="b-t"/>
                     {/* History Section */}
                     <div className="row p-3">
-                        <h5 className="w-100">History</h5>
+                        <h5 className="w-100 f-700">History</h5>
                         <p>History will come later.</p>
                     </div>
                 </div>
