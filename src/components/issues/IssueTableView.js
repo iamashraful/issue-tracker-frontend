@@ -51,11 +51,15 @@ class IssueTableView extends Component {
                             {issue.project.name}
                         </Link>
                     </td>
-                    <td>{issue.author}</td>
+                    <td>
+                        <Link to={BasicStore.urlPaths.profiles + '/' + issue.author_id}>{issue.author}</Link>
+                    </td>
                     <td>{BasicStore.issueTrackerEnum[issue.tracker]}</td>
                     <td>{issue.created_at}</td>
                     <td>{issue.due_date}</td>
-                    <td>{issue.assigned_to.user.username}</td>
+                    <td>
+                        <Link to={BasicStore.urlPaths.profiles + '/' + issue.assigned_to.id}>{issue.assigned_to.user.username}</Link>
+                    </td>
                     <td>{BasicStore.issuePriorityEnum[issue.priority]}</td>
                     <td>{BasicStore.issueStatusEnum[issue.status]}</td>
                     <td>{issue.progress}%</td>

@@ -68,7 +68,7 @@ class IssueDetails extends Component {
                 <div className="issue-details jumbotron">
                     <p className="issue-title">{this.state.issue.title}</p>
                     <span className="added-by">Added by,&nbsp;
-                        <Link to="/">{this.state.issue.author}</Link>
+                        <Link to={BasicStore.urlPaths.profiles + '/' + this.state.issue.author_id}>{this.state.issue.author}</Link>
                     </span>
 
                     <div className="row p-t-b-1rem">
@@ -121,7 +121,7 @@ class IssueDetails extends Component {
                                 </div>
                                 <div className="col-md-4">
                                     <p className="value-view">
-                                        <Link to="/">
+                                        <Link to={BasicStore.urlPaths.profiles + '/' + this.state.issue.assigned_to.id}>
                                             {assigned_to}
                                         </Link>
                                     </p>

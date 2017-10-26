@@ -36,7 +36,7 @@ class Login extends Component {
         }).then((data) => {
             this.setState({loading: true, loadingText: 'Redirecting...'});
             if (data.token) {
-                BasicStore.setToken(data.token, data.user_role);
+                BasicStore.setToken(data.token, data.user_role, data.user_id, data.user_name);
                 // Clear username & password from state
                 this.setState({
                     username: '',

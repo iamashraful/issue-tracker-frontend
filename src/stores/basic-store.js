@@ -9,6 +9,7 @@ import Settings from "../components/Settings";
 import ProjectsList from "../components/projects/ProjectsList";
 import IssuesList from "../components/issues/IssuesList";
 import ActivityLog from "../components/reports/ActivityLog";
+import MeDetailsView from "../components/profiles/MeDetailsView";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -31,7 +32,14 @@ class BasicStore extends EventEmitter {
             edit: '/edit',
             activityLog: '/activity-logs',
             profiles: '/profiles',
+            me: '/me',
         };
+
+        // Token -- Accessing from local storage
+        this.token = localStorage.getItem('token') || '';
+        this.userRole = localStorage.getItem('role') || '';
+        this.userId = localStorage.getItem('user_id') || '';
+        this.userName = localStorage.getItem('user_name') || '';
 
         // API Response data
         this.projects = [];
@@ -167,16 +175,20 @@ class BasicStore extends EventEmitter {
                 auth: false
             },
             {
-                id: 31,
+                id: 35,
                 text: 'Logout',
                 url: this.urlPaths.logout,
                 component: Logout,
                 auth: true
             },
+            {
+                id: 40,
+                text: this.userName,
+                url: this.urlPaths.me,
+                component: MeDetailsView,
+                auth: true
+            },
         ];
-        // Token -- Accessing from local storage
-        this.token = localStorage.getItem('token') || '';
-        this.userRole = localStorage.getItem('role') || '';
 
         // Declaring all urls
         this.allUrls = [];
@@ -243,13 +255,18 @@ class BasicStore extends EventEmitter {
         return this.apiUrl + path;
     }
 
-    setToken(token, role) {
+    setToken(token, role, user_id, user_name) {
         this.token = token;
         this.userRole = role;
+        this.userId = user_id;
+        this.userName = user_name;
         // Set token to local storage
         localStorage.setItem('token', String(token));
         // Set role to local storage
         localStorage.setItem('role', String(role));
+        // Set user id and name to localstorage
+        localStorage.setItem('user_id', String(user_id));
+        localStorage.setItem('user_name', String(user_name));
         // Change the authentication value
         this.isAuthentication = true;
         if (this.token !== '') {
@@ -262,10 +279,14 @@ class BasicStore extends EventEmitter {
     destroyToken() {
         this.token = '';
         this.userRole = '';
+        this.userId = '';
+        this.userName = '';
         // Set local storage token empty
         localStorage.setItem('token', '');
         // Set local storage role empty
         localStorage.setItem('role', '');
+        localStorage.setItem('user_id', '');
+        localStorage.setItem('user_name', '');
         this.isAuthentication = false;
         // Trick to delete Authorization when no need
         delete this.headers.Authorization;

@@ -6,7 +6,7 @@ class ProfileDetailsView extends Component {
         super(props);
         this.state = {
             loading: true,
-            profileId: this.props.match.params.id,
+            profileId: this.props.match !== undefined ? this.props.match.params.id : this.props.profilePK,
             profile: [],
             notFound: false,
             unAuth: false,
@@ -30,13 +30,12 @@ class ProfileDetailsView extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, profile: data});
-            console.log(data);
         }).catch((err) => {
             console.log(err);
         });
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getDetails();
     }
 
