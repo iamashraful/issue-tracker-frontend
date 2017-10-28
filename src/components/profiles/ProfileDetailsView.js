@@ -55,6 +55,7 @@ class ProfileDetailsView extends Component {
                     <div className="row p-10">
                         <div className="col-md-6 col-sm-6 col-xs-12">
                             <p className="profile-item-bg">Name</p>
+                            <p className="profile-item-bg">Role</p>
                             <p className="profile-item-bg">Email</p>
                             <p className="profile-item-bg">Assigned Issues</p>
                             <p className="profile-item-bg">Reported Issues</p>
@@ -62,6 +63,7 @@ class ProfileDetailsView extends Component {
                         </div>
                         <div className="col-md-6 col-sm-6 col-xs-12">
                             <p className="profile-item-bg">{this.state.profile.name}</p>
+                            <p className="profile-item-bg">{this.state.profile.role}</p>
                             <p className="profile-item-bg">{this.state.profile.email}</p>
                             <p className="profile-item-bg">{this.state.profile.assigned_issues}</p>
                             <p className="profile-item-bg">{this.state.profile.reported_issues}</p>
