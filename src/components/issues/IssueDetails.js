@@ -11,7 +11,21 @@ class IssueDetails extends Component {
             notFound: false,
             unAuth: false,
             loading: true,
+            historyCollapse: false,
+            showDiffButtonText: "Show",
+            selectedHistory: "",
         };
+        this.collapseHistory = this.collapseHistory.bind(this);
+    }
+
+    collapseHistory(history) {
+        if (!this.state.historyCollapse) {
+            this.setState({selectedHistory: history, historyCollapse: true, showDiffButtonText: 'Close'});
+        }
+        else {
+            this.setState({historyCollapse: false, showDiffButtonText: 'Show'});
+        }
+
     }
 
     getDetails() {
@@ -41,7 +55,40 @@ class IssueDetails extends Component {
     }
 
     render() {
-        const assigned_to = this.state.issue.assigned_to ? this.state.issue.assigned_to.user.username:"N/A";
+        let historyPart = "";
+        if (this.state.issue) {
+            const historyDiff = this.state.historyCollapse ? 'd-block' : 'd-none';
+            historyPart = this.state.issue.history.map(hh => {
+                return (
+                    <div>
+                        <div key={hh.id}>
+                            <ul>
+                                <li>
+                                    {hh.comment} at
+                                    <mark>{hh.created_at}</mark>
+                                    <button
+                                        className="btn btn-info btn-xs p-l-r-1 m-l-1"
+                                        onClick={this.collapseHistory.bind(this, hh)}>
+                                        {this.state.showDiffButtonText}
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="container-fluid">
+                            <div className={historyDiff + 'row'} style={{backgroundColor: 'white'}}>
+                                <div className="col-md-6 col-sm-6 col-xs-12">
+                                    {this.state.selectedHistory.old_description}
+                                </div>
+                                <div className="col-md-6 col-sm-6 col-xs-12">
+                                    {this.state.selectedHistory.new_description}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            });
+        }
+        const assigned_to = this.state.issue.assigned_to ? this.state.issue.assigned_to.user.username : "N/A";
         if (this.state.loading) {
             return (
                 <div className="container-loading text-center align-middle">
@@ -68,7 +115,8 @@ class IssueDetails extends Component {
                 <div className="issue-details jumbotron">
                     <p className="issue-title">{this.state.issue.title}</p>
                     <span className="added-by">Added by,&nbsp;
-                        <Link to={BasicStore.urlPaths.profiles + '/' + this.state.issue.author_id}>{this.state.issue.author}</Link>
+                        <Link
+                            to={BasicStore.urlPaths.profiles + '/' + this.state.issue.author_id}>{this.state.issue.author}</Link>
                     </span>
 
                     <div className="row p-t-b-1rem">
@@ -141,13 +189,13 @@ class IssueDetails extends Component {
                     {/* Issue Description */}
                     <div className="row p-3">
                         <h5 className="w-100 f-700">Description</h5>
-                        <p className="issue-desc" dangerouslySetInnerHTML={{ __html: this.state.issue.description }}/>
+                        <p className="issue-desc" dangerouslySetInnerHTML={{__html: this.state.issue.description}}/>
                     </div>
                     <div className="b-t"/>
                     {/* History Section */}
                     <div className="row p-3">
                         <h5 className="w-100 f-700">History</h5>
-                        <p>History will come later.</p>
+                        {historyPart}
                     </div>
                 </div>
             </div>
