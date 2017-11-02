@@ -19,11 +19,12 @@ class IssueDetails extends Component {
     }
 
     collapseHistory(history) {
+        console.log(history.id);
         if (!this.state.historyCollapse) {
-            this.setState({selectedHistory: history, historyCollapse: true, showDiffButtonText: 'Close'});
+            this.setState({selectedHistory: history, historyCollapse: true});
         }
         else {
-            this.setState({historyCollapse: false, showDiffButtonText: 'Show'});
+            this.setState({historyCollapse: false});
         }
 
     }
@@ -55,38 +56,64 @@ class IssueDetails extends Component {
     }
 
     render() {
-        let historyPart = "";
+        let HistoryModal = "";
         if (this.state.issue) {
             const historyDiff = this.state.historyCollapse ? 'd-block' : 'd-none';
-            historyPart = this.state.issue.history.map(hh => {
-                return (
-                    <div>
-                        <div key={hh.id}>
-                            <ul>
-                                <li>
-                                    {hh.comment} at
-                                    <mark>{hh.created_at}</mark>
-                                    <button
-                                        className="btn btn-info btn-xs p-l-r-1 m-l-1"
-                                        onClick={this.collapseHistory.bind(this, hh)}>
-                                        {this.state.showDiffButtonText}
+            if (this.state.historyCollapse) {
+                HistoryModal = (
+                    <div className="modal fade" id="myModal"
+                         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button type="button" className="close" data-dismiss="modal"
+                                            onClick={(e) => this.setState({historyCollapse: false})}>
+                                        <span aria-hidden="true">&times;</span>
+                                        <span className="sr-only">Close</span>
                                     </button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="container-fluid">
-                            <div className={historyDiff + 'row'} style={{backgroundColor: 'white'}}>
-                                <div className="col-md-6 col-sm-6 col-xs-12">
-                                    {this.state.selectedHistory.old_description}
+                                    <h4 className="modal-title text-truncate p-l-r-1" id="myModalLabel">
+                                        {this.state.selectedHistory.comment}
+                                    </h4>
                                 </div>
-                                <div className="col-md-6 col-sm-6 col-xs-12">
-                                    {this.state.selectedHistory.new_description}
+                                <div className="modal-body">
+                                    <div className="container-fluid">
+                                        <div className={historyDiff + 'row'} style={{backgroundColor: 'white'}}>
+                                            <div className="col-md-12 col-sm-12 col-xs-12">
+                                                <strong>Old Assignee:</strong>
+                                                <span style={{paddingLeft: '10px'}}>
+                                                    {this.state.selectedHistory.old_assignee.user.username}
+                                                </span>
+                                                <br/>
+                                                <strong>New Assignee:</strong>
+                                                <span style={{paddingLeft: '10px'}}>
+                                                    {this.state.selectedHistory.new_assignee.user.username}
+                                                </span>
+                                            </div>
+                                            <hr/>
+                                            <div className="col-md-12 col-sm-12 col-xs-12">
+                                                <strong>Old Description</strong>
+                                                <hr className="m-t-0"/>
+                                                <p dangerouslySetInnerHTML={{__html: this.state.selectedHistory.old_description}}/>
+                                            </div>
+                                            <div className="col-md-12 col-sm-12 col-xs-12">
+                                                <strong>New Description</strong>
+                                                <hr className="m-t-0"/>
+                                                <p dangerouslySetInnerHTML={{__html: this.state.selectedHistory.new_description}}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal"
+                                            onClick={(e) => this.setState({historyCollapse: false})}>
+                                        Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )
-            });
+            }
         }
         const assigned_to = this.state.issue.assigned_to ? this.state.issue.assigned_to.user.username : "N/A";
         if (this.state.loading) {
@@ -195,7 +222,25 @@ class IssueDetails extends Component {
                     {/* History Section */}
                     <div className="row p-3">
                         <h5 className="w-100 f-700">History</h5>
-                        {historyPart}
+                        <div className="col-md-12 col-sm-12" >
+                            <ol>
+                                {
+                                    this.state.issue.history.map(hh =>
+                                        <li key={hh.id} style={{paddingBottom: '1rem'}}>
+                                            {hh.comment} at
+                                            <mark>{hh.created_at}</mark>
+                                            <button
+                                                data-toggle="modal" data-target="#myModal"
+                                                className="btn btn-info btn-xs p-l-r-1 m-l-1"
+                                                onClick={this.collapseHistory.bind(this, hh)}>
+                                                {this.state.showDiffButtonText}
+                                            </button>
+                                        </li>
+                                    )
+                                }
+                            </ol>
+                        </div>
+                        {HistoryModal}
                     </div>
                 </div>
             </div>
