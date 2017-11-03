@@ -19,7 +19,6 @@ class IssueDetails extends Component {
     }
 
     collapseHistory(history) {
-        console.log(history.id);
         if (!this.state.historyCollapse) {
             this.setState({selectedHistory: history, historyCollapse: true});
         }
@@ -87,6 +86,18 @@ class IssueDetails extends Component {
                                                 <strong>New Assignee:</strong>
                                                 <span style={{paddingLeft: '10px'}}>
                                                     {this.state.selectedHistory.new_assignee.user.username}
+                                                </span>
+                                            </div>
+                                            <hr/>
+                                            <div className="col-md-12 col-sm-12 col-xs-12">
+                                                <strong>Progress Before:</strong>
+                                                <span style={{paddingLeft: '10px'}}>
+                                                    {this.state.selectedHistory.old_progress} %
+                                                </span>
+                                                <br/>
+                                                <strong>Progress After:</strong>
+                                                <span style={{paddingLeft: '10px'}}>
+                                                    {this.state.selectedHistory.new_progress} %
                                                 </span>
                                             </div>
                                             <hr/>

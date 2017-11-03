@@ -30,7 +30,6 @@ class CreateEditProject extends Component {
             description: this.state.description.toString('html'),
             website: this.state.website,
         });
-        console.log(postBody);
 
         // Here will be save API call
         const url = BasicStore.makeUrl('api/v1/pms/projects/');
