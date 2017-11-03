@@ -139,6 +139,9 @@ class IssueEditView extends Component {
             if (response.status === 401) {
                 this.setState({statusCode: response.status, loading: false});
             }
+            if (response.status === 403) {
+                this.setState({statusCode: response.status, loading: false});
+            }
             if (response.status === 200) {
                 this.setState({statusCode: response.status, success: true, loading: false});
             }
@@ -179,6 +182,16 @@ class IssueEditView extends Component {
             return (
                 <div className="container-loading text-center align-middle">
                     <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                </div>
+            )
+        }
+
+        if(this.state.statusCode === 403) {
+            return (
+                <div className="container">
+                    <p className="alert alert-danger text-center">
+                        You don't have permission to edit this content.
+                    </p>
                 </div>
             )
         }
