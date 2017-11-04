@@ -168,7 +168,7 @@ class AccessControlView extends Component {
                 this.setState({errorData: data});
             }
             if (this.state.success) {
-                this.setState({saveButtonLoading: false, issuePostResponse: data, errorData: []});
+                this.setState({saveButtonLoading: false, errorData: []});
             }
         }).catch((err) => {
             console.log(err);
@@ -238,8 +238,8 @@ class AccessControlView extends Component {
                             <button className="btn btn-primary pull-right custom-btn-padding">
                                 <span className={saveButton}>Save</span>
                                 <span className={Update}>Please Wait...
-                                            <i className="fa fa-spinner fa-spin"/>
-                                        </span>
+                                    <i className="fa fa-spinner fa-spin"/>
+                                </span>
                             </button>
                         </form>
                     </div>
