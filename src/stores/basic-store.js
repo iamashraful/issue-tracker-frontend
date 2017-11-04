@@ -5,7 +5,7 @@ import Login from "../components/Login";
 import Logout from "../components/Logout";
 import Home from "../components/Home";
 import UserRegistration from "../components/profiles/UserRegistration";
-import Settings from "../components/Settings";
+import Settings from "../components/settings/Settings";
 import ProjectsList from "../components/projects/ProjectsList";
 import IssuesList from "../components/issues/IssuesList";
 import ActivityLog from "../components/reports/ActivityLog";

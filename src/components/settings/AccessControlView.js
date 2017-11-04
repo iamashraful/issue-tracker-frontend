@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import BasicStore from '../stores/basic-store';
+import BasicStore from '../../stores/basic-store';
 import Select from 'react-select';
 
 
-class Settings extends Component {
+class AccessControlView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -153,7 +153,6 @@ class Settings extends Component {
             body: postBody
         };
         fetch(url, payload).then((response) => {
-            console.log(response.status);
             if (response.status === 400) {
                 this.setState({statusCode: response.status, saveButtonLoading: false});
             }
@@ -186,77 +185,63 @@ class Settings extends Component {
         if (this.state.allUrls.length === 0) {
             accessControlView += 'd-none';
         }
-        if (this.state.loading) {
-            return (
-                <div className="container-loading text-center align-middle">
-                    <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
-                </div>
-            )
-        }
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6 col-sm-6">
-                        <div className={accessControlView}>
-                            <div className="card-header">
-                                <h3>Set Role wise Permission</h3>
+            <div className="col-md-6 col-sm-6">
+                <div className={accessControlView}>
+                    <div className="card-header">
+                        <h3>Set Role wise Permission</h3>
+                    </div>
+                    <div className={"container " + displayClass}>
+                        <p className="alert alert-success text-center">Permission Granted!!</p>
+                    </div>
+                    <div className="card-body p-2">
+                        <form onSubmit={this.handleAccessControl}>
+                            <div className="row p-b-15px">
+                                <div className="w-50ps p-l-r-15px">
+                                    <label>Role</label> <br/>
+                                    {/*<span className="text-danger">{this.state.errorData}</span>*/}
+                                    <Select
+                                        required
+                                        name="form-field-name"
+                                        value={this.state.accessRole}
+                                        options={this.state.roleSelectData}
+                                        onChange={this.onRoleSelect}
+                                    />
+                                </div>
+                                <div className="w-50ps p-l-r-15px">
+                                    <label>Access View</label> <br/>
+                                    {/*<span className="text-danger">{this.state.errorData.url_name}</span>*/}
+                                    <Select
+                                        required
+                                        name="form-field-name"
+                                        value={this.state.accessUrl}
+                                        options={this.state.accessViewSelectData}
+                                        onChange={this.onAccessViewSelect}
+                                    />
+                                </div>
                             </div>
-                            <div className={"container " + displayClass}>
-                                <p className="alert alert-success text-center">Permission Granted!!</p>
-                            </div>
-                            <div className="card-body p-2">
-                                <form onSubmit={this.handleAccessControl}>
-                                    <div className="row p-b-15px">
-                                        <div className="w-50ps p-l-r-15px">
-                                            <label>Role</label> <br/>
-                                            {/*<span className="text-danger">{this.state.errorData}</span>*/}
-                                            <Select
-                                                required
-                                                name="form-field-name"
-                                                value={this.state.accessRole}
-                                                options={this.state.roleSelectData}
-                                                onChange={this.onRoleSelect}
-                                            />
-                                        </div>
-                                        <div className="w-50ps p-l-r-15px">
-                                            <label>Access View</label> <br/>
-                                            {/*<span className="text-danger">{this.state.errorData.url_name}</span>*/}
-                                            <Select
-                                                required
-                                                name="form-field-name"
-                                                value={this.state.accessUrl}
-                                                options={this.state.accessViewSelectData}
-                                                onChange={this.onAccessViewSelect}
-                                            />
-                                        </div>
-                                    </div>
 
-                                    <div className="row p-b-15px">
-                                        <div className="w-100 p-l-r-15px">
-                                            <label>Permissions</label> <br/>
-                                            {/*<span className="text-danger">{this.state.errorData}</span>*/}
-                                            <Select
-                                                multi
-                                                name="form-field-name"
-                                                value={this.state.accessPermissions}
-                                                options={this.state.permissionsSelectData}
-                                                onChange={this.onPermissionsSelect}
-                                            />
-                                        </div>
-                                    </div>
-                                    <button className="btn btn-primary pull-right custom-btn-padding">
-                                        <span className={saveButton}>Save</span>
-                                        <span className={Update}>Please Wait...
+                            <div className="row p-b-15px">
+                                <div className="w-100 p-l-r-15px">
+                                    <label>Permissions</label> <br/>
+                                    {/*<span className="text-danger">{this.state.errorData}</span>*/}
+                                    <Select
+                                        multi
+                                        name="form-field-name"
+                                        value={this.state.accessPermissions}
+                                        options={this.state.permissionsSelectData}
+                                        onChange={this.onPermissionsSelect}
+                                    />
+                                </div>
+                            </div>
+                            <button className="btn btn-primary pull-right custom-btn-padding">
+                                <span className={saveButton}>Save</span>
+                                <span className={Update}>Please Wait...
                                             <i className="fa fa-spinner fa-spin"/>
                                         </span>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-sm-6">
-                        <h3>Here will be something ...</h3>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -264,4 +249,4 @@ class Settings extends Component {
     }
 }
 
-export default Settings
+export default AccessControlView;
