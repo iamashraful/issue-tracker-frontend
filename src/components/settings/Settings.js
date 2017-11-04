@@ -34,7 +34,7 @@ class Settings extends Component {
             if (response.status === 400) {
                 this.setState({statusCode: response.status, testLoading: false});
             }
-            if (response.status === 401) {
+            if (response.status === 403) {
                 this.setState({statusCode: response.status, testLoading: false});
             }
             if (response.status === 200) {
@@ -59,6 +59,7 @@ class Settings extends Component {
         const testLoader = this.state.testLoading ? "d-block" : "d-none";
         const wellTested = this.state.testedReport !== "" ? "d-block" : "d-none";
         const notTestedYet = this.state.testedReport === "" ? "d-block" : "d-none";
+        const notPermitted = this.state.statusCode === 403 ? "d-block" : "d-none";
 
         if (this.state.loading) {
             return (
@@ -85,6 +86,9 @@ class Settings extends Component {
                                 </button>
                                 <div className={testLoader + " container-loading text-center align-middle"}>
                                     <i className="fa fa-spinner fa-spin" aria-hidden="true"/>
+                                </div>
+                                <div className={notPermitted + " alert alert-danger m-2"}>
+                                    <p className="text-center m-0">You don't have permission to do this.</p>
                                 </div>
                             </div>
                         </div>

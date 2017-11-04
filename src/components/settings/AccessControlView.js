@@ -182,7 +182,7 @@ class AccessControlView extends Component {
         const displayClass = this.state.success ? "d-block" : "d-none";
 
         let accessControlView = 'card ';
-        if (this.state.allUrls.length === 0) {
+        if (this.state.userRole !== BasicStore.userRoleEnum.admin) {
             accessControlView += 'd-none';
         }
 
