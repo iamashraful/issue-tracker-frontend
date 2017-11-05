@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BasicStore from '../../stores/basic-store';
+import Select from 'react-select';
 import {Redirect} from 'react-router-dom';
 
 class UserRegistration extends Component {
@@ -8,7 +9,7 @@ class UserRegistration extends Component {
         this.state = {
             username: '',
             password: '',
-            confirm_password: '',
+            role: '',
             email: '',
             gender: '',
             isAuth: BasicStore.isAuthentication,
@@ -16,7 +17,9 @@ class UserRegistration extends Component {
             loadingText: '',
             _hasError: false,
             apiResponseData: {},
-            errorData: {}
+            errorData: {},
+            roleSelectData: [],
+            allRoles: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -28,6 +31,30 @@ class UserRegistration extends Component {
         })
     }
 
+    getAllRoles() {
+        const url = BasicStore.makeUrl('api/v1/role-manager/roles/');
+        const payload = {
+            method: 'GET',
+            headers: BasicStore.headers
+        };
+        fetch(url, payload).then((response) => {
+            return response.json();
+        }).then((data) => {
+            // set loading false for stop loading feature
+            this.setState({loading: false});
+            if (data) {
+                this.setState({allRoles: data.results});
+                let d = [];
+                data.results.map(role => {
+                    d.push({label: role.name, value: role.id});
+                });
+                this.setState({roleSelectData: d});
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     handleSubmit(event) {
         // Set loading true
         this.setState({loading: true, loadingText: 'Please Wait...'});
@@ -36,7 +63,7 @@ class UserRegistration extends Component {
         const postBody = JSON.stringify({
             username: this.state.username,
             password: this.state.password,
-            confirm_password: this.state.confirm_password,
+            role: this.state.role,
             email: this.state.email,
             gender: this.state.gender
         });
@@ -60,11 +87,8 @@ class UserRegistration extends Component {
         event.preventDefault();
     }
 
-    makeUrl(path) {
-        return BasicStore.apiUrl + path;
-    }
-
     componentWillMount() {
+        this.getAllRoles();
         BasicStore.on("change", () => {
             this.setState({isAuth: BasicStore.isAuthentication});
         });
@@ -75,7 +99,7 @@ class UserRegistration extends Component {
         const registeringButtonViewClass = this.state.loading ? 'd-block' : 'd-none';
         const registerButtonViewClass = this.state.loading ? 'd-none' : 'd-block';
 
-        if (this.state.isAuth) {
+        if (BasicStore.userRole !== BasicStore.userRoleEnum.admin) {
             return <Redirect to="/"/>
         }
         return (
@@ -109,11 +133,12 @@ class UserRegistration extends Component {
                                                 <p className="alert-danger">{this.state.errorData.password}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Confirm Password</label>
-                                                <input className={cssClasses} placeholder="Confirm Password"
-                                                       type="password"
-                                                       onChange={(event) => this.setState({confirm_password: event.target.value})}
-                                                       value={this.state.confirm_password} required
+                                                <label>Role</label>
+                                                <Select
+                                                    name="form-field-name"
+                                                    value={this.state.role}
+                                                    options={this.state.roleSelectData}
+                                                    onChange={(val) => this.setState({role: val ? val.value:""})}
                                                 />
                                                 <p className="alert-danger">{this.state.errorData.confirm_password}</p>
                                             </div>
@@ -135,9 +160,9 @@ class UserRegistration extends Component {
                                             </div>
                                             <button className="btn btn-md btn-block btn-success">
                                                 <span className={registerButtonViewClass}>Register</span>
-                                                <span className={registeringButtonViewClass}>
-                                                Please Wait... <i className="fa fa-spinner fa-spin"/>
-                                            </span>
+                                                <span className={registeringButtonViewClass}>Please Wait...
+                                                    <i className="fa fa-spinner fa-spin"/>
+                                                </span>
                                             </button>
                                         </fieldset>
                                     </form>

@@ -7,7 +7,7 @@ class AccessControlView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            role: BasicStore.userRole,
+            userRole: BasicStore.userRole,
             accessRole: '',
             accessUrl: '',
             accessPermissions: '',
@@ -130,7 +130,7 @@ class AccessControlView extends Component {
 
     componentWillMount() {
         BasicStore.on("change", () => {
-            this.setState({role: BasicStore.userRole})
+            this.setState({userRole: BasicStore.userRole})
         });
         this.getAllUrls();
         this.getAllRoles();

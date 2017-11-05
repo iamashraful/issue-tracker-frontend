@@ -19,13 +19,13 @@ class NavLinkCustom extends Component {
     render() {
         let hideContentClassNames = this.props.cssClass + ' ';
         // TODO: Will try to remove this hardcoded lines
-        if(this.props.text === 'Login' && this.props.url === '/login' && this.state.isAuth){
+        if (this.props.text === 'Login' && this.props.url === '/login' && this.state.isAuth) {
             hideContentClassNames += 'd-none';
         }
-        if(this.props.text === 'Register' && this.props.url === '/register' && this.state.isAuth){
+        if (this.props.text === 'Register' && this.props.url === '/register' && BasicStore.userRole !== BasicStore.userRoleEnum.admin) {
             hideContentClassNames += 'd-none';
         }
-        if(!this.state.isAuth) {
+        if (!this.state.isAuth) {
             hideContentClassNames += this.props.auth ? 'd-none' : 'd-block';
         }
         return (
