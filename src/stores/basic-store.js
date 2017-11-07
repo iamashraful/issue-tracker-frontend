@@ -10,13 +10,14 @@ import ProjectsList from "../components/projects/ProjectsList";
 import IssuesList from "../components/issues/IssuesList";
 import ActivityLog from "../components/reports/ActivityLog";
 import MeDetailsView from "../components/profiles/MeDetailsView";
+import ProgressReport from "../components/reports/ProgressReport";
 
 class BasicStore extends EventEmitter {
     constructor() {
         super();
 
         // Change the url when API server is changed.
-        this.apiUrl = 'http://localhost:8000/';
+        this.apiUrl = 'https://tester-ash.herokuapp.com/';
         // All the urls paths
         this.urlPaths = {
             home: '/',
@@ -31,6 +32,7 @@ class BasicStore extends EventEmitter {
             create: '/create',
             edit: '/edit',
             activityLog: '/activity-logs',
+            progressReport: '/progress-report',
             profiles: '/profiles',
             me: '/me',
         };
@@ -115,9 +117,9 @@ class BasicStore extends EventEmitter {
                     },
                     {
                         id: 20,
-                        text: 'Home Report',
-                        url: this.urlPaths.activityLog,
-                        component: Home,
+                        text: 'Progress Report',
+                        url: this.urlPaths.progressReport,
+                        component: ProgressReport,
                         auth: true
                     },
                 ]
