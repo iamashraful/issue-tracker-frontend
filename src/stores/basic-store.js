@@ -17,7 +17,7 @@ class BasicStore extends EventEmitter {
         super();
 
         // Change the url when API server is changed.
-        this.apiUrl = 'https://tester-ash.herokuapp.com/';
+        this.apiUrl = 'http://localhost:8000/';
         // All the urls paths
         this.urlPaths = {
             home: '/',
