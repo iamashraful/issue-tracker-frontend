@@ -8,35 +8,13 @@ class ProgressReport extends Component {
         super(props);
         this.state = {
             loading: true,
-            lineChart: [0, 59, 80, 81, 56, 55, 40],
+            lineChart: [0, 59, 80, 81, 56, 55, 40, 0, 59, 80, 81, 56, 55],
             reportData: "",
         };
         this.staticColors = ['#EC6518', '#8ED29E', '#93357B', '#31EF0B', '#0BEF9C', '#0BC9EF', '#990BEF', '#404D05'];
         this.lineChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'December'],
-            datasets: [
-                {
-                    label: 'Project 1',
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.state.lineChart
-                }
-            ]
+            labels: [],
+            datasets: []
         };
 
         this.pieChartData = {
@@ -61,6 +39,36 @@ class ProgressReport extends Component {
         };
     }
 
+    generateLineChartData() {
+        this.lineChartData['labels'] = this.state.reportData['line_chart']['labels'];
+        const dataLength = this.state.reportData['line_chart']['data'].length;
+        for (let i = 0; i < dataLength; i++) {
+            const getColor = this.staticColors[Math.floor(Math.random()*this.staticColors.length)];
+            let eachData = {
+                label: this.state.reportData['line_chart']['data'][i].label,
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: getColor,
+                borderColor: getColor,
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: getColor,
+                pointBackgroundColor: '#fff',
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: getColor,
+                pointHoverBorderColor: getColor,
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: this.state.reportData['line_chart']['data'][i].data
+            };
+            this.lineChartData['datasets'].push(eachData);
+        }
+    }
+
     getProgressReportData() {
         const url = BasicStore.makeUrl('api/v1/pms/progress-report/');
         const payload = {
@@ -82,15 +90,18 @@ class ProgressReport extends Component {
     }
 
     render() {
+        if(this.state.reportData !== "") {
+            this.generateLineChartData();
+        }
         return (
             <div className="container-fluid">
                 <h2 className="text-center">Project's Progress Report</h2>
                 <div className="row">
                     <div className="col-md-6 col-sm-12">
-                        <Line data={this.lineChartData} />
+                        <Line data={this.lineChartData}/>
                     </div>
                     <div className="col-md-6 col-sm-12">
-                        <Pie data={this.pieChartData} />
+                        <Pie data={this.pieChartData}/>
                     </div>
                 </div>
 

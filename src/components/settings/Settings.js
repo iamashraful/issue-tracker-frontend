@@ -47,7 +47,6 @@ class Settings extends Component {
             }
             if (this.state.success) {
                 this.setState({testLoading: false, testedReport: data, errorData: []});
-                console.log(this.state.testedReport);
             }
         }).catch((err) => {
             console.log(err);
