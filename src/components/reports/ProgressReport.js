@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Line, Pie} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 import BasicStore from "../../stores/basic-store";
 
 
@@ -15,27 +15,6 @@ class ProgressReport extends Component {
         this.lineChartData = {
             labels: [],
             datasets: []
-        };
-
-        this.pieChartData = {
-            labels: [
-                'Red',
-                'Green',
-                'Yellow'
-            ],
-            datasets: [{
-                data: [300, 50, 100],
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ]
-            }]
         };
     }
 
@@ -80,6 +59,7 @@ class ProgressReport extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, reportData: data});
+            console.log(data.pie_chart)
         }).catch((err) => {
             console.log(err);
         });
@@ -97,12 +77,14 @@ class ProgressReport extends Component {
             <div className="container-fluid">
                 <h2 className="text-center">Project's Progress Report</h2>
                 <div className="row">
-                    <div className="col-md-6 col-sm-12">
+                    <div className="mt-5 ml-auto mr-auto col-md-6 col-sm-12">
                         <Line data={this.lineChartData}/>
+                        <p className="mt-4 text-center">
+                            Report is showing for all projects. This is the progress of all projects. This just mean
+                            how work is going. All the progress values are showing to percent (%).
+                        </p>
                     </div>
-                    <div className="col-md-6 col-sm-12">
-                        <Pie data={this.pieChartData}/>
-                    </div>
+
                 </div>
 
             </div>
