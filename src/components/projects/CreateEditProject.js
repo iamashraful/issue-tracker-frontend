@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import BasicStore from "../../stores/basic-store";
 import RichTextEditor from 'react-rte';
+import Dropzone from 'react-dropzone';
 
 class CreateEditProject extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class CreateEditProject extends Component {
             name: "",
             description: RichTextEditor.createEmptyValue(),
             website: "",
-            documents: "",
+            documents: [],
+            logo: [],
             // API Response state
             projectPostResponse: "",
             statusCode: 400,
@@ -23,12 +25,41 @@ class CreateEditProject extends Component {
         this.handleSaveProject.bind(this);
     }
 
+    uploadFile(logo) {
+        // Here will be save API call
+        const url = BasicStore.makeUrl('api/v1/pms/documents/' + logo.name);
+        let formData  = new FormData();
+        formData.append('file', logo);
+        const payload = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Token ' + BasicStore.token
+            },
+            body: formData
+        };
+
+        fetch(url, payload).then((response) => {
+            return response.json();
+        }).then((data) => {
+            this.setState({documents: [data.pk]})
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    onDrop(files) {
+        this.setState({logo: files});
+        this.uploadFile(files[0]);
+    }
+
     handleSaveProject(event) {
         this.setState({loading: true});
         const postBody = JSON.stringify({
             name: this.state.name,
             description: this.state.description.toString('html'),
             website: this.state.website,
+            documents: this.state.documents,
         });
 
         // Here will be save API call
@@ -103,6 +134,17 @@ class CreateEditProject extends Component {
                                    value={this.state.website}
                             />
                         </div>
+                        <div className="form-group">
+                            <label>Logo</label><br/>
+                            <Dropzone onDrop={this.onDrop.bind(this)} multiple={false} accept="image/*">
+                                <p className="p-2">Try dropping some files here, or click to select files to upload.</p>
+                            </Dropzone>
+                            <aside>
+                                <h2>Dropped files</h2>
+                                <ul>{this.state.logo.map(f => <img className="img-thumbnail" key={f.name} src={f.preview}/>)}</ul>
+                            </aside>
+                        </div>
+
                         <div className="form-group">
                             <label>Description</label>
                             <br/>
