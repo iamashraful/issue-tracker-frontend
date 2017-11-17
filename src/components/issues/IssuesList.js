@@ -18,7 +18,6 @@ class IssuesList extends Component {
         };
         this.contentVisibility = this.contentVisibility.bind(this);
         this.onProjectSelect = this.onProjectSelect.bind(this);
-        this.reloadData = this.reloadData.bind(this);
     }
 
     contentVisibility(val) {
@@ -36,7 +35,6 @@ class IssuesList extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, issues: data.results});
-            console.log(data.results);
         }).catch((err) => {
             console.log(err);
         });
@@ -49,11 +47,6 @@ class IssuesList extends Component {
         }
     }
 
-    reloadData(e) {
-        this.getIssues(this.state.issueParams);
-        e.preventDefault();
-    }
-
     onProjectSelect(val) {
         if (val !== null) {
             let d = [];
@@ -63,6 +56,7 @@ class IssuesList extends Component {
                 str += item.value + ",";
             });
             this.setState({selectedProject: d, issueParams: 'project=' + str});
+            this.getIssues('project=' + str);
         }
         else {
             this.setState({selectedProject: []});
@@ -89,11 +83,6 @@ class IssuesList extends Component {
                             </Link>
                         </div>
                         <div style={{paddingTop: '2.5rem'}}>
-                            <button
-                                className="m-l-1 pull-right btn btn-info"
-                                onClick={this.reloadData}
-                            >Reload
-                            </button>
                             <Select
                                 className="pull-right w-33ps"
                                 multi={true}
