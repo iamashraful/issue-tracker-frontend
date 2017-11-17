@@ -24,7 +24,7 @@ class IssueTableView extends Component {
         if (this.props.issues.length === 0) {
             return (
                 <div className="text-center">
-                    <p>No data found.</p>
+                    <p>No issues found.</p>
                 </div>
             )
         }

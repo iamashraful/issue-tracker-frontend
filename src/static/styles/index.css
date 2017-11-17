@@ -102,7 +102,8 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
 
 .project-card-title {
     font-size: 1.5rem;
-    color: #1d1e1f;
+    background-color: #aebafd;
+    color: #000913;
     padding: 5px 20px 5px 20px;
     text-decoration: none !important;
 }
