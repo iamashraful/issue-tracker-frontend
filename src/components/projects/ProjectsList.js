@@ -12,20 +12,22 @@ class ProjectsList extends Component {
             // Style related states
             displayClass: 'd-block',
             loading: true,
+            projectName: "",
 
             // Business Logic related states
             projects: [],
             statusCode: 0,
         };
-        this.contentVisibility.bind(this);
+        this.contentVisibility = this.contentVisibility.bind(this);
+        this.searchProject = this.searchProject.bind(this);
     }
 
     contentVisibility(val) {
         this.setState({displayClass: val});
     }
 
-    getProjectList() {
-        const url = BasicStore.makeUrl('api/v1/pms/projects/');
+    getProjectList(params) {
+        const url = BasicStore.makeUrl('api/v1/pms/projects/?' + params);
         const payload = {
             method: 'GET',
             headers: BasicStore.headers
@@ -43,6 +45,11 @@ class ProjectsList extends Component {
         }).catch((err) => {
             console.log(err);
         });
+    }
+
+    searchProject(e) {
+        this.getProjectList("name=" + e.target.value);
+        e.preventDefault();
     }
 
     componentWillMount() {
@@ -66,21 +73,9 @@ class ProjectsList extends Component {
             )
         }
 
+        let notFound = "";
         if (this.state.projects.length === 0) {
-            return (
-                <div className={mainContentClass}>
-                    <div className="action-view">
-                        {/* Action buttons view */}
-                        <div>
-                            <Link
-                                className="btn btn-primary link-button pull-right"
-                                to={BasicStore.urlPaths.projects + BasicStore.urlPaths.create}> Create
-                            </Link>
-                        </div>
-                    </div>
-                    <h1 className="text-center text-danger p-5">No projects found.</h1>
-                </div>
-            )
+            notFound = "No projects found.";
         }
 
         return (
@@ -96,6 +91,15 @@ class ProjectsList extends Component {
                             </Link>
                         </div>
                     </div>
+                    {/* Search View */}
+                    <div style={{marginTop: "1rem", marginBottom: "1rem"}}>
+                        <input
+                            className="form-control w-33ps m-auto"
+                            placeholder="Search..."
+                            onChange={this.searchProject}
+                        />
+                    </div>
+                    <p className="text-center">{notFound}</p>
                     {/* All the projects card view */}
                     <div className="row p-t-b-1rem">
                         {this.state.projects.map(project =>
