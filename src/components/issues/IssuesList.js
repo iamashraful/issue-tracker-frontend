@@ -15,13 +15,18 @@ class IssuesList extends Component {
             selectedProject: [],
             projectSelectData: [],
             issueParams: "",
+            statusCode: "",
         };
         this.contentVisibility = this.contentVisibility.bind(this);
         this.onProjectSelect = this.onProjectSelect.bind(this);
     }
 
     contentVisibility(val) {
-        this.setState({displayClass: val});
+        if(this.state.statusCode === 403) {
+            this.setState({displayClass: 'd-none'});
+        } else {
+            this.setState({displayClass: val});
+        }
     }
 
     getIssues(params) {
@@ -31,6 +36,9 @@ class IssuesList extends Component {
             headers: BasicStore.headers
         };
         fetch(url, payload).then((response) => {
+            if (response.status === 403) {
+                this.setState({statusCode: response.status, loading: false});
+            }
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature

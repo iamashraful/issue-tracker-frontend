@@ -10,6 +10,7 @@ class Dashboard extends Component {
         this.state = {
             displayClass: 'd-block',
             loading: true,
+            statusCode: "",
             issuesAssignedToMe: [],
             issuesReportedByMe: []
         };
@@ -17,7 +18,11 @@ class Dashboard extends Component {
     }
 
     contentVisibility(val) {
-        this.setState({displayClass: val})
+        if(this.state.statusCode === 403) {
+            this.setState({displayClass: 'd-none'});
+        } else {
+            this.setState({displayClass: val});
+        }
     }
 
     getIssues(params, flag) {
@@ -27,6 +32,9 @@ class Dashboard extends Component {
             headers: BasicStore.headers
         };
         fetch(url, payload).then((response) => {
+            if (response.status === 403) {
+                this.setState({statusCode: response.status, loading: false});
+            }
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature
