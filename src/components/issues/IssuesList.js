@@ -53,6 +53,7 @@ class IssuesList extends Component {
         if (BasicStore.projects.length === 0) {
             BasicStore.fetchProjects();
         }
+
     }
 
     onProjectSelect(val) {

@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import BasicStore from "../../stores/basic-store";
+// Import React Table
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 
 class IssueTableView extends Component {
@@ -71,27 +74,91 @@ class IssueTableView extends Component {
 
         return (
             <div>
-                <table className="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th className="w-10">Title</th>
-                        <th>Project</th>
-                        <th>Author</th>
-                        <th>Tracker</th>
-                        <th>Created</th>
-                        <th>Due Date</th>
-                        <th>Assignee</th>
-                        <th>Priority</th>
-                        <th>Status</th>
-                        <th>% Done</th>
-                        <th>Updated</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {tableRowView}
-                    </tbody>
-                </table>
+                <ReactTable
+                    noDataText="No Issues Found!!"
+                    data={this.props.issues}
+                    columns={[
+                        {
+                            columns: [
+                                {
+                                    Header: "#",
+                                    accessor: "id",
+                                    width: 40
+                                },
+                                {
+                                    Header: "Title",
+                                    accessor: "title",
+                                    width: 280
+                                },
+                                {
+                                    Header: "Project Name",
+                                    id: "project.name",
+                                    accessor: issue => issue.project.name
+                                },
+                                {
+                                    Header: "Tracker",
+                                    accessor: "author"
+                                },
+                                {
+                                    Header: "Due Date",
+                                    accessor: "author"
+                                },
+                                {
+                                    Header: "Assigned to",
+                                    id: "assigned_to.user.username",
+                                    accessor: issue => issue.assigned_to.user.username
+                                },
+                                {
+                                    Header: "Progress (%)",
+                                    accessor: "progress"
+                                },
+                                {
+                                    Header: "Status",
+                                    accessor: "status"
+                                },
+                                {
+                                    Header: "Priority",
+                                    accessor: "priority"
+                                },
+                                {
+                                    Header: "Created at",
+                                    accessor: "created_at"
+                                },
+                                {
+                                    Header: "Updated at",
+                                    accessor: "updated_at"
+                                },
+
+                            ]
+                        },
+                    ]}
+                    defaultPageSize={5}
+                    className="-striped -highlight"
+                />
+
+
+
+                {/*<table className="table table-hover">*/}
+                    {/*<thead>*/}
+                    {/*<tr>*/}
+                        {/*<th>#</th>*/}
+                        {/*<th className="w-10">Title</th>*/}
+                        {/*<th>Project</th>*/}
+                        {/*<th>Author</th>*/}
+                        {/*<th>Tracker</th>*/}
+                        {/*<th>Created</th>*/}
+                        {/*<th>Due Date</th>*/}
+                        {/*<th>Assignee</th>*/}
+                        {/*<th>Priority</th>*/}
+                        {/*<th>Status</th>*/}
+                        {/*<th>% Done</th>*/}
+                        {/*<th>Updated</th>*/}
+                    {/*</tr>*/}
+                    {/*</thead>*/}
+                    {/*<tbody>*/}
+                        {/*{tableRowView}*/}
+                    {/*</tbody>*/}
+                {/*</table>*/}
             </div>
         )
     }
