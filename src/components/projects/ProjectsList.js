@@ -17,6 +17,7 @@ class ProjectsList extends Component {
             // Business Logic related states
             projects: [],
             statusCode: 0,
+            permissionError: false,
         };
         this.contentVisibility = this.contentVisibility.bind(this);
         this.searchProject = this.searchProject.bind(this);
@@ -33,8 +34,8 @@ class ProjectsList extends Component {
             headers: BasicStore.headers
         };
         fetch(url, payload).then((response) => {
-            if (response.status === 401) {
-                this.setState({statusCode: response.status, loading: false});
+            if (response.status === 401 || response.status === 403) {
+                this.setState({statusCode: response.status, loading: false, permissionError: true});
             }
             return response.json();
         }).then((data) => {

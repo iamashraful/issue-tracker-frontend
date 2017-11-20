@@ -73,7 +73,7 @@ class CreateEditProject extends Component {
             if (response.status === 400) {
                 this.setState({statusCode: response.status, loading: false});
             }
-            if (response.status === 401) {
+            if (response.status === 401 || response.status === 403) {
                 this.setState({statusCode: response.status, loading: false});
             }
             if (response.status === 201) {
@@ -99,6 +99,7 @@ class CreateEditProject extends Component {
         const savingButton = this.state.loading ? 'd-block' : 'd-none';
         const saveButton = this.state.loading ? 'd-none' : 'd-block';
         successMgs += this.state.success ? "d-block" : "d-none";
+        const notPermitted = this.state.statusCode === 403 ? "You don't have permission to create a project." : "";
 
         if(this.state.success) {
             setTimeout(function() {
@@ -155,6 +156,7 @@ class CreateEditProject extends Component {
                                 onChange={(val) => this.setState({description: val})}
                             />
                         </div>
+                        <p className="alert-danger text-center">{notPermitted}</p>
                         <button className="btn btn-primary pull-right custom-btn-padding">
                             <span className={saveButton}>Save</span>
                             <span className={savingButton}>Please Wait...
@@ -162,7 +164,6 @@ class CreateEditProject extends Component {
                             </span>
                         </button>
                     </fieldset>
-
                 </form>
             </div>
         )
