@@ -130,7 +130,7 @@ class IssueTableView extends Component {
                             ]
                         },
                     ]}
-                    defaultPageSize={5}
+                    defaultPageSize={this.props.defaultPageSize > 0 ? this.props.defaultPageSize : 5}
                     className="-striped -highlight"
                 />
             </div>

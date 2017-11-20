@@ -80,7 +80,7 @@ class IssuesList extends Component {
             <div className={mainContentClass}>
                 <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
                 <div>
-                    <div className="row">
+                    <div className="row p-l-r-15px">
                         <div className="action-view">
                             {/* Action buttons view */}
                             <div className="action-buttons">
@@ -91,7 +91,7 @@ class IssuesList extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row p-l-r-15px">
                         {/* Here will be some filters */}
                         <div style={{paddingTop: '1rem', paddingBottom: '1rem'}} className="w-100">
                             <Select
@@ -109,6 +109,7 @@ class IssuesList extends Component {
                         style={{paddingTop: '1rem'}}
                         issues={this.state.issues}
                         loading={this.state.loading}
+                        defaultPageSize={10}
                     />
                 </div>
             </div>
