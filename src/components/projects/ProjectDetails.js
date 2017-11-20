@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Redirect, Link, Switch, Route} from 'react-router-dom';
 
 import BasicStore from '../../stores/basic-store';
-import IssuesList from "../issues/IssuesList";
+import IssueTableView from "../issues/IssueTableView";
 
 
 class ProjectDetails extends Component {
@@ -13,7 +13,9 @@ class ProjectDetails extends Component {
             projectSlug: this.props.match.params.slug,
             project: "",
             notFound: false,
-            unAuth: false
+            unAuth: false,
+            statusCode: 0,
+            issues: [],
         };
     }
 
@@ -34,6 +36,26 @@ class ProjectDetails extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, project: data});
+            this.getIssues();
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    getIssues() {
+        const url = BasicStore.makeUrl('api/v1/pms/issues/' + '?project=' + this.state.project.id);
+        const payload = {
+            method: 'GET',
+            headers: BasicStore.headers
+        };
+        fetch(url, payload).then((response) => {
+            if (response.status === 403) {
+                this.setState({statusCode: response.status, loading: false});
+            }
+            return response.json();
+        }).then((data) => {
+            // set loading false for stop loading feature
+            this.setState({loading: false, issues: data.results});
         }).catch((err) => {
             console.log(err);
         });
@@ -66,28 +88,30 @@ class ProjectDetails extends Component {
                 </div>
                 {/* This is inline navigation bar */}
                 <div className="float-right">
-                    <ul className="nav justify-content-end">
+                    <ul className="nav nav-tabs" role="tablist">
                         <li className="nav-item">
-                            <Link className="nav-link active" to="">Issues</Link>
+                            <a className="nav-link active" href="#overview" role="tab" data-toggle="tab">Overview</a>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link active" to="">Issues</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link active" to="">Issues</Link>
+                            <a className="nav-link" href="#issue-tab" role="tab" data-toggle="tab">Issues</a>
                         </li>
                     </ul>
                 </div>
                 <div className="jumbotron">
-                    <h4>Description</h4>
-                    <p dangerouslySetInnerHTML={{ __html: this.state.project.description }}/>
-                    <hr/>
-                    {/* TODO: Here will add tab view */}
-                    {/* Defining Route */}
-                    <Switch>
-                        {/* Defining urls */}
-                        <Route exact path={"/projects/" + this.state.projectSlug + "/issues"} component={IssuesList}/>
-                    </Switch>
+                    <div className="tab-content mt-5">
+                        <div role="tabpanel" className="tab-pane fade in active" id="overview">
+                            <h4>Description</h4>
+                            <p dangerouslySetInnerHTML={{ __html: this.state.project.description }}/>
+                        </div>
+                        <div role="tabpanel" className="tab-pane fade" id="issue-tab">
+                            <IssueTableView
+                                style={{paddingTop: '1rem'}}
+                                issues={this.state.issues}
+                                loading={this.state.loading}
+                                defaultPageSize={5}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         )
