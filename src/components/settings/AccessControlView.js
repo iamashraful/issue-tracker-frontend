@@ -20,6 +20,7 @@ class AccessControlView extends Component {
             loading: true,
             saveButtonLoading: false,
             success: false,
+            permissionError: false,
         };
         this.onRoleSelect = this.onRoleSelect.bind(this);
         this.onAccessViewSelect = this.onAccessViewSelect.bind(this);
@@ -58,6 +59,8 @@ class AccessControlView extends Component {
             headers: BasicStore.headers
         };
         fetch(url, payload).then((response) => {
+            if(response.status === 403 || response.status === 401)
+                this.setState({permissionError: true});
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature
@@ -144,6 +147,8 @@ class AccessControlView extends Component {
             url_name: this.state.accessUrl,
             permissions: this.state.accessPermissions,
         });
+        // Clear fields from state
+        this.setState({accessRole: "", accessUrl: "", accessPermissions: []});
 
         // Here will be save API call
         const url = BasicStore.makeUrl('api/v1/role-manager/accesses/');
@@ -156,8 +161,8 @@ class AccessControlView extends Component {
             if (response.status === 400) {
                 this.setState({statusCode: response.status, saveButtonLoading: false});
             }
-            if (response.status === 401) {
-                this.setState({statusCode: response.status, saveButtonLoading: false});
+            if (response.status === 401 || response.status === 403) {
+                this.setState({statusCode: response.status, permissionError: true, saveButtonLoading: false});
             }
             if (response.status === 200) {
                 this.setState({statusCode: response.status, success: true, saveButtonLoading: false});
@@ -180,6 +185,8 @@ class AccessControlView extends Component {
         const Update = this.state.saveButtonLoading ? 'd-block' : 'd-none';
         const saveButton = this.state.saveButtonLoading ? 'd-none' : 'd-block';
         const displayClass = this.state.success ? "d-block" : "d-none";
+        const notPermitted = this.state.permissionError ? "You don't have any permission to do this." : "";
+
 
         let accessControlView = 'card ';
 
@@ -222,7 +229,6 @@ class AccessControlView extends Component {
                             <div className="row p-b-15px">
                                 <div className="w-100 p-l-r-15px">
                                     <label>Permissions</label> <br/>
-                                    {/*<span className="text-danger">{this.state.errorData}</span>*/}
                                     <Select
                                         multi
                                         name="form-field-name"
@@ -232,6 +238,7 @@ class AccessControlView extends Component {
                                     />
                                 </div>
                             </div>
+                            <p className={"alert-danger text-center"}>{notPermitted}</p>
                             <button className="btn btn-primary pull-right custom-btn-padding">
                                 <span className={saveButton}>Save</span>
                                 <span className={Update}>Please Wait...
