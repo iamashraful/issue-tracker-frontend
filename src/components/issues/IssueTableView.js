@@ -32,46 +32,6 @@ class IssueTableView extends Component {
             )
         }
 
-        const tableRowView = this.props.issues.map(function (issue) {
-            let tableRowClass = '';
-            if (issue.tracker === BasicStore.issueTrackerEnum.bug) {
-                tableRowClass = 'table-danger';
-            }
-            if (issue.tracker === BasicStore.issueTrackerEnum.support) {
-                tableRowClass = 'table-info';
-            }
-
-            return(
-                <tr className={tableRowClass} key={issue.id}>
-                    <th scope="row">{issue.id}</th>
-                    <td className="text-truncate force-text-ellipsis" title={issue.title}>
-                        <Link to={BasicStore.urlPaths.issues + "/" + issue.id}>
-                            {issue.title}
-                        </Link>
-                    </td>
-                    <td className="text-truncate" title={issue.project.name}>
-                        <Link to={BasicStore.urlPaths.projects + "/" + issue.project.slug}>
-                            {issue.project.name}
-                        </Link>
-                    </td>
-                    <td>
-                        <Link to={BasicStore.urlPaths.profiles + '/' + issue.author_id}>{issue.author}</Link>
-                    </td>
-                    <td>{BasicStore.issueTrackerEnum[issue.tracker]}</td>
-                    <td>{issue.created_at}</td>
-                    <td>{issue.due_date}</td>
-                    <td>
-                        <Link to={BasicStore.urlPaths.profiles + '/' + issue.assigned_to.id}>{issue.assigned_to.user.username}</Link>
-                    </td>
-                    <td>{BasicStore.issuePriorityEnum[issue.priority]}</td>
-                    <td>{BasicStore.issueStatusEnum[issue.status]}</td>
-                    <td>{issue.progress}%</td>
-                    <td>{issue.updated_at}</td>
-                </tr>
-            )
-        });
-
-
         return (
             <div>
                 <ReactTable
@@ -87,26 +47,57 @@ class IssueTableView extends Component {
                                 },
                                 {
                                     Header: "Title",
-                                    accessor: "title",
-                                    width: 280
+                                    id: "title",
+                                    accessor: (issue => {
+                                        return (
+                                            <Link
+                                                to={BasicStore.urlPaths.issues + '/' + issue.id}>
+                                                {issue.title}
+                                            </Link>
+                                        )
+                                    }),
+                                    width: 230
                                 },
                                 {
                                     Header: "Project Name",
-                                    id: "project.name",
-                                    accessor: issue => issue.project.name
+                                    id: "project_name",
+                                    accessor: (issue => {
+                                        return (
+                                            <Link
+                                                to={BasicStore.urlPaths.projects + '/' + issue.project.slug}>
+                                                {issue.project.name}
+                                            </Link>
+                                        )
+                                    }),
+                                    width: 180
                                 },
                                 {
-                                    Header: "Tracker",
-                                    accessor: "author"
+                                    Header: "Author",
+                                    id: "author",
+                                    accessor: (issue => {
+                                        return (
+                                        <Link
+                                            to={BasicStore.urlPaths.profiles + '/' + issue.author_id}>
+                                            {issue.author}
+                                        </Link>
+                                        )
+                                    }),
                                 },
                                 {
                                     Header: "Due Date",
-                                    accessor: "author"
+                                    accessor: "due_date"
                                 },
                                 {
                                     Header: "Assigned to",
                                     id: "assigned_to.user.username",
-                                    accessor: issue => issue.assigned_to.user.username
+                                    accessor: (issue => {
+                                        return (
+                                            <Link
+                                                to={BasicStore.urlPaths.profiles + '/' + issue.assigned_to.id}>
+                                                {issue.assigned_to.user.username}
+                                            </Link>
+                                        )
+                                    })
                                 },
                                 {
                                     Header: "Progress (%)",
@@ -114,11 +105,18 @@ class IssueTableView extends Component {
                                 },
                                 {
                                     Header: "Status",
-                                    accessor: "status"
+                                    id: "status",
+                                    accessor: issue => BasicStore.issueStatusEnum[issue.status]
                                 },
                                 {
                                     Header: "Priority",
-                                    accessor: "priority"
+                                    id: "priority",
+                                    accessor: issue => BasicStore.issuePriorityEnum[issue.priority]
+                                },
+                                {
+                                    Header: "Tracker",
+                                    id: 'tracker',
+                                    accessor: issue => BasicStore.issueTrackerEnum[issue.tracker]
                                 },
                                 {
                                     Header: "Created at",
@@ -135,30 +133,6 @@ class IssueTableView extends Component {
                     defaultPageSize={5}
                     className="-striped -highlight"
                 />
-
-
-
-                {/*<table className="table table-hover">*/}
-                    {/*<thead>*/}
-                    {/*<tr>*/}
-                        {/*<th>#</th>*/}
-                        {/*<th className="w-10">Title</th>*/}
-                        {/*<th>Project</th>*/}
-                        {/*<th>Author</th>*/}
-                        {/*<th>Tracker</th>*/}
-                        {/*<th>Created</th>*/}
-                        {/*<th>Due Date</th>*/}
-                        {/*<th>Assignee</th>*/}
-                        {/*<th>Priority</th>*/}
-                        {/*<th>Status</th>*/}
-                        {/*<th>% Done</th>*/}
-                        {/*<th>Updated</th>*/}
-                    {/*</tr>*/}
-                    {/*</thead>*/}
-                    {/*<tbody>*/}
-                        {/*{tableRowView}*/}
-                    {/*</tbody>*/}
-                {/*</table>*/}
             </div>
         )
     }
