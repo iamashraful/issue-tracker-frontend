@@ -80,20 +80,22 @@ class IssuesList extends Component {
             <div className={mainContentClass}>
                 <NoAccess displayCSS={this.contentVisibility.bind(this)}/>
                 <div>
-                    {/* Here will be some filters */}
-                </div>
-                <div>
-                    <div className="action-view">
-                        {/* Action buttons view */}
-                        <div className="action-buttons">
-                            <Link
-                                className="btn btn-primary link-button pull-right"
-                                to={BasicStore.urlPaths.issues + BasicStore.urlPaths.create}> Create
-                            </Link>
+                    <div className="row">
+                        <div className="action-view">
+                            {/* Action buttons view */}
+                            <div className="action-buttons">
+                                <Link
+                                    className="btn btn-primary link-button pull-right"
+                                    to={BasicStore.urlPaths.issues + BasicStore.urlPaths.create}> Create
+                                </Link>
+                            </div>
                         </div>
-                        <div style={{paddingTop: '2.5rem'}}>
+                    </div>
+                    <div className="row">
+                        {/* Here will be some filters */}
+                        <div style={{paddingTop: '1rem', paddingBottom: '1rem'}} className="w-100">
                             <Select
-                                className="pull-right w-33ps"
+                                className="w-33ps pull-right"
                                 multi={true}
                                 name="form-field-name"
                                 value={this.state.selectedProject}

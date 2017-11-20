@@ -71,6 +71,7 @@
 }
 
 .action-view {
+    width: 100%;
     background-color: #c4e2ec;
     padding: 5px;
     height: 35px;
