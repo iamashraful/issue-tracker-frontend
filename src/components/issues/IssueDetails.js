@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import BasicStore from "../../stores/basic-store";
 import {Link} from "react-router-dom";
+import IssueConversationView from "./IssueConversationView";
 
 class IssueDetails extends Component {
     constructor(props) {
@@ -141,6 +142,11 @@ class IssueDetails extends Component {
                 <div className="action-view">
                     <span className="issue-title">#{this.state.issue.id}</span>
                     <span className="action-buttons">
+                        <button
+                            data-toggle="modal" data-target="#conversationModal"
+                            className="btn btn-primary link-button">
+                            Conversation
+                        </button>
                         <Link
                             className="btn btn-success link-button"
                             to={BasicStore.urlPaths.issues + '/' + this.state.issueId + BasicStore.urlPaths.edit}
@@ -252,6 +258,11 @@ class IssueDetails extends Component {
                             </ol>
                         </div>
                         {HistoryModal}
+                        {/* Show Conversation modal */}
+                        <div className="modal fade" id="conversationModal"
+                             role="dialog" aria-labelledby="conversationModalLabel" aria-hidden="true">
+                            <IssueConversationView issueId={this.state.issueId}/>
+                        </div>
                     </div>
                 </div>
             </div>
