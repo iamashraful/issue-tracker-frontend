@@ -31,7 +31,7 @@ class LogListView extends Component {
 
             return(
                 <tr className={tableRowClass} key={lg.id}>
-                    <th scope="row">{lg.profile.user.username}</th>
+                    <th scope="row">{lg.profile.name}</th>
                     <td title={lg.operational_text}>
                         <Link to={lg.link}>{lg.operational_text}</Link>
                     </td>

@@ -246,7 +246,7 @@ class BasicStore extends EventEmitter {
         }).then((data) => {
             this.profiles = data.results;
             data.results.map(pr => {
-                this.profilesSelectFormat.push({label: pr.user.username, value: pr.id});
+                this.profilesSelectFormat.push({label: pr.name, value: pr.id});
             });
         }).catch((err) => {
             console.log(err);

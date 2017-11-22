@@ -89,12 +89,12 @@ class IssueTableView extends Component {
                                 },
                                 {
                                     Header: "Assigned to",
-                                    id: "assigned_to.user.username",
+                                    id: "assigned_to.name",
                                     accessor: (issue => {
                                         return (
                                             <Link
                                                 to={BasicStore.urlPaths.profiles + '/' + issue.assigned_to.id}>
-                                                {issue.assigned_to.user.username}
+                                                {issue.assigned_to.name}
                                             </Link>
                                         )
                                     })

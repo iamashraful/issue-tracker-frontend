@@ -72,7 +72,7 @@ class IssueCreateView extends Component {
         const profiles = BasicStore.profiles;
         let data = [];
         profiles.map(pr => {
-            data.push({label: pr.user.username, value: pr.id});
+            data.push({label: pr.name, value: pr.id});
         });
         this.setState({profileSelectData: data});
         // e.preventDefault();

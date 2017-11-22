@@ -9,7 +9,7 @@ class IssueConversationView extends Component {
             loading: true,
             statusCode: 0,
             permissionError: false,
-            conversation: "",
+            conversation: {},
         }
     }
 
@@ -40,57 +40,16 @@ class IssueConversationView extends Component {
         this.getConversation();
     }
 
+
+
     render() {
-        let comment = "";
-        let CommentModalView = "";
-        if(this.state.conversation.comment !== undefined) {
-            comment = this.state.conversation.comment;
-            if (comment) {
-                CommentModalView = (
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Notes</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="card">
-                                <div className="card-header p-0 pl-2">
-                                    <h4>Comment & Replies</h4>
-                                </div>
-                                <div className="card-body">
-                                    <h5 className="pl-2 mb-0">
-                                        <i className="fa fa-comments" aria-hidden="true"/>
-                                        <span className="pl-1">{comment.text}</span>
-                                    </h5>
-                                    <p className="pl-2 pt-0 text-muted">Commented by, {}</p>
-                                    <div className="ml-5">
-                                        <strong>Replies</strong>
-                                        {
-                                            comment.replies.map(reply => {
-                                                return (
-                                                    <p>
-                                                        <i className="fa fa-reply" aria-hidden="true"/>
-                                                        <span className="pl-1">{reply.text} --</span>
-                                                        <span className="text-muted">{}</span>
-                                                    </p>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                )
-            }
+        if(Object.keys(this.state.conversation).length === 0 && this.state.conversation.constructor === Object) {
+            return null;
         }
-        else {
-            CommentModalView = (
+
+        console.log(this.state.conversation);
+        return (
+            <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Notes</h5>
@@ -99,15 +58,41 @@ class IssueConversationView extends Component {
                         </button>
                     </div>
                     <div className="modal-body">
-                        <p className="text-center">No notes found.</p>
+                        {this.state.conversation.comments.map(comment => {
+                            return (
+                                <div className="card m-b-15" key={comment.id}>
+                                    <div className="card-header p-0 pl-2">
+                                        <h4>Comment & Replies</h4>
+                                    </div>
+                                    <div className="card-body">
+                                        <h5 className="pl-2 mb-0">
+                                            <i className="fa fa-comments" aria-hidden="true"/>
+                                            <span className="pl-1">{comment.text}</span>
+                                        </h5>
+                                        <p className="pl-2 pt-0 text-muted">Commented by, {comment.author.name}</p>
+                                        <div className="ml-5">
+                                            <strong>Replies</strong>
+                                            {
+                                                comment.replies.map(reply => {
+                                                    return (
+                                                        <p key={reply.id}>
+                                                            <i className="fa fa-reply" aria-hidden="true"/>
+                                                            <span className="pl-1">{reply.text} --</span>
+                                                            <span className="text-muted">{reply.author.name}</span>
+                                                        </p>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-            )
-        }
-
-        return (
-            <div className="modal-dialog" role="document">
-                {CommentModalView}
             </div>
         )
     }

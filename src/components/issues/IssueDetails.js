@@ -81,12 +81,12 @@ class IssueDetails extends Component {
                                             <div className="col-md-12 col-sm-12 col-xs-12">
                                                 <strong>Old Assignee:</strong>
                                                 <span style={{paddingLeft: '10px'}}>
-                                                    {this.state.selectedHistory.old_assignee.user.username}
+                                                    {this.state.selectedHistory.old_assignee.name}
                                                 </span>
                                                 <br/>
                                                 <strong>New Assignee:</strong>
                                                 <span style={{paddingLeft: '10px'}}>
-                                                    {this.state.selectedHistory.new_assignee.user.username}
+                                                    {this.state.selectedHistory.new_assignee.name}
                                                 </span>
                                             </div>
                                             <hr/>
@@ -127,7 +127,7 @@ class IssueDetails extends Component {
                 )
             }
         }
-        const assigned_to = this.state.issue.assigned_to ? this.state.issue.assigned_to.user.username : "N/A";
+        const assigned_to = this.state.issue.assigned_to ? this.state.issue.assigned_to.name : "N/A";
         if (this.state.loading) {
             return (
                 <div className="container-loading text-center align-middle">
