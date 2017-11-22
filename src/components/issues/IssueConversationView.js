@@ -30,7 +30,6 @@ class IssueConversationView extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, conversation: data});
-            console.log(this.state.conversation);
         }).catch((err) => {
             console.log(err);
         });
@@ -44,10 +43,9 @@ class IssueConversationView extends Component {
 
     render() {
         if(Object.keys(this.state.conversation).length === 0 && this.state.conversation.constructor === Object) {
-            return null;
+            return <p className="text-center">No Notes Found!!</p>;
         }
 
-        console.log(this.state.conversation);
         return (
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
@@ -58,6 +56,9 @@ class IssueConversationView extends Component {
                         </button>
                     </div>
                     <div className="modal-body">
+                        <p className="text-center">
+                            {this.state.conversation.comments.length <= 0 ? "No notes found!!": ""}
+                        </p>
                         {this.state.conversation.comments.map(comment => {
                             return (
                                 <div className="card m-b-15" key={comment.id}>
@@ -71,7 +72,9 @@ class IssueConversationView extends Component {
                                         </h5>
                                         <p className="pl-2 pt-0 text-muted">Commented by, {comment.author.name}</p>
                                         <div className="ml-5">
-                                            <strong>Replies</strong>
+                                            <strong className={comment.replies.length <= 0 ? "d-none": "d-block"}>
+                                                Replies
+                                            </strong>
                                             {
                                                 comment.replies.map(reply => {
                                                     return (
