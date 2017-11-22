@@ -10,7 +10,11 @@ class IssueConversationView extends Component {
             statusCode: 0,
             permissionError: false,
             conversation: {},
-        }
+            commentText: "",
+            replyText: "",
+        };
+        this.handleCommitSubmit = this.handleCommitSubmit.bind(this);
+        this.handleReplySubmit = this.handleReplySubmit.bind(this);
     }
 
     getConversation() {
@@ -35,11 +39,20 @@ class IssueConversationView extends Component {
         });
     }
 
-    componentDidMount() {
-        this.getConversation();
+    handleCommitSubmit(e) {
+        console.log(this.state.commentText);
+        e.preventDefault();
+    }
+
+    handleReplySubmit(e) {
+        console.log(this.state.replyText);
+        e.preventDefault();
     }
 
 
+    componentDidMount() {
+        this.getConversation();
+    }
 
     render() {
         if(Object.keys(this.state.conversation).length === 0 && this.state.conversation.constructor === Object) {
@@ -59,6 +72,17 @@ class IssueConversationView extends Component {
                         <p className="text-center">
                             {this.state.conversation.comments.length <= 0 ? "No notes found!!": ""}
                         </p>
+                        <form onSubmit={this.handleCommitSubmit}>
+                            <textarea
+                                rows="2" required placeholder="Write a note here..." style={{width: '80%'}}
+                                onChange={(e) => this.setState({commentText: e.target.value})}
+                            />
+                            <button
+                                type="submit"
+                                className="pl-2 pr-2 btn btn-lg btn-outline-primary pull-right">
+                                Save Note
+                            </button>
+                        </form>
                         {this.state.conversation.comments.map(comment => {
                             return (
                                 <div className="card m-b-15" key={comment.id}>
@@ -72,9 +96,22 @@ class IssueConversationView extends Component {
                                         </h5>
                                         <p className="pl-2 pt-0 text-muted">Commented by, {comment.author.name}</p>
                                         <div className="ml-5">
-                                            <strong className={comment.replies.length <= 0 ? "d-none": "d-block"}>
-                                                Replies
-                                            </strong>
+                                            <strong>Replies</strong>
+                                            <p className="text-center">
+                                                {comment.replies.length <= 0 ? "No reply found": ""}
+                                            </p>
+                                            <form onSubmit={this.handleReplySubmit}>
+                                                <input
+                                                    required placeholder="Write a reply here..."
+                                                    style={{width: '80%'}}
+                                                    onChange={(e) => this.setState({replyText: e.target.value})}
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    className="pl-2 pr-2 btn btn-xs btn-outline-primary pull-right">
+                                                    Reply
+                                                </button>
+                                            </form>
                                             {
                                                 comment.replies.map(reply => {
                                                     return (
