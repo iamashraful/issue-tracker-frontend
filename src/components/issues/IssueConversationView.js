@@ -13,6 +13,7 @@ class IssueConversationView extends Component {
             commentText: "",
             replyText: "",
         };
+        this.conversation = {};
         this.handleCommitSubmit = this.handleCommitSubmit.bind(this);
         this.handleReplySubmit = this.handleReplySubmit.bind(this);
     }
@@ -33,6 +34,7 @@ class IssueConversationView extends Component {
             return response.json();
         }).then((data) => {
             // set loading false for stop loading feature
+            this.conversation = data;
             this.setState({loading: false, conversation: data});
         }).catch((err) => {
             console.log(err);
@@ -40,13 +42,62 @@ class IssueConversationView extends Component {
     }
 
     handleCommitSubmit(e) {
-        console.log(this.state.commentText);
+        const url = BasicStore.makeUrl('api/v1/pms/conversations/' + this.conversation.id + '/');
+        const postBody = JSON.stringify({
+            text: this.state.commentText,
+            comment: true
+        });
+        const payload = {
+            method: 'POST',
+            headers: BasicStore.headers,
+            body: postBody
+        };
+        fetch(url, payload).then((response) => {
+            if (response.status === 403) {
+                this.setState({permissionError: true});
+            }
+            return response.json();
+        }).then((data) => {
+            // set loading false for stop loading feature
+            this.setState({loading: false, commentText: ""});
+            this.conversation.comments.unshift(data);
+            this.setState({conversation: this.conversation});
+        }).catch((err) => {
+            console.log(err);
+        });
         e.preventDefault();
     }
 
-    handleReplySubmit(e) {
-        console.log(this.state.replyText);
-        e.preventDefault();
+    handleReplySubmit(comment) {
+        const url = BasicStore.makeUrl('api/v1/pms/conversations/' + this.conversation.id + '/');
+        const postBody = JSON.stringify({
+            text: this.state.replyText,
+            reply: true,
+            comment_id: comment.id
+        });
+        const payload = {
+            method: 'POST',
+            headers: BasicStore.headers,
+            body: postBody
+        };
+        fetch(url, payload).then((response) => {
+            if (response.status === 403) {
+                this.setState({permissionError: true});
+            }
+            return response.json();
+        }).then((data) => {
+            // set loading false for stop loading feature
+            this.setState({loading: false, replyText: ""});
+            this.conversation.comments.map((cm) => {
+                if(cm.id === comment.id) {
+                    cm.replies.unshift(data);
+                }
+            });
+            this.setState({conversation: this.conversation});
+            console.log(this.state.conversation);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
 
@@ -74,6 +125,7 @@ class IssueConversationView extends Component {
                         </p>
                         <form onSubmit={this.handleCommitSubmit}>
                             <textarea
+                                value={this.state.commentText}
                                 rows="2" required placeholder="Write a note here..." style={{width: '80%'}}
                                 onChange={(e) => this.setState({commentText: e.target.value})}
                             />
@@ -100,18 +152,16 @@ class IssueConversationView extends Component {
                                             <p className="text-center">
                                                 {comment.replies.length <= 0 ? "No reply found": ""}
                                             </p>
-                                            <form onSubmit={this.handleReplySubmit}>
-                                                <input
+                                                <textarea
                                                     required placeholder="Write a reply here..."
-                                                    style={{width: '80%'}}
+                                                    rows="2" style={{width: '80%'}} value={this.state.replyText}
                                                     onChange={(e) => this.setState({replyText: e.target.value})}
                                                 />
                                                 <button
-                                                    type="submit"
+                                                    onClick={this.handleReplySubmit.bind(this, comment)}
                                                     className="pl-2 pr-2 btn btn-xs btn-outline-primary pull-right">
                                                     Reply
                                                 </button>
-                                            </form>
                                             {
                                                 comment.replies.map(reply => {
                                                     return (
