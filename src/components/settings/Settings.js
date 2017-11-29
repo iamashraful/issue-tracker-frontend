@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BasicStore from '../../stores/basic-store';
 import AccessControlView from "./AccessControlView";
+import ExportToExcel from "../utility/ExportToExcel";
 
 
 class Settings extends Component {

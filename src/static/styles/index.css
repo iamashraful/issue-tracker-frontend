@@ -125,3 +125,9 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse.fixed-top {
 .modal-dialog {
     max-width: 700px !important;
 }
+
+.export-view {
+    float: right;
+    margin-right: 0;
+    margin-bottom: 15px;
+}

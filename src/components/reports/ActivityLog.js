@@ -3,6 +3,7 @@ import BasicStore from "../../stores/basic-store";
 import LogListView from "./LogListView";
 import {withRouter} from "react-router-dom";
 import qs from "query-string";
+import ActivityLogExportMixin from "./ActivityLogExportMixin";
 
 class ActivityLog extends Component {
     constructor(props) {
@@ -68,6 +69,7 @@ class ActivityLog extends Component {
                         {/*<input type="date"  className="pull-right form-control" style={{padding: '5px'}}/>*/}
                     {/*</div>*/}
                 </div>
+                <ActivityLogExportMixin log={this.state.logs}/>
                 <LogListView logs={this.state.logs} loading={this.state.loading}/>
             </div>
         )
