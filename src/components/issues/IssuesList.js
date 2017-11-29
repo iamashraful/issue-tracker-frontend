@@ -4,6 +4,7 @@ import NoAccess from "../utility/NoAccess";
 import Select from 'react-select';
 import IssueTableView from "./IssueTableView";
 import {Link} from "react-router-dom";
+import IssueExportToExcelMixin from "./IssueExportToExcelMixin";
 
 
 class IssuesList extends Component {
@@ -91,7 +92,7 @@ class IssuesList extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row p-l-r-15px">
+                    <div className="row p-l-r-15px" style={{marginBottom: '-40px'}}>
                         {/* Here will be some filters */}
                         <div style={{paddingTop: '1rem', paddingBottom: '1rem'}} className="w-100">
                             <Select
@@ -103,6 +104,7 @@ class IssuesList extends Component {
                                 onChange={this.onProjectSelect}
                             />
                         </div>
+                        <IssueExportToExcelMixin issues={this.state.issues}/>
                     </div>
                     {/* Here will be table view for issues List*/}
                     <IssueTableView
