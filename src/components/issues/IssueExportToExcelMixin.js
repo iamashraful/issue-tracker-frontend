@@ -23,7 +23,7 @@ class IssueExportToExcelMixin extends Component {
             // this.generateExportData(this.props.log);
             // console.log(this.props.log.length);
             this.props.issues.map((issue) => {
-                log.push({
+                return log.push({
                     'Title': issue.title,
                     'Project Name': issue.project.name,
                     'Author': issue.author,

@@ -104,7 +104,7 @@ class CreateEditProject extends Component {
         if(this.state.success) {
             setTimeout(function() {
                 window.location.assign("/#" + BasicStore.urlPaths.projects);
-            }.bind(this), 3000);
+            }, 3000);
         }
 
         return (
@@ -141,8 +141,8 @@ class CreateEditProject extends Component {
                                 <p className="p-2">Try dropping some files here, or click to select files to upload.</p>
                             </Dropzone>
                             <aside>
-                                <h2>Dropped files</h2>
-                                <ul>{this.state.logo.map(f => <img className="img-thumbnail" key={f.name} src={f.preview}/>)}</ul>
+                                <h4>Dropped files</h4>
+                                <ul>{this.state.logo.map(f => <img alt="" className="img-thumbnail" key={f.name} src={f.preview}/>)}</ul>
                             </aside>
                         </div>
 

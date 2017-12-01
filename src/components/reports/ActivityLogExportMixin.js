@@ -19,7 +19,7 @@ class ActivityLogExportMixin extends Component {
             // this.generateExportData(this.props.log);
             // console.log(this.props.log.length);
             this.props.log.map((d) => {
-                log.push({
+                return log.push({
                     'Action Type': d.action,
                     'Action Date': d.created_at,
                     'Action Message': d.operational_text,

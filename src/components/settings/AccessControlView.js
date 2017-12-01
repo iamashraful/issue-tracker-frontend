@@ -43,7 +43,7 @@ class AccessControlView extends Component {
                 this.setState({allUrls: data.url_names});
                 let d = [];
                 data.url_names.map(url_name => {
-                    d.push({label: url_name, value: url_name});
+                    return d.push({label: url_name, value: url_name});
                 });
                 this.setState({accessViewSelectData: d});
             }
@@ -69,7 +69,7 @@ class AccessControlView extends Component {
                 this.setState({allRoles: data.results});
                 let d = [];
                 data.results.map(role => {
-                    d.push({label: role.name, value: role.id});
+                    return d.push({label: role.name, value: role.id});
                 });
                 this.setState({roleSelectData: d});
             }
@@ -93,7 +93,7 @@ class AccessControlView extends Component {
                 this.setState({allPermissions: data.results});
                 let d = [];
                 data.results.map(pp => {
-                    d.push({label: pp.access_type_name, value: pp.id});
+                    return d.push({label: pp.access_type_name, value: pp.id});
                 });
                 this.setState({permissionsSelectData: d});
             }
@@ -122,7 +122,7 @@ class AccessControlView extends Component {
         if (val !== null) {
             let d = [];
             val.map(item => {
-                d.push(item.value)
+                return d.push(item.value)
             });
             this.setState({accessPermissions: d});
         }

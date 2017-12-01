@@ -54,7 +54,7 @@ class IssueCreateView extends Component {
         const projects = BasicStore.projects;
         let data = [];
         projects.map(pr => {
-            data.push({label: pr.name, value: pr.id});
+            return data.push({label: pr.name, value: pr.id});
         });
         this.setState({projectSelectData: data});
         // e.preventDefault();
@@ -72,7 +72,7 @@ class IssueCreateView extends Component {
         const profiles = BasicStore.profiles;
         let data = [];
         profiles.map(pr => {
-            data.push({label: pr.name, value: pr.id});
+            return data.push({label: pr.name, value: pr.id});
         });
         this.setState({profileSelectData: data});
         // e.preventDefault();
@@ -90,7 +90,7 @@ class IssueCreateView extends Component {
         if(val !== null) {
             let d = [];
             val.map(item => {
-                d.push(item.value)
+                return d.push(item.value)
             });
             this.setState({watchers: d});
         }
@@ -155,7 +155,7 @@ class IssueCreateView extends Component {
         if(this.state.success) {
             setTimeout(function() {
                 window.location.assign("/#" + BasicStore.urlPaths.issues);
-            }.bind(this), 3000);
+            }, 3000);
         }
 
         return (

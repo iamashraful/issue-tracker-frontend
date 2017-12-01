@@ -46,7 +46,7 @@ class UserRegistration extends Component {
                 this.setState({allRoles: data.results});
                 let d = [];
                 data.results.map(role => {
-                    d.push({label: role.name, value: role.id});
+                    return d.push({label: role.name, value: role.id});
                 });
                 this.setState({roleSelectData: d});
             }

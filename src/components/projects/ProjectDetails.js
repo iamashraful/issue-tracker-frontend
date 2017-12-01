@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Redirect, Link, Switch, Route} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 import BasicStore from '../../stores/basic-store';
 import IssueTableView from "../issues/IssueTableView";
@@ -43,7 +43,7 @@ class ProjectDetails extends Component {
     }
 
     getIssues() {
-        const url = BasicStore.makeUrl('api/v1/pms/issues/' + '?project=' + this.state.project.id);
+        const url = BasicStore.makeUrl('api/v1/pms/issues/?project=' + this.state.project.id);
         const payload = {
             method: 'GET',
             headers: BasicStore.headers

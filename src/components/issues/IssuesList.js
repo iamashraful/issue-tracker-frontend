@@ -31,7 +31,7 @@ class IssuesList extends Component {
     }
 
     getIssues(params) {
-        const url = BasicStore.makeUrl('api/v1/pms/issues/' + '?' + params);
+        const url = BasicStore.makeUrl('api/v1/pms/issues/?' + params);
         const payload = {
             method: 'GET',
             headers: BasicStore.headers
@@ -64,6 +64,7 @@ class IssuesList extends Component {
             val.map(item => {
                 d.push(item.value);
                 str += item.value + ",";
+                return str
             });
             this.setState({selectedProject: d, issueParams: 'project=' + str});
             this.getIssues('project=' + str);

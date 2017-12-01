@@ -18,7 +18,7 @@ class Home extends Component {
                             <span className="intro-divider">
                                 <ul className="list-inline intro-social-buttons">
                                     <li className="list-inline-item">
-                                        <a href="https://twitter.com/__ashraful" target="_blank"
+                                        <a href="https://twitter.com/__ashraful" target="_blank" rel="noopener noreferrer"
                                            className="btn btn-secondary btn-lg">
                                             <i className="fa fa-twitter fa-fw"/>
                                             <span className="network-name">Twitter</span>
@@ -26,14 +26,14 @@ class Home extends Component {
                                     </li>
                                     <li className="list-inline-item">
                                         <a href="https://github.com/iamashraful/issue-tracker-backend" target="_blank"
-                                           className="btn btn-secondary btn-lg">
+                                           className="btn btn-secondary btn-lg" rel="noopener noreferrer">
                                             <i className="fa fa-github fa-fw"/>
                                             <span className="network-name">API Codes</span>
                                         </a>
                                     </li>
                                     <li className="list-inline-item">
                                         <a href="https://github.com/iamashraful/issue-tracker-frontend" target="_blank"
-                                           className="btn btn-secondary btn-lg">
+                                           className="btn btn-secondary btn-lg" rel="noopener noreferrer">
                                             <i className="fa fa-github fa-fw"/>
                                             <span className="network-name">Client Codes</span>
                                         </a>
@@ -124,7 +124,7 @@ class Home extends Component {
                 <footer>
                     <h4 className="text-center p-5">
                         I declare hereby, This software is made for no harm, no awards or no competition or anything else.
-                        This is created as internship project for <a href="https://field.buzz" target="_blank">Field Buzz</a>.
+                        This is created as internship project for <a href="https://field.buzz" target="_blank" rel="noopener noreferrer">Field Buzz</a>.
                     </h4>
                 </footer>
             </div>

@@ -92,6 +92,7 @@ class IssueConversationView extends Component {
                 if(cm.id === comment.id) {
                     cm.replies.unshift(data);
                 }
+                return 0
             });
             this.setState({conversation: this.conversation});
             console.log(this.state.conversation);
@@ -132,7 +133,7 @@ class IssueConversationView extends Component {
                             <button
                                 type="submit"
                                 className="pl-2 pr-2 btn btn-lg btn-outline-primary pull-right">
-                                Save Note
+                                Comment
                             </button>
                         </form>
                         {this.state.conversation.comments.map(comment => {

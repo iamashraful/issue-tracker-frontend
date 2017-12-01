@@ -26,7 +26,7 @@ class Dashboard extends Component {
     }
 
     getIssues(params, flag) {
-        const url = BasicStore.makeUrl('api/v1/pms/issues/' + '?' + params);
+        const url = BasicStore.makeUrl('api/v1/pms/issues/?' + params);
         const payload = {
             method: 'GET',
             headers: BasicStore.headers

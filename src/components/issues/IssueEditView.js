@@ -62,7 +62,7 @@ class IssueEditView extends Component {
                 progress: data.progress, tracker: data.tracker
             });
             data.watchers.map(w => {
-                this.state.watchers.push(w.id);
+                return this.state.watchers.push(w.id);
             });
             console.log(this.state.project);
         }).catch((err) => {
@@ -102,7 +102,7 @@ class IssueEditView extends Component {
         if (val !== null) {
             let d = [];
             val.map(item => {
-                d.push(item.value)
+                return d.push(item.value)
             });
             this.setState({watchers: d});
         }
