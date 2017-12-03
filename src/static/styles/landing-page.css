@@ -16,14 +16,14 @@ body, h1, h2, h3, h4, h5, h6 {
 
 .projects-card-img{
     /*TODO Not working on --moz engine. Only for --webkit*/
-    content:url(../images/ipad.png);
+    content:url(../images/project-view.PNG);
 }
 
 .issues-list-img {
-    content:url(../images/dog.png);
+    content:url(../images/issue-list-view.PNG);
 }
 .reporting-img {
-    content:url(../images/phones.png);
+    content:url(../images/issue-details.PNG);
 }
 
 .intro-header {
