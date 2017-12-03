@@ -62,6 +62,7 @@ class BasicStore extends EventEmitter {
             2: "On Hold",
             3: "Awaiting QA",
             4: "QA Verified",
+            5: "Close"
         };
         this.issueStatusEnumSelectData = [];
         for (let i=0; i<=6; i++) {
