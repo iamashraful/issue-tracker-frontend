@@ -56,16 +56,12 @@ class BasicStore extends EventEmitter {
             onHold: 2,
             awaitingQA: 3,
             qaVerified: 4,
-            closeIssue: 5,
-            archive: 6,
             // Reverse way access
             0: "New",
             1: "In Progress",
             2: "On Hold",
             3: "Awaiting QA",
             4: "QA Verified",
-            5: "Close",
-            6: "Archive"
         };
         this.issueStatusEnumSelectData = [];
         for (let i=0; i<=6; i++) {
@@ -196,7 +192,7 @@ class BasicStore extends EventEmitter {
         this.allUrls = [];
         // Declaring role
         this.userRoleEnum = {
-            admin: "Admin",
+            admin: "ADMIN",
             manager: "Manager",
             tester: "Tester",
             developer: "Developer"

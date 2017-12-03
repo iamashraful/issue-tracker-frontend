@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import BasicStore from "../../stores/basic-store";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import IssueConversationView from "./IssueConversationView";
 
 class IssueDetails extends Component {
@@ -17,6 +17,7 @@ class IssueDetails extends Component {
             selectedHistory: "",
         };
         this.collapseHistory = this.collapseHistory.bind(this);
+        this.closeIssue = this.closeIssue.bind(this)
     }
 
     collapseHistory(history) {
@@ -46,6 +47,30 @@ class IssueDetails extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, issue: data});
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    closeIssue() {
+        const url = BasicStore.makeUrl('api/v1/pms/close-issues/');
+        const postBody = JSON.stringify({
+            issues: [this.state.issueId],
+            issue_close: true
+        });
+        const payload = {
+            method: 'POST',
+            headers: BasicStore.headers,
+            body: postBody
+        };
+        fetch(url, payload).then((response) => {
+            if (response.status === 401) {
+                this.setState({unAuth: true});
+            }
+            return response.json();
+        }).then((data) => {
+            // set loading false for stop loading feature
+            window.location = "#/issues";
         }).catch((err) => {
             console.log(err);
         });
@@ -136,6 +161,8 @@ class IssueDetails extends Component {
             )
         }
 
+        const adminVisible = BasicStore.userRole === BasicStore.userRoleEnum.admin ? '' : 'd-none ';
+
         return (
             <div className="container-fluid">
                 {/* Action View */}
@@ -152,6 +179,11 @@ class IssueDetails extends Component {
                             to={BasicStore.urlPaths.issues + '/' + this.state.issueId + BasicStore.urlPaths.edit}
                         >Edit
                         </Link>
+                        <button
+                            className={adminVisible + "btn btn-danger link-button"}
+                            onClick={this.closeIssue.bind(this)}>
+                            Close
+                        </button>
                     </span>
                 </div>
 

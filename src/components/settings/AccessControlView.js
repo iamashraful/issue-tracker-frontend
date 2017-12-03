@@ -186,10 +186,8 @@ class AccessControlView extends Component {
         const saveButton = this.state.saveButtonLoading ? 'd-none' : 'd-block';
         const displayClass = this.state.success ? "d-block" : "d-none";
         const notPermitted = this.state.permissionError ? "You don't have any permission to do this." : "";
-
-
         let accessControlView = 'card ';
-
+        accessControlView += BasicStore.userRole === BasicStore.userRoleEnum.admin ? 'd-block ' : 'd-none '
         return (
             <div className="col-md-6 col-sm-6">
                 <div className={accessControlView}>
