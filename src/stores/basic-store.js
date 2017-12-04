@@ -11,6 +11,8 @@ import IssuesList from "../components/issues/IssuesList";
 import ActivityLog from "../components/reports/ActivityLog";
 import MeDetailsView from "../components/profiles/MeDetailsView";
 import ProgressReport from "../components/reports/ProgressReport";
+import UserWiseDailyReport from "../components/reports/UserWiseDailyReport";
+import ProjectWiseDailyReport from "../components/reports/ProjectWiseDailyReport";
 
 class BasicStore extends EventEmitter {
     constructor() {
@@ -31,10 +33,12 @@ class BasicStore extends EventEmitter {
             issues: '/issues',
             create: '/create',
             edit: '/edit',
-            activityLog: '/activity-logs',
-            progressReport: '/progress-report',
             profiles: '/profiles',
             me: '/me',
+            activityLog: '/activity-logs',
+            progressReport: '/progress-report',
+            projectBasedDailyReport: '/project-based-daily-report',
+            userBasedDailyReport: '/user-based-daily-report',
         };
 
         // Token -- Accessing from local storage
@@ -117,6 +121,20 @@ class BasicStore extends EventEmitter {
                         text: 'Progress Report',
                         url: this.urlPaths.progressReport,
                         component: ProgressReport,
+                        auth: true
+                    },
+                    {
+                        id: 30,
+                        text: 'Daily Report (Project wise)',
+                        url: this.urlPaths.projectBasedDailyReport,
+                        component: ProjectWiseDailyReport,
+                        auth: true
+                    },
+                    {
+                        id: 40,
+                        text: 'Daily Report (User wise)',
+                        url: this.urlPaths.userBasedDailyReport,
+                        component: UserWiseDailyReport,
                         auth: true
                     },
                 ]

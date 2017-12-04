@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import BasicStore from "../../stores/basic-store";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import IssueConversationView from "./IssueConversationView";
 
 class IssueDetails extends Component {
