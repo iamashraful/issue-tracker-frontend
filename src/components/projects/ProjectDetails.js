@@ -99,7 +99,7 @@ class ProjectDetails extends Component {
                 </div>
                 <div className="jumbotron">
                     <div className="tab-content mt-5">
-                        <div role="tabpanel" className="tab-pane fade in active" id="overview">
+                        <div role="tabpanel" className="tab-pane active" id="overview">
                             <h4>Description</h4>
                             <p dangerouslySetInnerHTML={{ __html: this.state.project.description }}/>
                         </div>
