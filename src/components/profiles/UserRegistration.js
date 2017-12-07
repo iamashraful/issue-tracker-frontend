@@ -20,6 +20,7 @@ class UserRegistration extends Component {
             errorData: {},
             roleSelectData: [],
             allRoles: [],
+            success: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -79,8 +80,7 @@ class UserRegistration extends Component {
             }
         }).then((data) => {
             // Set loading false and text empty
-            this.setState({loading: false, loadingText: '', apiResponseData: data});
-            console.log(data);
+            this.setState({loading: false, loadingText: '', apiResponseData: data, success: true, password: ''});
         }).catch((err) => {
             console.log(err);
         });
@@ -98,6 +98,10 @@ class UserRegistration extends Component {
         let cssClasses = "form-control ";
         const registeringButtonViewClass = this.state.loading ? 'd-block' : 'd-none';
         const registerButtonViewClass = this.state.loading ? 'd-none' : 'd-block';
+        const showSuccess = this.state.success ? 'd-block' : 'd-none';
+        // if (this.state.success) {
+        //     return <Redirect to={BasicStore.urlPaths.profiles + '/' + this.state.apiResponseData.id}/>
+        // }
 
         if (BasicStore.userRole !== BasicStore.userRoleEnum.admin) {
             return <Redirect to="/"/>
@@ -105,6 +109,11 @@ class UserRegistration extends Component {
         return (
             <div>
                 <div className="container">
+                    <div>
+                        {<p className={showSuccess + " mt-1 alert alert-success text-center"}>
+                            User registered successfully
+                        </p>}
+                    </div>
                     <div className="row">
                         <div className="col-sm-5 ml-auto mr-auto mt-4">
                             <div className="card">
