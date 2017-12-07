@@ -53,27 +53,30 @@ class IssueDetails extends Component {
     }
 
     closeIssue() {
-        const url = BasicStore.makeUrl('api/v1/pms/close-issues/');
-        const postBody = JSON.stringify({
-            issues: [this.state.issueId],
-            issue_close: true
-        });
-        const payload = {
-            method: 'POST',
-            headers: BasicStore.headers,
-            body: postBody
-        };
-        fetch(url, payload).then((response) => {
-            if (response.status === 401) {
-                this.setState({unAuth: true});
-            }
-            return response.json();
-        }).then((data) => {
-            // set loading false for stop loading feature
-            window.location = "#/issues";
-        }).catch((err) => {
-            console.log(err);
-        });
+        let isConfirmed = window.confirm("Are you sure to close the issue?");
+        if (isConfirmed) {
+            const url = BasicStore.makeUrl('api/v1/pms/close-issues/');
+            const postBody = JSON.stringify({
+                issues: [this.state.issueId],
+                issue_close: true
+            });
+            const payload = {
+                method: 'POST',
+                headers: BasicStore.headers,
+                body: postBody
+            };
+            fetch(url, payload).then((response) => {
+                if (response.status === 401) {
+                    this.setState({unAuth: true});
+                }
+                return response.json();
+            }).then((data) => {
+                // set loading false for stop loading feature
+                window.location = "#/issues";
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     }
 
     componentWillMount() {

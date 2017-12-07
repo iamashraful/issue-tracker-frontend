@@ -59,7 +59,6 @@ class ProgressReport extends Component {
         }).then((data) => {
             // set loading false for stop loading feature
             this.setState({loading: false, reportData: data});
-            console.log(data.pie_chart)
         }).catch((err) => {
             console.log(err);
         });
