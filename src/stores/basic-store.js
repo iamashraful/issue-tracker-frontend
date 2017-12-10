@@ -206,6 +206,7 @@ class BasicStore extends EventEmitter {
                 auth: true
             },
         ];
+        console.log(this.userName);
 
         // Declaring all urls
         this.allUrls = [];
@@ -289,6 +290,8 @@ class BasicStore extends EventEmitter {
         if (this.token !== '') {
             this.headers.Authorization = 'Token ' + this.token;
         }
+        // This is really bad to see that. Will remove this soon
+        window.location.reload();
         // Response to components for store change
         this.emit("change");
     }
