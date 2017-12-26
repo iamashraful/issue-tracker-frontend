@@ -24,7 +24,7 @@ class UserWiseDailyReport extends DailyReport {
                                         return (
                                             <Link
                                                 to={BasicStore.urlPaths.profiles + '/' + log.updated_by_id}>
-                                                {log.updated_by_name}
+                                                {log.updated_by_name === null ? 'System Bot' : log.updated_by_name}
                                             </Link>
                                         )
                                     }),
