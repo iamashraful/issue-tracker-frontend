@@ -121,12 +121,6 @@ class Home extends Component {
                         </div>
                     </div>
                 </aside>
-                <footer>
-                    <h4 className="text-center p-5">
-                        I declare hereby, This software is made for no harm, no awards or no competition or anything else.
-                        This is created as internship project for <a href="https://field.buzz" target="_blank" rel="noopener noreferrer">Field Buzz</a>.
-                    </h4>
-                </footer>
             </div>
         )
     }
